@@ -7,8 +7,6 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use app\models\GacEntityListV;
-use app\models\GacEntityListU;
 
 /**
  * This is the model class for table "tbl_user".
@@ -18,19 +16,20 @@ use app\models\GacEntityListU;
  * @property string $middlename
  * @property string $lastname
  * @property integer $organizationid
- * @property string $loginname
+ * @property string $username
  * @property string $password
  * @property integer $status
- * @property string $datecreated
+ * @property string $created_at
  * @property string $datedeactivated
  * @property string $lastlogin
  * @property integer $logins
+ * @property string $updated_at
  *
  * @property TblLogs[] $tblLogs
  * @property TblStation[] $tblStations
  * @property TblStakeholder $organization
  */
-class User extends \yii\db\ActiveRecord {
+class User extends ActiveRecord implements IdentityInterface {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_BLOCKED = 2;
@@ -59,13 +58,13 @@ class User extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-        [['firstname', 'lastname', 'loginname', 'password'], 'required'],
+        [['firstname', 'lastname', 'username', 'password_hash'], 'required'],
         [['organizationid', 'status', 'logins'], 'integer'],
-        [['datecreated', 'datedeactivated', 'lastlogin'], 'safe'],
+        [['created_at', 'datedeactivated', 'lastlogin', 'created_at'], 'safe'],
         [['firstname', 'middlename'], 'string', 'max' => 100],
         [['lastname'], 'string', 'max' => 150],
-        [['loginname'], 'string', 'max' => 50],
-        [['password'], 'string', 'max' => 255],
+        [['username'], 'string', 'max' => 50],
+        [['password_hash', 'auth_key'], 'string', 'max' => 255],
         [['organizationid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['organizationid' => 'id']],
         ];
     }
@@ -80,10 +79,10 @@ class User extends \yii\db\ActiveRecord {
         'middlename' => 'Middlename',
         'lastname' => 'Lastname',
         'organizationid' => 'Organizationid',
-        'loginname' => 'Loginname',
+        'username' => 'Loginname',
         'password' => 'Password',
         'status' => 'Status',
-        'datecreated' => 'Datecreated',
+        'created_at' => 'Datecreated',
         'datedeactivated' => 'Datedeactivated',
         'lastlogin' => 'Lastlogin',
         'logins' => 'Logins',
@@ -114,7 +113,7 @@ class User extends \yii\db\ActiveRecord {
      * @return static|null
      */
     public static function findByUsername($username) {
-        return static::findOne(['loginname' => $username]);
+        return static::findOne(['username' => $username]);
     }
 
     /**

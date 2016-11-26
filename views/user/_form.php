@@ -22,11 +22,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'loginname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'datecreated')->textInput() ?>
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'datedeactivated')->textInput() ?>
 

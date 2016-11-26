@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'organizationid', 'status', 'logins'], 'integer'],
-            [['firstname', 'middlename', 'lastname', 'loginname', 'password', 'datecreated', 'datedeactivated', 'lastlogin'], 'safe'],
+            [['firstname', 'middlename', 'lastname', 'loginname', 'password_hash', 'created_at', 'datedeactivated', 'lastlogin'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class UserSearch extends User
             'id' => $this->id,
             'organizationid' => $this->organizationid,
             'status' => $this->status,
-            'datecreated' => $this->datecreated,
+            'created_at' => $this->created_at,
             'datedeactivated' => $this->datedeactivated,
             'lastlogin' => $this->lastlogin,
             'logins' => $this->logins,
@@ -72,7 +72,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'middlename', $this->middlename])
             ->andFilterWhere(['like', 'lastname', $this->lastname])
             ->andFilterWhere(['like', 'loginname', $this->loginname])
-            ->andFilterWhere(['like', 'password', $this->password]);
+            ->andFilterWhere(['like', 'password_hash', $this->password_hash]);
 
         return $dataProvider;
     }
