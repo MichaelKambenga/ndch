@@ -16,7 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'unitmeasure')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'elementcode')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'vaisalacode')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'vaisaladesc')->textInput(['vaisaladesc' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -11,6 +11,8 @@ use Yii;
  * @property string $name
  * @property string $unitmeasure
  * @property string $elementcode
+ * @property string $vaisalacode
+ * @property string $vaisaladesc
  *
  * @property TblStationWeatherElements[] $tblStationWeatherElements
  */
@@ -33,7 +35,7 @@ class WeatherElements extends \yii\db\ActiveRecord
             [['name', 'unitmeasure'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['unitmeasure'], 'string', 'max' => 10],
-            [['elementcode'], 'string', 'max' => 50],
+            [['vaisalacode','vaisaladesc'], 'string', 'max' => 50],
             [['name'], 'unique'],
         ];
     }
@@ -47,7 +49,8 @@ class WeatherElements extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'unitmeasure' => 'Unitmeasure',
-            'elementcode' => 'Elementcode',
+            'vaisalacode' => 'Vaisala Code',
+            'vaisaladesc' => 'Vaisala Description',
         ];
     }
 

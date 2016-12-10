@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'unitmeasure',
-            'elementcode',
+            'vaisalacode',
+            'vaisaladesc',
         ],
     ]) ?>
 

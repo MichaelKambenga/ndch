@@ -19,7 +19,7 @@ class WeatherElementsSearch extends WeatherElements
     {
         return [
             [['id'], 'integer'],
-            [['name', 'unitmeasure', 'elementcode'], 'safe'],
+            [['name', 'unitmeasure', 'vaisalacode','vaisaladesc'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class WeatherElementsSearch extends WeatherElements
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'unitmeasure', $this->unitmeasure])
-            ->andFilterWhere(['like', 'elementcode', $this->elementcode]);
+            ->andFilterWhere(['like', 'vaisalacode', $this->vaisalacode])
+            ->andFilterWhere(['like', 'vaisaladesc', $this->vaisaladesc]);
 
         return $dataProvider;
     }

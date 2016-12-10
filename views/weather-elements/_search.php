@@ -21,7 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'unitmeasure') ?>
 
-    <?= $form->field($model, 'elementcode') ?>
+    <?= $form->field($model, 'vaisalacode') ?>
+    
+    <?= $form->field($model, 'vaisaladesc') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
