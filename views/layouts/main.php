@@ -99,26 +99,8 @@ LteAsset::register($this);
                             </span>
                             </a>
                             <ul class = "treeview-menu">
-                            <li class="btnFinancialStmt"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Statement of Financial Performance</a></li>
-                            <li class="btnFinancialPosition"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Statement of Financial Position</a></li>
-                            <li class="btnCashFlowStmt"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Cashflow Statement</a></li>
-                            <li class="btnChangesInEquity"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Changes in Equity</a></li>
-                            <li class="btnBudgetVsActual"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Comparison of Budget vs Actual</a></li>
-                            <li class="btnSegFinancialPerformance"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Segmented Statement of Financial Performance</a></li>
-                            <li class="btnSegFinancialPosition"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Segmented Statement of Financial Position</a></li>
-                            <li class="btnSegCashFlowStmt"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Segmented Statement of Cash Flow</a></li>
                             <li class="btnTrialBalance"><a href = "#"><i class = "fa fa-circle-o"></i>
                             Trial Balance</a></li>
-                            <li class="btnConsoStatus"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Consolidation Status</a></li>
                             <li class="btnEntityList"><a href = "#"><i class = "fa fa-circle-o"></i>
                             Entity List</a></li>
                             <li class="btnGFSList"><a href = "#"><i class = "fa fa-circle-o"></i>
@@ -141,14 +123,16 @@ LteAsset::register($this);
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="index.php?r=gac-glob-period-u"><i class="fa fa-circle-o"></i>
-                                        Global Period</a></li>
-                                <li><a href="index.php?r=gac-gfs-list-u"><i class="fa fa-circle-o"></i> 
-                                        GFS Management</a></li>
-                                <li><a href="index.php?r=gac-entity-list-u"><i class="fa fa-circle-o"></i>
-                                        Entity Management</a></li>
-                                <li><a href="index.php?r=gac-note-itemranges-u"><i class="fa fa-circle-o"></i>
-                                        Reports Management i.e Range</a></li>  
+                                <li><a href="index.php?r=stakeholder"><i class="fa fa-circle-o"></i>
+                                        Stakeholders</a></li>
+                                <li><a href="index.php?r=station"><i class="fa fa-circle-o"></i> 
+                                        Stations</a></li>
+                                <li><a href="index.php?r=region"><i class="fa fa-circle-o"></i>
+                                        Regions</a></li>
+                                <li><a href="index.php?r=district"><i class="fa fa-circle-o"></i>
+                                        Districts</a></li> 
+                                <li><a href="index.php?r=ward"><i class="fa fa-circle-o"></i>
+                                        Wards</a></li>
                                 <li><a href="index.php?r=aws-vaisala"><i class="fa fa-circle-o"></i>
                                         AWS</a></li>
                             </ul>
