@@ -1,11 +1,8 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\StationWeatherElements */
-
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Station Weather Elements', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

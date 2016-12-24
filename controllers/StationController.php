@@ -48,8 +48,14 @@ class StationController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
+        $condition = "stationid = {$id}";
+        $model_station_weather_element = new \app\models\StationWeatherElements;
+        $searchModel_station_weather_element = new \app\models\StationWeatherElementsSearch;
+        $dataProvider_station_weather_element = $searchModel_station_weather_element->search(Yii::$app->request->getQueryParams(), $condition);
         return $this->render('view', [
                     'model' => $this->findModel($id),
+                    'dataProvider_station_weather_element' => $dataProvider_station_weather_element,
+                    'searchModel_station_weather_element' => $searchModel_station_weather_element
         ]);
     }
 

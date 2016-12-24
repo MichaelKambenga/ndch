@@ -1,43 +1,62 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StationSearch */
+/* @var $searchModel app\models\StakeholderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Stations';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="station-index">
+<div class="stakeholder-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <!--<h1><?= Html::encode($this->title) ?></h1>-->
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
         <?= Html::a('Create Station', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+
+
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'stationcode',
             'stationtype',
             'stationowner',
-            // 'geocode',
-            // 'regionid',
-            // 'districtid',
-            // 'wardid',
-            // 'datecreated',
-            // 'createdby',
-            // 'createdbyinsitutionid',
+            'geocode',
+            'regionid',
+            'districtid',
+            'wardid',
+            [
+                'label' => 'Action',
+                'value' => function($model) {
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['station/view', 'id' => $model->id]), [
+                                'title' => Yii::t('yii', 'View Details'),
+                    ]);
+                },
+                        'format' => 'raw',
+                    ],
+                ],
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => 'STATIONS',
+                    'type' => 'default',
+                    'showFooter' => true
+                ],
+            ]);
+            Pjax::end();
+            ?>
 </div>

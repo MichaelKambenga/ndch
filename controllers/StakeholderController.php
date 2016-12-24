@@ -51,8 +51,14 @@ class StakeholderController extends Controller
      */
     public function actionView($id)
     {
+        $condition = "stationowner = {$id}";
+        $model_station = new \app\models\Station;
+        $searchModel_station = new \app\models\StationSearch;
+        $dataProvider_station = $searchModel_station->search(Yii::$app->request->getQueryParams(), $condition);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider_station' => $dataProvider_station,
+            'searchModel_station' => $searchModel_station
         ]);
     }
 
