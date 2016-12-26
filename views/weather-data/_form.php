@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'stationweatherelementsid')->textInput() ?>
-
     <?= $form->field($model, 'value')->textInput() ?>
 
     <?= $form->field($model, 'daterecorded')->textInput() ?>
@@ -23,6 +21,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'entrydate')->textInput() ?>
 
     <?= $form->field($model, 'entryby')->textInput() ?>
+
+    <?= $form->field($model, 'stationid')->textInput() ?>
+
+    <?= $form->field($model, 'weatherelementid')->textInput() ?>
+
+    <?= $form->field($model, 'weatherelementlistid')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

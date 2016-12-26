@@ -29,12 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'stationweatherelementsid',
             'value',
             'daterecorded',
             'source',
             'entrydate',
             'entryby',
+            'stationid',
+            'weatherelementid',
+            'weatherelementlistid',
         ],
     ]) ?>
 

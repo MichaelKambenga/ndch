@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Weather Data', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -25,12 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'stationweatherelementsid',
             'value',
             'daterecorded',
             'source',
-            // 'entrydate',
+            'entrydate',
             // 'entryby',
+            // 'stationid',
+            // 'weatherelementid',
+            // 'weatherelementlistid',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

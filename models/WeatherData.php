@@ -8,15 +8,19 @@ use Yii;
  * This is the model class for table "tbl_weather_data".
  *
  * @property integer $id
- * @property integer $stationweatherelementsid
  * @property double $value
  * @property string $daterecorded
  * @property integer $source
  * @property string $entrydate
  * @property integer $entryby
+ * @property integer $stationid
+ * @property integer $weatherelementid
+ * @property integer $weatherelementlistid
  *
  * @property TblDataSources $source0
- * @property TblStationWeatherElements $stationweatherelements
+ * @property TblStation $station
+ * @property TblWeatherElements $weatherelement
+ * @property TblWeatherElementsList $weatherelementlist
  */
 class WeatherData extends \yii\db\ActiveRecord
 {
@@ -34,12 +38,14 @@ class WeatherData extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stationweatherelementsid', 'value', 'daterecorded', 'source'], 'required'],
-            [['stationweatherelementsid', 'source', 'entryby'], 'integer'],
+            [['value', 'daterecorded', 'source'], 'required'],
             [['value'], 'number'],
             [['daterecorded', 'entrydate'], 'safe'],
+            [['source', 'entryby', 'stationid', 'weatherelementid', 'weatherelementlistid'], 'integer'],
             [['source'], 'exist', 'skipOnError' => true, 'targetClass' => DataSources::className(), 'targetAttribute' => ['source' => 'id']],
-            [['stationweatherelementsid'], 'exist', 'skipOnError' => true, 'targetClass' => StationWeatherElements::className(), 'targetAttribute' => ['stationweatherelementsid' => 'id']],
+            [['stationid'], 'exist', 'skipOnError' => true, 'targetClass' => Station::className(), 'targetAttribute' => ['stationid' => 'id']],
+            [['weatherelementid'], 'exist', 'skipOnError' => true, 'targetClass' => WeatherElements::className(), 'targetAttribute' => ['weatherelementid' => 'id']],
+            [['weatherelementlistid'], 'exist', 'skipOnError' => true, 'targetClass' => WeatherElementsList::className(), 'targetAttribute' => ['weatherelementlistid' => 'id']],
         ];
     }
 
@@ -50,12 +56,14 @@ class WeatherData extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'stationweatherelementsid' => 'Stationweatherelementsid',
             'value' => 'Value',
             'daterecorded' => 'Daterecorded',
             'source' => 'Source',
             'entrydate' => 'Entrydate',
             'entryby' => 'Entryby',
+            'stationid' => 'Stationid',
+            'weatherelementid' => 'Weatherelementid',
+            'weatherelementlistid' => 'Weatherelementlistid',
         ];
     }
 
@@ -70,8 +78,24 @@ class WeatherData extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStationweatherelements()
+    public function getStation()
     {
-        return $this->hasOne(StationWeatherElements::className(), ['id' => 'stationweatherelementsid']);
+        return $this->hasOne(Station::className(), ['id' => 'stationid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWeatherelement()
+    {
+        return $this->hasOne(WeatherElements::className(), ['id' => 'weatherelementid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWeatherelementlist()
+    {
+        return $this->hasOne(WeatherElementsList::className(), ['id' => 'weatherelementlistid']);
     }
 }

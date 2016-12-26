@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\WeatherData;
 
 /**
- * WeatherDataSearch represents the model behind the search form about `app\models\WeatherData`.
+ * WeatherDataSearch represents the model behind the search form of `\app\models\WeatherData`.
  */
 class WeatherDataSearch extends WeatherData
 {
@@ -18,7 +18,7 @@ class WeatherDataSearch extends WeatherData
     public function rules()
     {
         return [
-            [['id', 'stationweatherelementsid', 'source', 'entryby'], 'integer'],
+            [['id', 'source', 'entryby', 'stationid', 'weatherelementid', 'weatherelementlistid'], 'integer'],
             [['value'], 'number'],
             [['daterecorded', 'entrydate'], 'safe'],
         ];
@@ -61,12 +61,14 @@ class WeatherDataSearch extends WeatherData
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'stationweatherelementsid' => $this->stationweatherelementsid,
             'value' => $this->value,
             'daterecorded' => $this->daterecorded,
             'source' => $this->source,
             'entrydate' => $this->entrydate,
             'entryby' => $this->entryby,
+            'stationid' => $this->stationid,
+            'weatherelementid' => $this->weatherelementid,
+            'weatherelementlistid' => $this->weatherelementlistid,
         ]);
 
         return $dataProvider;

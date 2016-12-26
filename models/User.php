@@ -1,7 +1,5 @@
 <?php
-
 namespace app\models;
-
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -78,8 +76,8 @@ class User extends ActiveRecord implements IdentityInterface {
         'firstname' => 'Firstname',
         'middlename' => 'Middlename',
         'lastname' => 'Lastname',
-        'organizationid' => 'Organizationid',
-        'username' => 'Loginname',
+        'organizationid' => 'Organization',
+        'username' => 'User Name',
         'password' => 'Password',
         'status' => 'Status',
         'created_at' => 'Datecreated',

@@ -1,0 +1,1659 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.1.24
+-- Dumped by pg_dump version 9.1.24
+-- Started on 2016-12-26 16:44:19 EAT
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11680)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2107 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 162 (class 1259 OID 32908)
+-- Dependencies: 6
+-- Name: auth_assignment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_assignment (
+    item_name character varying(64) NOT NULL,
+    user_id character varying(64) NOT NULL,
+    created_at integer
+);
+
+
+ALTER TABLE public.auth_assignment OWNER TO postgres;
+
+--
+-- TOC entry 163 (class 1259 OID 32911)
+-- Dependencies: 6
+-- Name: auth_item; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_item (
+    name character varying(64) NOT NULL,
+    type integer NOT NULL,
+    description text,
+    rule_name character varying(64),
+    data text,
+    created_at integer,
+    updated_at integer
+);
+
+
+ALTER TABLE public.auth_item OWNER TO postgres;
+
+--
+-- TOC entry 164 (class 1259 OID 32917)
+-- Dependencies: 6
+-- Name: auth_item_child; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_item_child (
+    parent character varying(64) NOT NULL,
+    child character varying(64) NOT NULL
+);
+
+
+ALTER TABLE public.auth_item_child OWNER TO postgres;
+
+--
+-- TOC entry 165 (class 1259 OID 32920)
+-- Dependencies: 6
+-- Name: auth_rule; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_rule (
+    name character varying(64) NOT NULL,
+    data text,
+    created_at integer,
+    updated_at integer
+);
+
+
+ALTER TABLE public.auth_rule OWNER TO postgres;
+
+--
+-- TOC entry 166 (class 1259 OID 32926)
+-- Dependencies: 6
+-- Name: tbl_aws_vaisala; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_aws_vaisala (
+    id integer,
+    "TIME" character varying(40),
+    "BAT" double precision,
+    "DP" double precision,
+    "DP1HA" double precision,
+    "DP1HX" character varying(20),
+    "DP1HM" character varying(20),
+    "PA" character varying(20),
+    "PA1HA" character varying(20),
+    "PA1HX" character varying(20),
+    "PA1HM" character varying(20),
+    "PR" character varying(20),
+    "PR1HS" character varying(20),
+    "PR24HS" character varying(20),
+    "PR5MS00" character varying(20),
+    "PR5MS05" character varying(20),
+    "PR5MS10" character varying(20),
+    "PR5MS15" character varying(20),
+    "PR5MS20" character varying(20),
+    "PR5MS25" character varying(20),
+    "PR5MS30" character varying(20),
+    "PR5MS35" character varying(20),
+    "PR5MS40" character varying(20),
+    "PR5MS45" character varying(20),
+    "PR5MS50" character varying(20),
+    "PR5MS55" character varying(20),
+    "RH" character varying(20),
+    "RH1HA" character varying(20),
+    "RH1HX" character varying(20),
+    "RH1HM" character varying(20),
+    "SR" character varying(20),
+    "SR1HA" character varying(20),
+    "SR1HX" character varying(20),
+    "SR1HM" character varying(20),
+    "TA" character varying(20),
+    "TA1HA" character varying(20),
+    "TA1HX" character varying(20),
+    "TA1HM" character varying(20),
+    "WD" character varying(20),
+    "WD2MA" character varying(20),
+    "WD10MA" character varying(20),
+    "WD2MX" character varying(20),
+    "WD10MX" character varying(20),
+    "WD2MM" character varying(20),
+    "WD10MM" character varying(20),
+    "WD1HA" character varying(20),
+    "WD1HX" character varying(20),
+    "WD1HM" character varying(20),
+    "WS" character varying(20),
+    "WS2MA" character varying(20),
+    "WS10MA" character varying(20),
+    "WS2MX" character varying(20),
+    "WS10MX" character varying(20),
+    "WS2MM" character varying(20),
+    "WS10MM" character varying(20),
+    "QFE" character varying(20),
+    "QFE1HA" character varying(20),
+    "QFE1HX" character varying(20),
+    "QFE1HM" character varying(20),
+    "QFF" character varying(20),
+    "QFF1HA" character varying(20),
+    "QFF1HX" character varying(20),
+    "QFF1HM" character varying(20),
+    "QNH" character varying(20),
+    "QNH1HA" character varying(20),
+    "QNH1HX" character varying(20),
+    "QNH1HM" character varying(20),
+    a character varying(20),
+    p character varying(20),
+    "ETO" character varying(20),
+    "Path" character varying(255),
+    "StationName" character varying(50),
+    "VaisalaVersion" character varying(30),
+    "EntryDate" timestamp without time zone
+);
+
+
+ALTER TABLE public.tbl_aws_vaisala OWNER TO postgres;
+
+--
+-- TOC entry 167 (class 1259 OID 32932)
+-- Dependencies: 6
+-- Name: tbl_data_sources; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_data_sources (
+    id integer NOT NULL,
+    name character varying(50),
+    ipaddress character varying(50),
+    stakeholderid integer NOT NULL,
+    stationid integer NOT NULL
+);
+
+
+ALTER TABLE public.tbl_data_sources OWNER TO postgres;
+
+--
+-- TOC entry 168 (class 1259 OID 32935)
+-- Dependencies: 1877 6
+-- Name: tbl_district; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_district (
+    id integer NOT NULL,
+    districtname character varying(100) NOT NULL,
+    regionid integer NOT NULL,
+    datecreated timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.tbl_district OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 32939)
+-- Dependencies: 6 168
+-- Name: tbl_district_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_district_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_district_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: tbl_district_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_district_id_seq OWNED BY tbl_district.id;
+
+
+--
+-- TOC entry 170 (class 1259 OID 32941)
+-- Dependencies: 1879 6
+-- Name: tbl_logs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_logs (
+    id integer NOT NULL,
+    userid integer,
+    datecreated timestamp without time zone DEFAULT now() NOT NULL,
+    activitydetails text NOT NULL,
+    activitygroup integer NOT NULL
+);
+
+
+ALTER TABLE public.tbl_logs OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 32948)
+-- Dependencies: 170 6
+-- Name: tbl_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_logs_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: tbl_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_logs_id_seq OWNED BY tbl_logs.id;
+
+
+--
+-- TOC entry 172 (class 1259 OID 32950)
+-- Dependencies: 1881 6
+-- Name: tbl_region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_region (
+    id integer NOT NULL,
+    regionname character varying(100) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.tbl_region OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 32954)
+-- Dependencies: 172 6
+-- Name: tbl_region_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_region_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_region_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2110 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: tbl_region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_region_id_seq OWNED BY tbl_region.id;
+
+
+--
+-- TOC entry 174 (class 1259 OID 32956)
+-- Dependencies: 1883 1884 6
+-- Name: tbl_stakeholder; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_stakeholder (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    mobileno character varying(100),
+    email character varying(100),
+    orgtype integer NOT NULL,
+    datecreated timestamp without time zone DEFAULT now() NOT NULL,
+    status integer DEFAULT 1 NOT NULL,
+    datedeactivated timestamp without time zone
+);
+
+
+ALTER TABLE public.tbl_stakeholder OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 32961)
+-- Dependencies: 174 6
+-- Name: tbl_stakeholder_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_stakeholder_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_stakeholder_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2111 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: tbl_stakeholder_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_stakeholder_id_seq OWNED BY tbl_stakeholder.id;
+
+
+--
+-- TOC entry 176 (class 1259 OID 32963)
+-- Dependencies: 1886 6
+-- Name: tbl_station; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_station (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    stationcode character varying(20),
+    stationtype integer NOT NULL,
+    stationowner integer NOT NULL,
+    geocode character varying(255),
+    regionid integer NOT NULL,
+    districtid integer NOT NULL,
+    wardid integer,
+    datecreated timestamp without time zone DEFAULT now() NOT NULL,
+    createdby integer NOT NULL,
+    createdbyinsitutionid integer NOT NULL
+);
+
+
+ALTER TABLE public.tbl_station OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 32967)
+-- Dependencies: 176 6
+-- Name: tbl_station_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_station_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_station_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2112 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: tbl_station_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_station_id_seq OWNED BY tbl_station.id;
+
+
+--
+-- TOC entry 178 (class 1259 OID 32969)
+-- Dependencies: 6
+-- Name: tbl_station_weather_elements; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_station_weather_elements (
+    stationid integer NOT NULL,
+    elementsid integer NOT NULL,
+    collectionfrequency character varying(10),
+    id integer NOT NULL,
+    accuracy double precision,
+    surfacedistance double precision
+);
+
+
+ALTER TABLE public.tbl_station_weather_elements OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 32972)
+-- Dependencies: 178 6
+-- Name: tbl_station_weather_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_station_weather_elements_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_station_weather_elements_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2113 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: tbl_station_weather_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_station_weather_elements_id_seq OWNED BY tbl_station_weather_elements.id;
+
+
+--
+-- TOC entry 180 (class 1259 OID 32974)
+-- Dependencies: 1889 1890 6
+-- Name: tbl_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_user (
+    id integer NOT NULL,
+    firstname character varying(100) NOT NULL,
+    middlename character varying(100),
+    lastname character varying(150) NOT NULL,
+    organizationid integer,
+    username character varying(50) NOT NULL,
+    password_hash character varying(255) NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone,
+    datedeactivated timestamp without time zone,
+    lastlogin timestamp without time zone,
+    logins integer DEFAULT 0 NOT NULL,
+    updated_at timestamp without time zone,
+    auth_key character varying(255)
+);
+
+
+ALTER TABLE public.tbl_user OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 32982)
+-- Dependencies: 180 6
+-- Name: tbl_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2114 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: tbl_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_user_id_seq OWNED BY tbl_user.id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 32984)
+-- Dependencies: 6
+-- Name: tbl_ward; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_ward (
+    id integer NOT NULL,
+    wardname character varying(45) NOT NULL,
+    districtid integer NOT NULL
+);
+
+
+ALTER TABLE public.tbl_ward OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 32987)
+-- Dependencies: 182 6
+-- Name: tbl_ward_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_ward_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_ward_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2115 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: tbl_ward_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_ward_id_seq OWNED BY tbl_ward.id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 32989)
+-- Dependencies: 1893 6
+-- Name: tbl_weather_data; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_weather_data (
+    id integer NOT NULL,
+    value double precision NOT NULL,
+    daterecorded timestamp without time zone NOT NULL,
+    source integer NOT NULL,
+    entrydate timestamp without time zone DEFAULT now() NOT NULL,
+    entryby integer,
+    stationid integer,
+    weatherelementid integer,
+    weatherelementlistid integer
+);
+
+
+ALTER TABLE public.tbl_weather_data OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 32993)
+-- Dependencies: 6 184
+-- Name: tbl_weather_data_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_weather_data_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_weather_data_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2116 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: tbl_weather_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_weather_data_id_seq OWNED BY tbl_weather_data.id;
+
+
+--
+-- TOC entry 189 (class 1259 OID 41067)
+-- Dependencies: 6
+-- Name: tbl_weather_elements_list; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_weather_elements_list (
+    id integer NOT NULL,
+    itemname character varying(20)[],
+    itemcode character varying(10)[],
+    elementid integer
+);
+
+
+ALTER TABLE public.tbl_weather_elements_list OWNER TO postgres;
+
+--
+-- TOC entry 2117 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: TABLE tbl_weather_elements_list; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE tbl_weather_elements_list IS 'keeps a list of weather elements  groups like temp, pressure, humidity';
+
+
+--
+-- TOC entry 2118 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN tbl_weather_elements_list.itemname; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tbl_weather_elements_list.itemname IS 'Name of the weather element group';
+
+
+--
+-- TOC entry 188 (class 1259 OID 41065)
+-- Dependencies: 189 6
+-- Name: tbl_weather_element_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_weather_element_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_weather_element_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2119 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: tbl_weather_element_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_weather_element_group_id_seq OWNED BY tbl_weather_elements_list.id;
+
+
+--
+-- TOC entry 186 (class 1259 OID 32995)
+-- Dependencies: 6
+-- Name: tbl_weather_elements; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tbl_weather_elements (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    unitmeasure character varying(10) NOT NULL,
+    elementcode character varying(50)
+);
+
+
+ALTER TABLE public.tbl_weather_elements OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 32998)
+-- Dependencies: 186 6
+-- Name: tbl_weather_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tbl_weather_elements_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tbl_weather_elements_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2120 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: tbl_weather_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tbl_weather_elements_id_seq OWNED BY tbl_weather_elements.id;
+
+
+--
+-- TOC entry 1878 (class 2604 OID 33000)
+-- Dependencies: 169 168
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_district ALTER COLUMN id SET DEFAULT nextval('tbl_district_id_seq'::regclass);
+
+
+--
+-- TOC entry 1880 (class 2604 OID 33001)
+-- Dependencies: 171 170
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_logs ALTER COLUMN id SET DEFAULT nextval('tbl_logs_id_seq'::regclass);
+
+
+--
+-- TOC entry 1882 (class 2604 OID 33002)
+-- Dependencies: 173 172
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_region ALTER COLUMN id SET DEFAULT nextval('tbl_region_id_seq'::regclass);
+
+
+--
+-- TOC entry 1885 (class 2604 OID 33003)
+-- Dependencies: 175 174
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_stakeholder ALTER COLUMN id SET DEFAULT nextval('tbl_stakeholder_id_seq'::regclass);
+
+
+--
+-- TOC entry 1887 (class 2604 OID 33004)
+-- Dependencies: 177 176
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station ALTER COLUMN id SET DEFAULT nextval('tbl_station_id_seq'::regclass);
+
+
+--
+-- TOC entry 1888 (class 2604 OID 33005)
+-- Dependencies: 179 178
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station_weather_elements ALTER COLUMN id SET DEFAULT nextval('tbl_station_weather_elements_id_seq'::regclass);
+
+
+--
+-- TOC entry 1891 (class 2604 OID 33006)
+-- Dependencies: 181 180
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_user ALTER COLUMN id SET DEFAULT nextval('tbl_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 1892 (class 2604 OID 33007)
+-- Dependencies: 183 182
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_ward ALTER COLUMN id SET DEFAULT nextval('tbl_ward_id_seq'::regclass);
+
+
+--
+-- TOC entry 1894 (class 2604 OID 33008)
+-- Dependencies: 185 184
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_data ALTER COLUMN id SET DEFAULT nextval('tbl_weather_data_id_seq'::regclass);
+
+
+--
+-- TOC entry 1895 (class 2604 OID 33009)
+-- Dependencies: 187 186
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_elements ALTER COLUMN id SET DEFAULT nextval('tbl_weather_elements_id_seq'::regclass);
+
+
+--
+-- TOC entry 1896 (class 2604 OID 41070)
+-- Dependencies: 189 188 189
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_elements_list ALTER COLUMN id SET DEFAULT nextval('tbl_weather_element_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 2072 (class 0 OID 32908)
+-- Dependencies: 162 2100
+-- Data for Name: auth_assignment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_assignment (item_name, user_id, created_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2073 (class 0 OID 32911)
+-- Dependencies: 163 2100
+-- Data for Name: auth_item; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_item (name, type, description, rule_name, data, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2074 (class 0 OID 32917)
+-- Dependencies: 164 2100
+-- Data for Name: auth_item_child; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_item_child (parent, child) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2075 (class 0 OID 32920)
+-- Dependencies: 165 2100
+-- Data for Name: auth_rule; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_rule (name, data, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2076 (class 0 OID 32926)
+-- Dependencies: 166 2100
+-- Data for Name: tbl_aws_vaisala; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_aws_vaisala (id, "TIME", "BAT", "DP", "DP1HA", "DP1HX", "DP1HM", "PA", "PA1HA", "PA1HX", "PA1HM", "PR", "PR1HS", "PR24HS", "PR5MS00", "PR5MS05", "PR5MS10", "PR5MS15", "PR5MS20", "PR5MS25", "PR5MS30", "PR5MS35", "PR5MS40", "PR5MS45", "PR5MS50", "PR5MS55", "RH", "RH1HA", "RH1HX", "RH1HM", "SR", "SR1HA", "SR1HX", "SR1HM", "TA", "TA1HA", "TA1HX", "TA1HM", "WD", "WD2MA", "WD10MA", "WD2MX", "WD10MX", "WD2MM", "WD10MM", "WD1HA", "WD1HX", "WD1HM", "WS", "WS2MA", "WS10MA", "WS2MX", "WS10MX", "WS2MM", "WS10MM", "QFE", "QFE1HA", "QFE1HX", "QFE1HM", "QFF", "QFF1HA", "QFF1HX", "QFF1HM", "QNH", "QNH1HA", "QNH1HX", "QNH1HM", a, p, "ETO", "Path", "StationName", "VaisalaVersion", "EntryDate") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2077 (class 0 OID 32932)
+-- Dependencies: 167 2100
+-- Data for Name: tbl_data_sources; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_data_sources (id, name, ipaddress, stakeholderid, stationid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2078 (class 0 OID 32935)
+-- Dependencies: 168 2100
+-- Data for Name: tbl_district; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_district (id, districtname, regionid, datecreated) FROM stdin;
+1	Ilala	1	2016-12-26 14:43:01.5081
+2	Kidondoni	1	2016-12-26 14:44:18.724894
+3	mwanga	2	2016-12-26 14:44:32.31167
+\.
+
+
+--
+-- TOC entry 2121 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: tbl_district_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_district_id_seq', 3, true);
+
+
+--
+-- TOC entry 2080 (class 0 OID 32941)
+-- Dependencies: 170 2100
+-- Data for Name: tbl_logs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_logs (id, userid, datecreated, activitydetails, activitygroup) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2122 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: tbl_logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_logs_id_seq', 1, false);
+
+
+--
+-- TOC entry 2082 (class 0 OID 32950)
+-- Dependencies: 172 2100
+-- Data for Name: tbl_region; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_region (id, regionname, datecreated) FROM stdin;
+1	Dar es salaam	2016-12-21 14:33:52.890565
+2	Kilimanjaro	2016-12-21 14:36:46.335769
+\.
+
+
+--
+-- TOC entry 2123 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: tbl_region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_region_id_seq', 2, true);
+
+
+--
+-- TOC entry 2084 (class 0 OID 32956)
+-- Dependencies: 174 2100
+-- Data for Name: tbl_stakeholder; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_stakeholder (id, name, mobileno, email, orgtype, datecreated, status, datedeactivated) FROM stdin;
+1	TMA		tma@tma.go.tz	1	2016-12-26 14:38:02.128986	1	\N
+\.
+
+
+--
+-- TOC entry 2124 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: tbl_stakeholder_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_stakeholder_id_seq', 1, true);
+
+
+--
+-- TOC entry 2086 (class 0 OID 32963)
+-- Dependencies: 176 2100
+-- Data for Name: tbl_station; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_station (id, name, stationcode, stationtype, stationowner, geocode, regionid, districtid, wardid, datecreated, createdby, createdbyinsitutionid) FROM stdin;
+1	JNIA		1	1	898899	2	3	1	2016-12-26 14:49:49.704289	2	1
+\.
+
+
+--
+-- TOC entry 2125 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: tbl_station_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_station_id_seq', 1, true);
+
+
+--
+-- TOC entry 2088 (class 0 OID 32969)
+-- Dependencies: 178 2100
+-- Data for Name: tbl_station_weather_elements; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_station_weather_elements (stationid, elementsid, collectionfrequency, id, accuracy, surfacedistance) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2126 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: tbl_station_weather_elements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_station_weather_elements_id_seq', 1, false);
+
+
+--
+-- TOC entry 2090 (class 0 OID 32974)
+-- Dependencies: 180 2100
+-- Data for Name: tbl_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_user (id, firstname, middlename, lastname, organizationid, username, password_hash, status, created_at, datedeactivated, lastlogin, logins, updated_at, auth_key) FROM stdin;
+2	Augustino		Mateso	\N	admin	$2y$13$cqq9aJPTafietUgXJW3bCuSsvVG9SagFthY/pfJ0rzh1MyOgTNmQ6	1	\N	\N	\N	0	\N	\N
+\.
+
+
+--
+-- TOC entry 2127 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: tbl_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_user_id_seq', 2, true);
+
+
+--
+-- TOC entry 2092 (class 0 OID 32984)
+-- Dependencies: 182 2100
+-- Data for Name: tbl_ward; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_ward (id, wardname, districtid) FROM stdin;
+1	Buguruni	1
+2	Mchikichini	1
+3	Mchikichini	1
+\.
+
+
+--
+-- TOC entry 2128 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: tbl_ward_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_ward_id_seq', 3, true);
+
+
+--
+-- TOC entry 2094 (class 0 OID 32989)
+-- Dependencies: 184 2100
+-- Data for Name: tbl_weather_data; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_weather_data (id, value, daterecorded, source, entrydate, entryby, stationid, weatherelementid, weatherelementlistid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2129 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: tbl_weather_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_weather_data_id_seq', 1, false);
+
+
+--
+-- TOC entry 2130 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: tbl_weather_element_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_weather_element_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 2096 (class 0 OID 32995)
+-- Dependencies: 186 2100
+-- Data for Name: tbl_weather_elements; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_weather_elements (id, name, unitmeasure, elementcode) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2131 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: tbl_weather_elements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tbl_weather_elements_id_seq', 1, false);
+
+
+--
+-- TOC entry 2099 (class 0 OID 41067)
+-- Dependencies: 189 2100
+-- Data for Name: tbl_weather_elements_list; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tbl_weather_elements_list (id, itemname, itemcode, elementid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1898 (class 2606 OID 33011)
+-- Dependencies: 162 162 162 2101
+-- Name: auth_assignment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_assignment
+    ADD CONSTRAINT auth_assignment_pkey PRIMARY KEY (item_name, user_id);
+
+
+--
+-- TOC entry 1903 (class 2606 OID 33013)
+-- Dependencies: 164 164 164 2101
+-- Name: auth_item_child_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_item_child
+    ADD CONSTRAINT auth_item_child_pkey PRIMARY KEY (parent, child);
+
+
+--
+-- TOC entry 1900 (class 2606 OID 33015)
+-- Dependencies: 163 163 2101
+-- Name: auth_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_item
+    ADD CONSTRAINT auth_item_pkey PRIMARY KEY (name);
+
+
+--
+-- TOC entry 1905 (class 2606 OID 33017)
+-- Dependencies: 165 165 2101
+-- Name: auth_rule_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_rule
+    ADD CONSTRAINT auth_rule_pkey PRIMARY KEY (name);
+
+
+--
+-- TOC entry 1947 (class 2606 OID 41108)
+-- Dependencies: 189 189 2101
+-- Name: element_list_id; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_weather_elements_list
+    ADD CONSTRAINT element_list_id PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1921 (class 2606 OID 33019)
+-- Dependencies: 174 174 2101
+-- Name: primary key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_stakeholder
+    ADD CONSTRAINT "primary key" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1918 (class 2606 OID 33021)
+-- Dependencies: 172 172 2101
+-- Name: primary key1; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_region
+    ADD CONSTRAINT "primary key1" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1942 (class 2606 OID 33023)
+-- Dependencies: 184 184 2101
+-- Name: primary key11; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_weather_data
+    ADD CONSTRAINT "primary key11" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1936 (class 2606 OID 33025)
+-- Dependencies: 180 180 2101
+-- Name: primary key2; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_user
+    ADD CONSTRAINT "primary key2" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1913 (class 2606 OID 33027)
+-- Dependencies: 168 168 2101
+-- Name: primary key3; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_district
+    ADD CONSTRAINT "primary key3" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1939 (class 2606 OID 33029)
+-- Dependencies: 182 182 2101
+-- Name: primary key4; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_ward
+    ADD CONSTRAINT "primary key4" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1929 (class 2606 OID 33031)
+-- Dependencies: 176 176 2101
+-- Name: primary key5; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT "primary key5" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1909 (class 2606 OID 33033)
+-- Dependencies: 167 167 2101
+-- Name: primary key6; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_data_sources
+    ADD CONSTRAINT "primary key6" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1916 (class 2606 OID 33035)
+-- Dependencies: 170 170 2101
+-- Name: primary key7; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_logs
+    ADD CONSTRAINT "primary key7" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1945 (class 2606 OID 33037)
+-- Dependencies: 186 186 2101
+-- Name: primary key8; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_weather_elements
+    ADD CONSTRAINT "primary key8" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1933 (class 2606 OID 33039)
+-- Dependencies: 178 178 2101
+-- Name: primary key9; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tbl_station_weather_elements
+    ADD CONSTRAINT "primary key9" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1901 (class 1259 OID 33040)
+-- Dependencies: 163 2101
+-- Name: auth_item_type_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_item_type_idx ON auth_item USING btree (type);
+
+
+--
+-- TOC entry 1910 (class 1259 OID 33041)
+-- Dependencies: 168 2101
+-- Name: districtname_unique; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX districtname_unique ON tbl_district USING btree (districtname);
+
+
+--
+-- TOC entry 1906 (class 1259 OID 33042)
+-- Dependencies: 167 2101
+-- Name: fk_tbl_data_sources_tbl_stakeholder1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_data_sources_tbl_stakeholder1_idx ON tbl_data_sources USING btree (stakeholderid);
+
+
+--
+-- TOC entry 1907 (class 1259 OID 33043)
+-- Dependencies: 167 2101
+-- Name: fk_tbl_data_sources_tbl_station1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_data_sources_tbl_station1_idx ON tbl_data_sources USING btree (stationid);
+
+
+--
+-- TOC entry 1911 (class 1259 OID 33044)
+-- Dependencies: 168 2101
+-- Name: fk_tbl_district_tbl_region1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_district_tbl_region1_idx ON tbl_district USING btree (regionid);
+
+
+--
+-- TOC entry 1914 (class 1259 OID 33045)
+-- Dependencies: 170 2101
+-- Name: fk_tbl_logs_tbl_user1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_logs_tbl_user1_idx ON tbl_logs USING btree (userid);
+
+
+--
+-- TOC entry 1922 (class 1259 OID 33046)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_created_user_institution_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_created_user_institution_id ON tbl_station USING btree (createdbyinsitutionid);
+
+
+--
+-- TOC entry 1930 (class 1259 OID 33047)
+-- Dependencies: 178 2101
+-- Name: fk_tbl_station_has_tbl_weather_elements_tbl_station1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_has_tbl_weather_elements_tbl_station1_idx ON tbl_station_weather_elements USING btree (stationid);
+
+
+--
+-- TOC entry 1931 (class 1259 OID 33048)
+-- Dependencies: 178 2101
+-- Name: fk_tbl_station_has_tbl_weather_elements_tbl_weather_element_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_has_tbl_weather_elements_tbl_weather_element_idx ON tbl_station_weather_elements USING btree (elementsid);
+
+
+--
+-- TOC entry 1923 (class 1259 OID 33049)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_tbl_district_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_tbl_district_id ON tbl_station USING btree (districtid);
+
+
+--
+-- TOC entry 1924 (class 1259 OID 33050)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_tbl_region_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_tbl_region_id ON tbl_station USING btree (regionid);
+
+
+--
+-- TOC entry 1925 (class 1259 OID 33051)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_tbl_stakeholder_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_tbl_stakeholder_id ON tbl_station USING btree (stationowner);
+
+
+--
+-- TOC entry 1926 (class 1259 OID 33052)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_tbl_user_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_tbl_user_id ON tbl_station USING btree (createdby);
+
+
+--
+-- TOC entry 1927 (class 1259 OID 33053)
+-- Dependencies: 176 2101
+-- Name: fk_tbl_station_tbl_ward_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_station_tbl_ward_id ON tbl_station USING btree (wardid);
+
+
+--
+-- TOC entry 1934 (class 1259 OID 33054)
+-- Dependencies: 180 2101
+-- Name: fk_tbl_user_tbl_stakeholder1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_user_tbl_stakeholder1_idx ON tbl_user USING btree (organizationid);
+
+
+--
+-- TOC entry 1937 (class 1259 OID 33055)
+-- Dependencies: 182 2101
+-- Name: fk_tbl_ward_tbl_district1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_ward_tbl_district1_idx ON tbl_ward USING btree (districtid);
+
+
+--
+-- TOC entry 1940 (class 1259 OID 33056)
+-- Dependencies: 184 2101
+-- Name: fk_tbl_weather_data_tbl_data_sources1_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk_tbl_weather_data_tbl_data_sources1_idx ON tbl_weather_data USING btree (source);
+
+
+--
+-- TOC entry 1943 (class 1259 OID 33058)
+-- Dependencies: 186 2101
+-- Name: name_unique; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX name_unique ON tbl_weather_elements USING btree (name);
+
+
+--
+-- TOC entry 1919 (class 1259 OID 33059)
+-- Dependencies: 172 2101
+-- Name: regionname_unique; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX regionname_unique ON tbl_region USING btree (regionname);
+
+
+--
+-- TOC entry 1948 (class 2606 OID 33060)
+-- Dependencies: 163 162 1899 2101
+-- Name: auth_assignment_item_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_assignment
+    ADD CONSTRAINT auth_assignment_item_name_fkey FOREIGN KEY (item_name) REFERENCES auth_item(name) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1950 (class 2606 OID 33065)
+-- Dependencies: 163 164 1899 2101
+-- Name: auth_item_child_child_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_item_child
+    ADD CONSTRAINT auth_item_child_child_fkey FOREIGN KEY (child) REFERENCES auth_item(name) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1951 (class 2606 OID 33070)
+-- Dependencies: 164 163 1899 2101
+-- Name: auth_item_child_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_item_child
+    ADD CONSTRAINT auth_item_child_parent_fkey FOREIGN KEY (parent) REFERENCES auth_item(name) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1949 (class 2606 OID 33075)
+-- Dependencies: 163 165 1904 2101
+-- Name: auth_item_rule_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_item
+    ADD CONSTRAINT auth_item_rule_name_fkey FOREIGN KEY (rule_name) REFERENCES auth_rule(name) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1970 (class 2606 OID 41080)
+-- Dependencies: 1944 189 186 2101
+-- Name: elementid_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_elements_list
+    ADD CONSTRAINT elementid_fk FOREIGN KEY (elementid) REFERENCES tbl_weather_elements(id);
+
+
+--
+-- TOC entry 1952 (class 2606 OID 33080)
+-- Dependencies: 167 1920 174 2101
+-- Name: fk_tbl_data_sources_tbl_stakeholder1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_data_sources
+    ADD CONSTRAINT fk_tbl_data_sources_tbl_stakeholder1 FOREIGN KEY (stakeholderid) REFERENCES tbl_stakeholder(id);
+
+
+--
+-- TOC entry 1953 (class 2606 OID 33085)
+-- Dependencies: 176 167 1928 2101
+-- Name: fk_tbl_data_sources_tbl_station1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_data_sources
+    ADD CONSTRAINT fk_tbl_data_sources_tbl_station1 FOREIGN KEY (stationid) REFERENCES tbl_station(id);
+
+
+--
+-- TOC entry 1954 (class 2606 OID 33090)
+-- Dependencies: 172 168 1917 2101
+-- Name: fk_tbl_district_tbl_region1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_district
+    ADD CONSTRAINT fk_tbl_district_tbl_region1 FOREIGN KEY (regionid) REFERENCES tbl_region(id);
+
+
+--
+-- TOC entry 1955 (class 2606 OID 33095)
+-- Dependencies: 180 170 1935 2101
+-- Name: fk_tbl_logs_tbl_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_logs
+    ADD CONSTRAINT fk_tbl_logs_tbl_user FOREIGN KEY (userid) REFERENCES tbl_user(id);
+
+
+--
+-- TOC entry 1962 (class 2606 OID 33100)
+-- Dependencies: 1928 176 178 2101
+-- Name: fk_tbl_station_has_tbl_weather_elements_tbl_station1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station_weather_elements
+    ADD CONSTRAINT fk_tbl_station_has_tbl_weather_elements_tbl_station1 FOREIGN KEY (stationid) REFERENCES tbl_station(id);
+
+
+--
+-- TOC entry 1963 (class 2606 OID 33105)
+-- Dependencies: 186 178 1944 2101
+-- Name: fk_tbl_station_has_tbl_weather_elements_tbl_weather_elements1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station_weather_elements
+    ADD CONSTRAINT fk_tbl_station_has_tbl_weather_elements_tbl_weather_elements1 FOREIGN KEY (elementsid) REFERENCES tbl_weather_elements(id);
+
+
+--
+-- TOC entry 1956 (class 2606 OID 33110)
+-- Dependencies: 1912 176 168 2101
+-- Name: fk_tbl_station_tbl_district1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_district1 FOREIGN KEY (districtid) REFERENCES tbl_district(id);
+
+
+--
+-- TOC entry 1957 (class 2606 OID 33115)
+-- Dependencies: 1917 176 172 2101
+-- Name: fk_tbl_station_tbl_region1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_region1 FOREIGN KEY (regionid) REFERENCES tbl_region(id);
+
+
+--
+-- TOC entry 1958 (class 2606 OID 33120)
+-- Dependencies: 1920 176 174 2101
+-- Name: fk_tbl_station_tbl_stakeholder; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_stakeholder FOREIGN KEY (stationowner) REFERENCES tbl_stakeholder(id);
+
+
+--
+-- TOC entry 1959 (class 2606 OID 33125)
+-- Dependencies: 174 176 1920 2101
+-- Name: fk_tbl_station_tbl_stakeholder1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_stakeholder1 FOREIGN KEY (createdbyinsitutionid) REFERENCES tbl_stakeholder(id);
+
+
+--
+-- TOC entry 1960 (class 2606 OID 33130)
+-- Dependencies: 176 180 1935 2101
+-- Name: fk_tbl_station_tbl_user1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_user1 FOREIGN KEY (createdby) REFERENCES tbl_user(id);
+
+
+--
+-- TOC entry 1961 (class 2606 OID 33135)
+-- Dependencies: 176 182 1938 2101
+-- Name: fk_tbl_station_tbl_ward1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_station
+    ADD CONSTRAINT fk_tbl_station_tbl_ward1 FOREIGN KEY (wardid) REFERENCES tbl_ward(id);
+
+
+--
+-- TOC entry 1964 (class 2606 OID 33140)
+-- Dependencies: 174 180 1920 2101
+-- Name: fk_tbl_user_tbl_stakeholder1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_user
+    ADD CONSTRAINT fk_tbl_user_tbl_stakeholder1 FOREIGN KEY (organizationid) REFERENCES tbl_stakeholder(id);
+
+
+--
+-- TOC entry 1965 (class 2606 OID 33145)
+-- Dependencies: 182 1912 168 2101
+-- Name: fk_tbl_ward_tbl_district1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_ward
+    ADD CONSTRAINT fk_tbl_ward_tbl_district1 FOREIGN KEY (districtid) REFERENCES tbl_district(id);
+
+
+--
+-- TOC entry 1966 (class 2606 OID 33150)
+-- Dependencies: 184 167 1908 2101
+-- Name: fk_tbl_weather_data_tbl_data_sources1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_data
+    ADD CONSTRAINT fk_tbl_weather_data_tbl_data_sources1 FOREIGN KEY (source) REFERENCES tbl_data_sources(id);
+
+
+--
+-- TOC entry 1967 (class 2606 OID 41095)
+-- Dependencies: 1928 184 176 2101
+-- Name: station_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_data
+    ADD CONSTRAINT station_fk FOREIGN KEY (stationid) REFERENCES tbl_station(id);
+
+
+--
+-- TOC entry 1968 (class 2606 OID 41100)
+-- Dependencies: 1944 186 184 2101
+-- Name: weather_elements_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_data
+    ADD CONSTRAINT weather_elements_fk FOREIGN KEY (weatherelementid) REFERENCES tbl_weather_elements(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 1969 (class 2606 OID 41109)
+-- Dependencies: 1946 184 189 2101
+-- Name: weatherelement_list-fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tbl_weather_data
+    ADD CONSTRAINT "weatherelement_list-fk" FOREIGN KEY (weatherelementlistid) REFERENCES tbl_weather_elements_list(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2106 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-12-26 16:44:20 EAT
+
+--
+-- PostgreSQL database dump complete
+--
+

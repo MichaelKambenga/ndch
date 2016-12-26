@@ -17,17 +17,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'stationweatherelementsid') ?>
-
     <?= $form->field($model, 'value') ?>
 
     <?= $form->field($model, 'daterecorded') ?>
 
     <?= $form->field($model, 'source') ?>
 
-    <?php // echo $form->field($model, 'entrydate') ?>
+    <?= $form->field($model, 'entrydate') ?>
 
     <?php // echo $form->field($model, 'entryby') ?>
+
+    <?php // echo $form->field($model, 'stationid') ?>
+
+    <?php // echo $form->field($model, 'weatherelementid') ?>
+
+    <?php // echo $form->field($model, 'weatherelementlistid') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
