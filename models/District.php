@@ -47,10 +47,10 @@ class District extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'districtname' => 'Districtname',
-            'regionid' => 'Regionid',
-            'datecreated' => 'Datecreated',
+            'id' => 'Id',
+            'districtname' => 'District Name',
+            'regionid' => 'Region',
+            'datecreated' => 'Date Created',
         ];
     }
 
@@ -76,5 +76,13 @@ class District extends \yii\db\ActiveRecord
     public function getTblWards()
     {
         return $this->hasMany(Ward::className(), ['districtid' => 'id']);
+    }
+      static function getDistrictNameById($id) {
+        $district = self::findOne($id);
+        if ($district) {
+
+            return $district->districtname;
+        }
+        return NULL;
     }
 }

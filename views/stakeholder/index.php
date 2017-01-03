@@ -31,16 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'mobileno',
             'email:email',
-            'orgtype',
-            [
+            array(
+                // 'label' => 'orgtype',
+                 'attribute' => 'orgtype',
+                 'value' => function ($model) {
+                 return $model->getOrgTypeName();
+                 },
+              ),
+             [
                 'label' => 'Action',
                 'value' => function($model) {
-
                     return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['stakeholder/view', 'id' => $model->id]), [
                                 'title' => Yii::t('yii', 'View Details'),
                     ]);
                 },
-                        'format' => 'raw',
+                       'format' => 'raw',
                     ],
                 ],
                 'responsive' => true,

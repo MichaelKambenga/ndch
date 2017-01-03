@@ -31,6 +31,14 @@ use Yii;
  */
 class Station extends \yii\db\ActiveRecord
 {
+    
+    /*
+     * contants for organiszation type
+     */
+    const STATION_TYPE_MANNED=1;  /// for stations operating only manualy
+    const STATION_TYPE_AUTOMATIC=2; /// for stations operating under AWS only
+    const STATION_TYPE_BOTH=3; /// for stations operating using Manual and AWS
+    
     /**
      * @inheritdoc
      */
@@ -46,9 +54,10 @@ class Station extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'stationtype', 'stationowner', 'regionid', 'districtid', 'createdby', 'createdbyinsitutionid'], 'required'],
+            [['name'], 'string', 'max' => 100],
+            //[['name'], 'unique'],
             [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
             [['datecreated'], 'safe'],
-            [['name'], 'string', 'max' => 100],
             [['stationcode'], 'string', 'max' => 20],
             [['geocode'], 'string', 'max' => 255],
             [['districtid'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['districtid' => 'id']],
@@ -67,16 +76,16 @@ class Station extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'stationcode' => 'Stationcode',
-            'stationtype' => 'Stationtype',
-            'stationowner' => 'Stationowner',
-            'geocode' => 'Geocode',
-            'regionid' => 'Regionid',
-            'districtid' => 'Districtid',
-            'wardid' => 'Wardid',
-            'datecreated' => 'Datecreated',
-            'createdby' => 'Createdby',
+            'name' => 'Station Name',
+            'stationcode' => 'Station Code',
+            'stationtype' => 'Station Type',
+            'stationowner' => 'Station Owner',
+            'geocode' => 'GeoCode',
+            'regionid' => 'Region',
+            'districtid' => 'District',
+            'wardid' => 'Ward',
+            'datecreated' => 'Date Created',
+            'createdby' => 'Created By',
             'createdbyinsitutionid' => 'Createdbyinsitutionid',
         ];
     }
@@ -144,4 +153,31 @@ class Station extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StationWeatherElements::className(), ['stationid' => 'id']);
     }
+    
+    static function getStationTypes() {
+        return [
+            self::STATION_TYPE_MANNED => 'Manned Station',
+            self::STATION_TYPE_AUTOMATIC => 'Automatic Station',
+            self::STATION_TYPE_BOTH => 'Both (Manned & Automatic)'
+        ];
+    }
+    
+    static function getOrganizationStatuses(){
+        return [
+            self::ORG_STATUS_ACTIVE => 'Active',
+            self::ORG_STATUS_INACTIVE => 'In Active',
+            
+        ]; 
+    }
+
+    public function getStationTypeName() {
+        $stationTypes = self::getStationTypes();
+        if (isset($stationTypes[$this->stationtype])) {
+            return $stationTypes[$this->stationtype];
+        }
+        return NULL;
+    }
+    
+    
+    
 }

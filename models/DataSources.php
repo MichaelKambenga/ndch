@@ -11,14 +11,20 @@ use Yii;
  * @property string $name
  * @property string $ipaddress
  * @property integer $stakeholderid
- * @property integer $stationid
+ * @property string $datalocation
+ * @property integer $datasourcetype
  *
+ * @property TblDataSourceStations[] $tblDataSourceStations
  * @property TblStakeholder $stakeholder
- * @property TblStation $station
  * @property TblWeatherData[] $tblWeatherDatas
  */
 class DataSources extends \yii\db\ActiveRecord
 {
+    //constants for data source types
+    const DATA_SOURCE_FAILEBASED=1;
+    const DATA_SOURCE_DATABASESYSTEM=2;
+
+        
     /**
      * @inheritdoc
      */
@@ -33,11 +39,11 @@ class DataSources extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'stakeholderid', 'stationid'], 'required'],
-            [['id', 'stakeholderid', 'stationid'], 'integer'],
+            [['name', 'ipaddress', 'stakeholderid', 'datasourcetype'], 'required'],
+            [['id', 'stakeholderid', 'datasourcetype'], 'integer'],
             [['name', 'ipaddress'], 'string', 'max' => 50],
+            [['datalocation'], 'string', 'max' => 255],
             [['stakeholderid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stakeholderid' => 'id']],
-            [['stationid'], 'exist', 'skipOnError' => true, 'targetClass' => Station::className(), 'targetAttribute' => ['stationid' => 'id']],
         ];
     }
 
@@ -49,10 +55,19 @@ class DataSources extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'ipaddress' => 'Ipaddress',
-            'stakeholderid' => 'Stakeholderid',
-            'stationid' => 'Stationid',
+            'ipaddress' => 'Ip Address',
+            'stakeholderid' => 'Data Source Owner',
+            'datalocation' => 'Data File Path(Location)',
+            'datasourcetype' => 'Data Source Type',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTblDataSourceStations()
+    {
+        return $this->hasMany(DataSourceStations::className(), ['datasourceid' => 'id']);
     }
 
     /**
@@ -60,15 +75,7 @@ class DataSources extends \yii\db\ActiveRecord
      */
     public function getStakeholder()
     {
-        return $this->hasOne(Stakeholder::className(), ['id' => 'stakeholderid']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStation()
-    {
-        return $this->hasOne(Station::className(), ['id' => 'stationid']);
+        return $this->hasOne(takeholder::className(), ['id' => 'stakeholderid']);
     }
 
     /**
@@ -77,5 +84,20 @@ class DataSources extends \yii\db\ActiveRecord
     public function getTblWeatherDatas()
     {
         return $this->hasMany(WeatherData::className(), ['source' => 'id']);
+    }
+    
+     static function getDataSourceTypes() {
+        return [
+        self::DATA_SOURCE_FAILEBASED => 'File Based',
+        self::DATA_SOURCE_DATABASESYSTEM => 'Database System',
+        ];
+    }
+
+    public function getDataSourceTypeName() {
+        $sourceTypes = self::getDataSourceTypes();
+        if (isset($sourceTypes[$this->datasourcetype])) {
+            return $sourceTypes[$this->datasourcetype];
+        }
+        return NULL;
     }
 }

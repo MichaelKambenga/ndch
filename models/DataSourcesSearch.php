@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\DataSources;
 
 /**
- * DataSourcesSearch represents the model behind the search form about `app\models\DataSources`.
+ * DataSourcesSearch represents the model behind the search form of `app\models\DataSources`.
  */
 class DataSourcesSearch extends DataSources
 {
@@ -18,8 +18,8 @@ class DataSourcesSearch extends DataSources
     public function rules()
     {
         return [
-            [['id', 'stakeholderid', 'stationid'], 'integer'],
-            [['name', 'ipaddress'], 'safe'],
+            [['id', 'stakeholderid', 'datasourcetype'], 'integer'],
+            [['name', 'ipaddress', 'datalocation'], 'safe'],
         ];
     }
 
@@ -61,11 +61,12 @@ class DataSourcesSearch extends DataSources
         $query->andFilterWhere([
             'id' => $this->id,
             'stakeholderid' => $this->stakeholderid,
-            'stationid' => $this->stationid,
+            'datasourcetype' => $this->datasourcetype,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'ipaddress', $this->ipaddress]);
+            ->andFilterWhere(['like', 'ipaddress', $this->ipaddress])
+            ->andFilterWhere(['like', 'datalocation', $this->datalocation]);
 
         return $dataProvider;
     }

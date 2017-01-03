@@ -23,7 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'stakeholderid') ?>
 
-    <?= $form->field($model, 'stationid') ?>
+    <?= $form->field($model, 'datalocation') ?>
+
+    <?php // echo $form->field($model, 'datasourcetype') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -1,36 +1,73 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
+use app\models\Stakeholder;
+use app\models\DataSources;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\DataSourcesSearch */
+/* @var $searchModel app\models\StakeholderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Data Sources';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="data-sources-index">
+<div class="stakeholder-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <!--<h1><?= Html::encode($this->title) ?></h1>-->
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-        <?= Html::a('Create Data Sources', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create/Add Data Source', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+
+
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'ipaddress',
-            'stakeholderid',
-            'stationid',
+            'datalocation',
+         array(
+'attribute' => 'stakeholderid',
+ 'value' => function ($model) {
+return Stakeholder::getStakeholderNameById($model->stakeholderid);
+},
+ ),
 
+ array(
+     'attribute' => 'datasourcetype',
+     'value' => function ($model) {
+     return $model->getDataSourceTypeName();
+     },
+     ),
             ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+//            [
+//                'label' => 'Action',
+//                'value' => function($model) {
+//
+//                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['station/view', 'id' => $model->id]), [
+//                                'title' => Yii::t('yii', 'View Details'),
+//                    ]);
+//                },
+//                        'format' => 'raw',
+//            ],
+            ],
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => 'Data Sources',
+                    'type' => 'default',
+                    'showFooter' => true
+                ],
+            ]);
+            Pjax::end();
+            ?>
 </div>

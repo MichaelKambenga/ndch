@@ -44,8 +44,8 @@ class Region extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'regionname' => 'Regionname',
-            'datecreated' => 'Datecreated',
+            'regionname' => 'Region Name',
+            'datecreated' => 'Date Created',
         ];
     }
 
@@ -63,5 +63,14 @@ class Region extends \yii\db\ActiveRecord
     public function getTblStations()
     {
         return $this->hasMany(Station::className(), ['regionid' => 'id']);
+    }
+    
+     static function getRegionNameById($id) {
+        $region = self::findOne($id);
+        if ($region) {
+
+            return $region->regionname;
+        }
+        return NULL;
     }
 }

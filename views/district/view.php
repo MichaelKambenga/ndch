@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\District */
 
-$this->title = $model->id;
+$this->title = 'District Details - ';
 $this->params['breadcrumbs'][] = ['label' => 'Districts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'districtname',
-            'regionid',
+           [
+            'attribute'=> 'regionid',
+           ],
             'datecreated',
         ],
     ]) ?>

@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
+use app\models\Station;
 
 /**
  * @var yii\web\View $this
@@ -24,7 +25,7 @@ use kartik\builder\Form;
         'attributes' => [
             'name' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'Name',
+                //'label' => 'Name',
                 'options' => ['placeholder' => 'Enter Station Name...'],
                 'columnOptions' => ['width' => '185px']
             ],
@@ -35,10 +36,11 @@ use kartik\builder\Form;
                 'columnOptions' => ['width' => '185px']
             ],
             'stationtype' => [
-                'type' => Form::INPUT_TEXT,
-                'label' => 'stationtype',
-                'options' => ['placeholder' => 'Enter Station Type...'],
-                'columnOptions' => ['width' => '185px']
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                //'label' => 'stationtype',
+                'options' => ['prompt' => '--select--'],
+                 'columnOptions' => ['width' => '185px'],
+                'items'=>  Station::getStationTypes()
             ],
             'stationowner' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,

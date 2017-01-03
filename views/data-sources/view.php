@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Stakeholder;
+use app\models\DataSources;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DataSources */
@@ -28,11 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
             'ipaddress',
-            'stakeholderid',
-            'stationid',
+            'datalocation',
+                     array(
+'attribute' => 'stakeholderid',
+ 'value' => function ($model) {
+return Stakeholder::getStakeholderNameById($model->stakeholderid);
+},
+ ),
+ array(
+     'attribute' => 'orgtype',
+     'value' => function ($model) {
+     return $model->getDataSourceTypeName();
+     },
+     ),
         ],
     ]) ?>
 

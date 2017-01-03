@@ -44,8 +44,8 @@ class Ward extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'wardname' => 'Wardname',
-            'districtid' => 'Districtid',
+            'wardname' => 'Ward name',
+            'districtid' => 'District',
         ];
     }
 
@@ -63,5 +63,14 @@ class Ward extends \yii\db\ActiveRecord
     public function getDistrict()
     {
         return $this->hasOne(District::className(), ['id' => 'districtid']);
+    }
+    
+    static function getWardNameById($id) {
+        $region = self::findOne($id);
+        if ($region) {
+
+            return $region->wardname;
+        }
+        return NULL;
     }
 }

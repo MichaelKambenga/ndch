@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
+use app\models\Stakeholder;
 
 /**
  * @var yii\web\View $this
@@ -41,10 +42,12 @@ use kartik\builder\Form;
                 'columnOptions' => ['width' => '185px']
             ],
             'orgtype' => [
-                'type' => Form::INPUT_TEXT,
-                'label' => 'Type',
-                'options' => ['placeholder' => 'Enter Organization type...'],
-                'columnOptions' => ['width' => '185px']
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                'label' => 'Org Type',
+                'options' => ['prompt' => '--select--'],
+            'items'=>  Stakeholder::getOrganizationTypes()
+                //'columnOptions' => ['width' => '100px'],
+               
             ],
         ]
     ]);

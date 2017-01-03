@@ -1,10 +1,21 @@
+<?php
+/* @var $this \yii\web\View */
+/* @var $content string */
 
+use yii\helpers\Html;
+use app\assets\LteAsset;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use yii\widgets\Breadcrumbs;
+
+LteAsset::register($this);
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GACS | Log in</title>
+        <title><?= Html::encode($this->title) ?></title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -27,15 +38,14 @@
     </head>
     <body class="hold-transition login-page">
         <?= $content ?>
-        <!--    </div>
+          </div>
         
-            <footer class="footer">
-                <div class="container">
-                    <strong>Copyright &copy; <?= Date('Y') . '' ?> <a href="http://www.mof.go.tz">ACCGEN - Dev Unit</a>.</strong> All rights reserved.
-        
-                    <p class="pull-right"><?= Yii::powered() ?></p>
-                </div>
-            </footer>
-        </div>-->
+              <footer class="main-footer" style="background: none">
+                <div >
+                  <strong>Copyright &copy; <?= '2016 - '.Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
+                All rights reserved.   
+                </div>                       
+            </footer> 
+        </div>
     </body>
 </html>

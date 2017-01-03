@@ -30,7 +30,7 @@ LteAsset::register($this);
                 <!-- Logo -->
                 <a href="index.php" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>NDCH</b></span>
+                    <span class="logo-mini"><b>NDCH</b> System</span>
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg"><b>NDCH</b> System</span>
                 </a>
@@ -126,7 +126,8 @@ LteAsset::register($this);
                                 <li><a href="index.php?r=stakeholder"><i class="fa fa-circle-o"></i>
                                         Stakeholders</a></li>
                                 <li><a href="index.php?r=station"><i class="fa fa-circle-o"></i> 
-                                        Stations</a></li>
+                                        Stations</a></li> <li><a href="index.php?r=data-sources"><i class="fa fa-circle-o"></i> 
+                                        Data Sources</a></li>
                                 <li><a href="index.php?r=region"><i class="fa fa-circle-o"></i>
                                         Regions</a></li>
                                 <li><a href="index.php?r=district"><i class="fa fa-circle-o"></i>
@@ -185,7 +186,7 @@ LteAsset::register($this);
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>
-                <strong>Copyright &copy; <?= '2016' ?> <a href="#">PMO - DMD</a>.</strong>
+                <strong>Copyright &copy; <?= '2016 - '.Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
                 All rights reserved.          
             </footer>   
         </div>  

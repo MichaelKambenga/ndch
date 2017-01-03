@@ -37,10 +37,26 @@ ob_start();
             'name',
             'mobileno',
             'email:email',
-            'orgtype',
-            'datecreated',
-            'status',
-            'datedeactivated',
+             array(
+                'attribute' => 'orgtype',
+                 'value' => function ($model) {
+                 return $model->getOrgTypeName();
+                 },
+              ),
+            array(
+                'attribute'=>'datecreated',
+                'value'=>Date('d, M Y @ H:i:s',  strtotime($model->datecreated)),
+            ),
+           array(
+                'attribute'=>'status',
+                'value' => function ($model) {
+                 return $model->getOrgStatusName();
+                 },
+            ),
+            [   'attribute'=>'datedeactivated',
+                'value'=>$model->datedeactivated?Date('d, M Y @ H:i:s',  strtotime($model->datedeactivated)):' ',
+            ],
+            
         ],
     ])
     ?>

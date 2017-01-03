@@ -73,15 +73,15 @@ class User extends ActiveRecord implements IdentityInterface {
     public function attributeLabels() {
         return [
         'id' => 'ID',
-        'firstname' => 'Firstname',
-        'middlename' => 'Middlename',
-        'lastname' => 'Lastname',
+        'firstname' => 'First Name',
+        'middlename' => 'Middle Name',
+        'lastname' => 'Last Name',
         'organizationid' => 'Organization',
         'username' => 'User Name',
         'password' => 'Password',
         'status' => 'Status',
-        'created_at' => 'Datecreated',
-        'datedeactivated' => 'Datedeactivated',
+        'created_at' => 'Date Created',
+        'datedeactivated' => 'Date Deactivated',
         'lastlogin' => 'Lastlogin',
         'logins' => 'Logins',
         ];

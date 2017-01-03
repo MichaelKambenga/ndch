@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\District;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Ward */
 
-$this->title = $model->id;
+$this->title = 'Ward Details';
 $this->params['breadcrumbs'][] = ['label' => 'Wards', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'wardname',
-            'districtid',
+             array(
+                'attribute'=>'districtid',
+                 'value' =>function ($model) {
+return District::getDistrictNameById($model->districtid);
+},
+                ),
         ],
     ]) ?>
 
