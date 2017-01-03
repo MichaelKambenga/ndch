@@ -127,7 +127,8 @@ LteAsset::register($this);
                                         Stakeholders</a></li>
                                 <li><a href="index.php?r=station"><i class="fa fa-circle-o"></i> 
                                         Stations</a></li> <li><a href="index.php?r=data-sources"><i class="fa fa-circle-o"></i> 
-                                        Data Sources</a></li>
+                                        Data Sources</a></li><li><a href="index.php?r=weather-elements"><i class="fa fa-circle-o"></i> 
+                                        Weather Elements</a></li>
                                 <li><a href="index.php?r=region"><i class="fa fa-circle-o"></i>
                                         Regions</a></li>
                                 <li><a href="index.php?r=district"><i class="fa fa-circle-o"></i>
@@ -182,7 +183,7 @@ LteAsset::register($this);
                 </section>
             </div>
 
-            <footer class="main-footer">
+            <footer class="main-footer"  >
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>

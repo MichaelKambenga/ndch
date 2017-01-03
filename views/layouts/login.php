@@ -40,7 +40,7 @@ LteAsset::register($this);
         <?= $content ?>
           </div>
         
-              <footer class="main-footer" style="background: none">
+              <footer class="main-footer" style="margin: 0;background: none;vertical-align: middle;text-align: center">
                 <div >
                   <strong>Copyright &copy; <?= '2016 - '.Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
                 All rights reserved.   
