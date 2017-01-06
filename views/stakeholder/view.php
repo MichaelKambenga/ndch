@@ -5,6 +5,10 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\tabs\TabsX;
+use app\models\Region;
+use app\models\District;
+use app\models\Station;
+use app\models\Stakeholder;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Stakeholder */
@@ -33,16 +37,16 @@ ob_start();
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'name',
-            'mobileno',
-            'email:email',
              array(
                 'attribute' => 'orgtype',
                  'value' => function ($model) {
                  return $model->getOrgTypeName();
                  },
               ),
+            'email:email',
+            'mobileno',            
             array(
                 'attribute'=>'datecreated',
                 'value'=>Date('d, M Y @ H:i:s',  strtotime($model->datecreated)),
@@ -66,23 +70,36 @@ ob_start();
     ob_end_clean();
     ?>
 
+<!--    STAKEHOLDER STATIONS-->
     
     <?php ob_start(); ?>
     <?php
     Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider_station,
-        'filterModel' => $searchModel_station,
+       // 'filterModel' => $model_station,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'stationcode',
-            'stationtype',
-            'stationowner',
-            'geocode',
-            'regionid',
-            'districtid',
-            'wardid',
+           'stationcode',
+           array(
+            'attribute' => 'stationtype',
+             'value' => function ($model) {
+            return $model->getStationTypeName();
+            },
+             ),
+                       [
+            'attribute' => 'regionid',
+             'value' => function ($model) {
+            return Region::getRegionNameById($model->regionid);
+            },
+             ],
+            [
+            'attribute' => 'districtid',
+             'value' => function ($model) {
+            return District::getDistrictNameById($model->districtid);
+            },
+             ],
             [
                 'label' => 'Action',
                 'value' => function($model) {
@@ -111,19 +128,64 @@ ob_start();
             ob_end_clean();
             ?>
 
+<!--    SHOWWING DATA SOURCES-->
+          <?php ob_start(); ?>
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
+        'dataProvider' => $dataProvider_datasources,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+             'name',
+             'ipaddress',
+             'datalocation',
+           array(
+             'attribute' => 'datasourcetype',
+             'value' => function ($model) {
+             return $model->getDataSourceTypeName();
+                 },
+             ),
+//             ['class' => 'yii\grid\ActionColumn',
+//            'template' => '{view}',
+//             ],          
+          ],
+         'responsive' => true,
+         'hover' => true,
+         'condensed' => true,
+         'floatHeader' => false,
+         'panel' => [
+                'showFooter' => false
+            ],
+          ]);
+        Pjax::end();
+            ?>
+            <?php
+            $stakeholderDataSources = ob_get_contents();
+            ob_end_clean();
+            ?>
+
+
+
+        <!--START JUI TABS-->
             <?php
             echo TabsX::widget([
                 'items' => [
                     [
-                        'label' => ' ' . 'Basic Stakeholder Details',
+                        'label' => ' ' . 'Basic Details',
                         'content' => $stakeholdeDetails,
-                        'options' => ['id' => 'Stakeholder-Details-tab'],
+                        'options' => ['id' => 'stakeholder-details-tab'],
                        // 'active' => ($activeTab == 'Stakeholder-Details-tab'),
                     ],
                     [
-                        'label' => ' ' . 'Stakeholder Stations',
+                        'label' => $model->name. ' - Stations',
                         'content' => $stakeholderStations,
-                        'options' => ['id' => 'Stations-tab'],
+                        'options' => ['id' => 'stations-tab'],
+                      //  'active' => ($activeTab == 'Stations-tab'),
+                    ],
+                     [
+                        'label' =>' Data Sources',
+                        'content' => $stakeholderDataSources,
+                        'options' => ['id' => 'data-sources-tab'],
                       //  'active' => ($activeTab == 'Stations-tab'),
                     ],
                 ],

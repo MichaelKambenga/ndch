@@ -5,10 +5,15 @@ use yii\widgets\DetailView;
 use app\models\Stakeholder;
 use app\models\DataSources;
 
+use kartik\grid\GridView;
+use app\models\Region;
+use app\models\District;
+use app\models\DataSourceStations;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\DataSources */
 
-$this->title = $model->name;
+$this->title = 'Data Sources Details';
 $this->params['breadcrumbs'][] = ['label' => 'Data Sources', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

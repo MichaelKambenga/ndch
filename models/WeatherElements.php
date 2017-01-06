@@ -11,10 +11,10 @@ use Yii;
  * @property string $name
  * @property string $unitmeasure
  * @property string $elementcode
- * @property string $vaisalacode
- * @property string $vaisaladesc
  *
  * @property TblStationWeatherElements[] $tblStationWeatherElements
+ * @property TblWeatherData[] $tblWeatherDatas
+ * @property TblWeatherElementsList[] $tblWeatherElementsLists
  */
 class WeatherElements extends \yii\db\ActiveRecord
 {
@@ -34,9 +34,10 @@ class WeatherElements extends \yii\db\ActiveRecord
         return [
             [['name', 'unitmeasure'], 'required'],
             [['name'], 'string', 'max' => 100],
-            [['unitmeasure'], 'string', 'max' => 10],
-            [['vaisalacode','vaisaladesc'], 'string', 'max' => 50],
             [['name'], 'unique'],
+            [['unitmeasure'], 'string', 'max' => 10],
+            [['elementcode'], 'string', 'max' => 50],
+            
         ];
     }
 
@@ -47,10 +48,9 @@ class WeatherElements extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'unitmeasure' => 'Unitmeasure',
-            'vaisalacode' => 'Vaisala Code',
-            'vaisaladesc' => 'Vaisala Description',
+            'name' => 'Element Name',
+            'unitmeasure' => 'Unit Measure',
+            'elementcode' => 'Element Code',
         ];
     }
 
@@ -60,5 +60,29 @@ class WeatherElements extends \yii\db\ActiveRecord
     public function getTblStationWeatherElements()
     {
         return $this->hasMany(StationWeatherElements::className(), ['elementsid' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTblWeatherDatas()
+    {
+        return $this->hasMany(WeatherData::className(), ['weatherelementid' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTblWeatherElementsLists()
+    {
+        return $this->hasMany(WeatherElementsList::className(), ['elementid' => 'id']);
+    }
+    
+    static function getElementNameById($id){
+        $data=self::findOne($id);
+        if ($data) {
+            return $data->name;
+        }
+        return NULL;
     }
 }

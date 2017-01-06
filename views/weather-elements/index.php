@@ -1,36 +1,50 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
+use app\models\WeatherElements;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\WeatherElementsSearch */
+/* @var $searchModel app\models\StakeholderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Weather Elements';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="weather-elements-index">
+<div class="stakeholder-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <!--<h1><?= Html::encode($this->title) ?></h1>-->
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-        <?= Html::a('Create Weather Elements', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create/Add Element', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'unitmeasure',
-            'vaisalacode',
-            'vaisaladesc',
+            'elementcode',
+            
 
             ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+
+            ],
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => 'Weather Elements',
+                    'type' => 'default',
+                    'showFooter' => true
+                ],
+            ]);
+            Pjax::end();
+            ?>
 </div>

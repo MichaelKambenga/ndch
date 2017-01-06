@@ -18,75 +18,68 @@ use Yii;
  * @property TblStakeholder $stakeholder
  * @property TblWeatherData[] $tblWeatherDatas
  */
-class DataSources extends \yii\db\ActiveRecord
-{
+class DataSources extends \yii\db\ActiveRecord {
     //constants for data source types
     const DATA_SOURCE_FAILEBASED=1;
     const DATA_SOURCE_DATABASESYSTEM=2;
 
-        
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'tbl_data_sources';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['name', 'ipaddress', 'stakeholderid', 'datasourcetype'], 'required'],
-            [['id', 'stakeholderid', 'datasourcetype'], 'integer'],
-            [['name', 'ipaddress'], 'string', 'max' => 50],
-            [['datalocation'], 'string', 'max' => 255],
-            [['stakeholderid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stakeholderid' => 'id']],
+        [['name', 'ipaddress', 'stakeholderid', 'datasourcetype'], 'required'],
+        [['ipaddress'], 'unique'],
+        [['id', 'stakeholderid', 'datasourcetype'], 'integer'],
+        [['name', 'ipaddress'], 'string', 'max' => 50],
+        [['datalocation'], 'string', 'max' => 255],
+        [['stakeholderid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stakeholderid' => 'id']],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'ipaddress' => 'Ip Address',
-            'stakeholderid' => 'Data Source Owner',
-            'datalocation' => 'Data File Path(Location)',
-            'datasourcetype' => 'Data Source Type',
+        'id' => 'ID',
+        'name' => 'Name',
+        'ipaddress' => 'Ip Address',
+        'stakeholderid' => 'Data Source Owner',
+        'datalocation' => 'Data File Path(Location)',
+        'datasourcetype' => 'Data Source Type',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblDataSourceStations()
-    {
+    public function getTblDataSourceStations() {
         return $this->hasMany(DataSourceStations::className(), ['datasourceid' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStakeholder()
-    {
+    public function getStakeholder() {
         return $this->hasOne(takeholder::className(), ['id' => 'stakeholderid']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblWeatherDatas()
-    {
+    public function getTblWeatherDatas() {
         return $this->hasMany(WeatherData::className(), ['source' => 'id']);
     }
-    
-     static function getDataSourceTypes() {
+
+    static function getDataSourceTypes() {
         return [
         self::DATA_SOURCE_FAILEBASED => 'File Based',
         self::DATA_SOURCE_DATABASESYSTEM => 'Database System',
@@ -100,4 +93,5 @@ class DataSources extends \yii\db\ActiveRecord
         }
         return NULL;
     }
+
 }

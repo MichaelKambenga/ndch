@@ -31,6 +31,7 @@ class Region extends \yii\db\ActiveRecord
     {
         return [
             [['regionname'], 'required'],
+            [['regionname'], 'unique'],
             [['datecreated'], 'safe'],
             [['regionname'], 'string', 'max' => 100],
             [['regionname'], 'unique'],

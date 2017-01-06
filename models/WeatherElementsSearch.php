@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\WeatherElements;
 
 /**
- * WeatherElementsSearch represents the model behind the search form about `app\models\WeatherElements`.
+ * WeatherElementsSearch represents the model behind the search form of `app\models\WeatherElements`.
  */
 class WeatherElementsSearch extends WeatherElements
 {
@@ -19,7 +19,7 @@ class WeatherElementsSearch extends WeatherElements
     {
         return [
             [['id'], 'integer'],
-            [['name', 'unitmeasure', 'vaisalacode','vaisaladesc'], 'safe'],
+            [['name', 'unitmeasure', 'elementcode'], 'safe'],
         ];
     }
 
@@ -64,8 +64,7 @@ class WeatherElementsSearch extends WeatherElements
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'unitmeasure', $this->unitmeasure])
-            ->andFilterWhere(['like', 'vaisalacode', $this->vaisalacode])
-            ->andFilterWhere(['like', 'vaisaladesc', $this->vaisaladesc]);
+            ->andFilterWhere(['like', 'elementcode', $this->elementcode]);
 
         return $dataProvider;
     }

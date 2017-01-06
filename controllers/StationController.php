@@ -8,6 +8,9 @@ use app\models\StationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\StationWeatherElements;
+use app\models\StationWeatherElementsSearch;
+use yii\helpers\Html;
 
 /**
  * StationController implements the CRUD actions for Station model.
@@ -19,12 +22,12 @@ class StationController extends Controller {
      */
     public function behaviors() {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+        'delete' => ['POST'],
+        ],
+        ],
         ];
     }
 
@@ -37,8 +40,8 @@ class StationController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -48,14 +51,16 @@ class StationController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
-        $condition = "stationid = {$id}";
-        $model_station_weather_element = new \app\models\StationWeatherElements;
-        $searchModel_station_weather_element = new \app\models\StationWeatherElementsSearch;
-        $dataProvider_station_weather_element = $searchModel_station_weather_element->search(Yii::$app->request->getQueryParams(), $condition);
+        $id = Html::encode($id);
+        $model = $this->findModel($id);
+        $model_station_weather_element = new StationWeatherElements;
+        $searchModel_station_weather_element = new StationWeatherElementsSearch;
+        $searchModel_station_weather_element->stationid = $model->id;
+        $dataProvider_station_weather_element = $searchModel_station_weather_element->search(NULL);
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'dataProvider_station_weather_element' => $dataProvider_station_weather_element,
-                    'searchModel_station_weather_element' => $searchModel_station_weather_element
+        'model' => $model,
+        'dataProvider_station_weather_element' => $dataProvider_station_weather_element,
+        'searchModel_station_weather_element' => $searchModel_station_weather_element
         ]);
     }
 
@@ -70,14 +75,14 @@ class StationController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $model->createdby = 2;
             $model->createdbyinsitutionid = 1;
+            $model->name = strtoupper($model->name);
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+        'model' => $model,
+        ]);
     }
 
     /**
@@ -89,13 +94,15 @@ class StationController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                        'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->name = strtoupper($model->name);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+        return $this->render('update', [
+        'model' => $model,
+        ]);
     }
 
     /**

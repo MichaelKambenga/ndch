@@ -48,6 +48,7 @@ class Stakeholder extends \yii\db\ActiveRecord {
     public function rules() {
         return [
         [['name', 'orgtype'], 'required'],
+        [['name'], 'unique'],
         [['orgtype', 'status'], 'integer'],
         [['datecreated', 'datedeactivated'], 'safe'],
         [['name', 'mobileno', 'email'], 'string', 'max' => 100],

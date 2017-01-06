@@ -38,15 +38,16 @@ $this->params['breadcrumbs'][] = $this->title;
                  return $model->getOrgTypeName();
                  },
               ),
-             [
-                'label' => 'Action',
-                'value' => function($model) {
-                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['stakeholder/view', 'id' => $model->id]), [
-                                'title' => Yii::t('yii', 'View Details'),
-                    ]);
-                },
-                       'format' => 'raw',
-                    ],
+                         ['class' => 'yii\grid\ActionColumn'],
+//             [
+//                'label' => 'Action',
+//                'value' => function($model) {
+//                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['stakeholder/view', 'id' => $model->id]), [
+//                                'title' => Yii::t('yii', 'View Details'),
+//                    ]);
+//                },
+//                       'format' => 'raw',
+//                    ],
                 ],
                 'responsive' => true,
                 'hover' => true,

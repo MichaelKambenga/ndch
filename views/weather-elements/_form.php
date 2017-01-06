@@ -1,29 +1,49 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\builder\Form;
+use app\models\WeatherElements;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\WeatherElements */
-/* @var $form yii\widgets\ActiveForm */
+/**
+ * @var yii\web\View $this
+ * @var app\models\Classes $model
+ * @var yii\widgets\ActiveForm $form
+ */
 ?>
 
-<div class="weather-elements-form">
+<div class="classes-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]);
+    echo Form::widget([
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'unitmeasure')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'vaisalacode')->textInput(['maxlength' => true]) ?>
-    
-    <?= $form->field($model, 'vaisaladesc')->textInput(['vaisaladesc' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+        'model' => $model,
+        'form' => $form,
+        'columns' => 2,
+        'attributes' => [
+            'name' => [
+                'type' => Form::INPUT_TEXT,
+                'options' => ['placeholder' => 'Enter Element Name...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+            'unitmeasure' => [
+                'type' => Form::INPUT_TEXT,
+               'options' => ['placeholder' => 'Unit of Measure...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+           
+            'elementcode' => [
+                'type' => Form::INPUT_TEXT,
+               'options' => ['placeholder' => 'Enter Element Code...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+         
+        ]
+    ]);
+    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
+    ActiveForm::end();
+    ?>
 
 </div>

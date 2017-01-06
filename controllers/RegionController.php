@@ -65,13 +65,16 @@ class RegionController extends Controller
     {
         $model = new Region();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->regionname=strtolower($model->regionname);
+            if($model->save()){
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+            }
+        }
             return $this->render('create', [
                 'model' => $model,
             ]);
-        }
+        
     }
 
     /**
@@ -84,13 +87,16 @@ class RegionController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->regionname=strtolower($model->regionname);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+           }
+        }
             return $this->render('update', [
                 'model' => $model,
             ]);
-        }
+        
     }
 
     /**

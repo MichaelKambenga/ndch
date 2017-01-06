@@ -28,8 +28,10 @@ ob_start();
     'confirm' => 'Are you sure you want to delete this item?',
     'method' => 'post',
     ],
-    ])
+    ]);
     ?>
+    <?= Html::a('Add Weather Element', ['station-weather-elements/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    
 </p>
 
 <?=
@@ -85,26 +87,38 @@ ob_end_clean();
 Pjax::begin();
 echo GridView::widget([
 'dataProvider' => $dataProvider_station_weather_element,
- 'filterModel' => $searchModel_station_weather_element,
+// 'filterModel' => $searchModel_station_weather_element,
  'columns' => [
 ['class' => 'yii\grid\SerialColumn'],
- 'elementsid',
+
+ array(
+    'attribute' => 'elementsid',
+     'label'=>'Weather Element Name',
+     'value' => function ($model) {
+        return \app\models\WeatherElements::getElementNameById($model->elementsid) ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    SElementNameById($model->elementsid);
+        },
+  ),
  'collectionfrequency',
  'accuracy',
  'surfacedistance',
- [
-'label' => 'Action',
- 'value' => function($model) {
-return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['station-weather-elements/view', 'id' => $model->id]), [
-'title' => Yii::t('yii', 'View Details'),
-]);
-},
- 'format' => 'raw',
-],
-],
+    ['class' => 'yii\grid\ActionColumn',
+     'template' => '{update} &nbsp;&nbsp;&nbsp;  {delete}',
+    'buttons' => [
+      'update'=> function ($url, $model) {
+            return Html::a('<span class="glyphicon glyphicon-edit"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/update','id'=>$model->id)), [
+        ]);
+        },
+       'delete'=> function ($url, $model) {
+            return Html::a('<span class="glyphicon glyphicon-remove"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/delete','id'=>$model->id)), [
+        ]);
+        }
+    ],
+                
+    ],
+    ],
  'responsive' => true,
  'hover' => true,
- 'condensed' => true,
+ 'condensed' => true,                                                                                                                                                                                                                                                   
  'floatHeader' => false,
  'panel' => [
 'heading' => ' ',

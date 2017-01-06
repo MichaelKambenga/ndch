@@ -8,6 +8,11 @@ use app\models\StakeholderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Station;
+use app\models\StationSearch;
+use app\models\DataSourcesSearch;
+use yii\helpers\Html;
+
 
 /**
  * StakeholderController implements the CRUD actions for Stakeholder model.
@@ -51,14 +56,22 @@ class StakeholderController extends Controller
      */
     public function actionView($id)
     {
-        $condition = "stationowner = {$id}";
-        $model_station = new \app\models\Station;
-        $searchModel_station = new \app\models\StationSearch;
-        $dataProvider_station = $searchModel_station->search(Yii::$app->request->getQueryParams(), $condition);
+        $id=Html::encode($id);
+        $model=$this->findModel($id);
+        $model_station = new Station;
+        $model_station_search = new StationSearch;
+        $model_data_source_search =new DataSourcesSearch();
+        $model_station_search->stationowner=$model->id;
+        $dataProviderStation = $model_station_search->search(NULL);
+        $model_data_source_search->stakeholderid=$model->id;
+        $dataProviderDataSources= $model_data_source_search->search(NULL);    
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'dataProvider_station' => $dataProvider_station,
-            'searchModel_station' => $searchModel_station
+            'model' => $model,
+            'model_station'=>$model_station,
+            'model_station_search' => $model_station_search,
+            'model_data_source_search' => $model_data_source_search,
+            'dataProvider_station' => $dataProviderStation,
+            'dataProvider_datasources' => $dataProviderDataSources,
         ]);
     }
 

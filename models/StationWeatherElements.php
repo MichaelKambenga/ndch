@@ -49,12 +49,12 @@ class StationWeatherElements extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'stationid' => 'Stationid',
-            'elementsid' => 'Elementsid',
-            'collectionfrequency' => 'Collectionfrequency',
-            'id' => 'ID',
-            'accuracy' => 'Accuracy',
-            'surfacedistance' => 'Surfacedistance',
+            'stationid' => 'Station',
+            'elementsid' => 'Weather Element',
+            'collectionfrequency' => 'Data Collection Frequency (in Minutes)',
+            'id' => 'Id',
+            'accuracy' => 'Device Accuracy (in %)',
+            'surfacedistance' => 'Device Surface Distance (in Meter)',
         ];
     }
 

@@ -8,6 +8,7 @@ use app\models\WeatherElementsListSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 
 /**
  * WeatherElementsListController implements the CRUD actions for WeatherElementsList model.
@@ -23,7 +24,7 @@ class WeatherElementsListController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -61,17 +62,21 @@ class WeatherElementsListController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
+        $id=Html::encode($id);
         $model = new WeatherElementsList();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+        if($model->save()){
+            return $this->redirect(['weather-elements/view', 'id' => $model->elementid]);
+        }        
         }
+        $model->elementid=(int)$id;
+        
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+        
     }
 
     /**
@@ -103,7 +108,7 @@ class WeatherElementsListController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
