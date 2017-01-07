@@ -19,6 +19,8 @@ use yii\data\ActiveDataProvider;
  */
 class DataSourceStations extends \yii\db\ActiveRecord
 {
+    public $stations;
+
     /**
      * @inheritdoc
      */
@@ -33,11 +35,11 @@ class DataSourceStations extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['datasourceid', 'stationid', 'datecreated'], 'required'],
-            [['datasourceid', 'stationid'], 'integer'],
+            [['datasourceid','stations','stationid'], 'required'],
+            [['datasourceid'], 'integer'],
             [['datecreated'], 'safe'],
             [['datasourceid'], 'exist', 'skipOnError' => true, 'targetClass' => DataSources::className(), 'targetAttribute' => ['datasourceid' => 'id']],
-            [['stationid'], 'exist', 'skipOnError' => true, 'targetClass' => Station::className(), 'targetAttribute' => ['stationid' => 'id']],
+            [['station'], 'exist', 'skipOnError' => true, 'targetClass' => Station::className(), 'targetAttribute' => ['stationid' => 'id']],
         ];
     }
 
@@ -49,7 +51,7 @@ class DataSourceStations extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'datasourceid' => 'Datasourceid',
-            'stationid' => 'Stationid',
+            'stationid' => 'Stations List',
             'datecreated' => 'Datecreated',
         ];
     }

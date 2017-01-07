@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'confirm' => 'Are you sure you want to delete this item?',
         'method' => 'post',
         ],
-        ])
-        ?>
-    </p>
+        ]);?>
+       <?= Html::a('Set Data Source Stations', ['add-station', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+   </p>
 
     <?=
     DetailView::widget([
@@ -74,26 +74,18 @@ $this->params['breadcrumbs'][] = $this->title;
     // 'filterModel' => $model_station,
     'columns' => [
     ['class' => 'yii\grid\SerialColumn'],
-    'name',
-    'stationcode',
     array(
-    'attribute' => 'stationtype',
-    'value' => function ($model) {
-    return $model->getStationTypeName();
-    },
+      'attribute'=>'stationcode',
+        'value'=>'station.stationcode',
     ),
-    [
-    'attribute' => 'regionid',
-    'value' => function ($model) {
-    return Region::getRegionNameById($model->regionid);
-    },
-    ],
-    [
-    'attribute' => 'districtid',
-    'value' => function ($model) {
-    return District::getDistrictNameById($model->districtid);
-    },
-    ],
+     array(
+      'attribute'=>'stationid',
+        'value'=>'station.name',
+    ),
+     array(
+      'attribute'=>'stationid',
+        'value'=>'station.name',
+    ),
     ['class' => 'yii\grid\ActionColumn',
     'template' => '{view}',
     'buttons' => [
