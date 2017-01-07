@@ -21,7 +21,8 @@
         "kartik-v/yii2-widgets": "*",
         "warrence/yii2-kartikgii": "dev-master",
         "kartik-v/yii2-mpdf": "*",
-        "kartik-v/yii2-tabs-x": "*"
+        "kartik-v/yii2-tabs-x": "*",
+        "mdmsoft/yii2-admin": "2.x-dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
