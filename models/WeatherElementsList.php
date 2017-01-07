@@ -31,6 +31,8 @@ class WeatherElementsList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['itemname'], 'required'],
+            [['itemname'], 'unique'],
             [['itemname', 'itemcode'], 'string'],
             [['elementid'], 'integer'],
             [['elementid'], 'exist', 'skipOnError' => true, 'targetClass' =>WeatherElements::className(), 'targetAttribute' => ['elementid' => 'id']],
@@ -44,9 +46,9 @@ class WeatherElementsList extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'itemname' => 'Itemname',
-            'itemcode' => 'Itemcode',
-            'elementid' => 'Elementid',
+            'itemname' => 'Item Name',
+            'itemcode' => 'Item Code',
+            'elementid' => 'Element',
         ];
     }
 

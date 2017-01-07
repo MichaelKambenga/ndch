@@ -50,9 +50,15 @@ class DataSourcesController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {  $id= \yii\bootstrap\Html::encode($id);
+        $model=$this->findModel($id);
+        $stations_model=new \app\models\DataSourceStationsSearch;
+        $stations_model->datasourceid=$id;
+        $dataProvider_stations=$stations_model->search(NULL);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'stations_model'=>$stations_model,
+            'dataProvider_stations'=>$dataProvider_stations
         ]);
     }
 
@@ -114,7 +120,7 @@ class DataSourcesController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
-    {
+    {  $id=  \yii\bootstrap\Html::encode($id);
         if (($model = DataSources::findOne($id)) !== null) {
             return $model;
         } else {

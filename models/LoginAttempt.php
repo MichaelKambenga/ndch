@@ -1,9 +1,6 @@
 <?php
-
 namespace app\models;
-
 use Yii;
-
 /**
  * This is the model class for table "tbl_login_attempt".
  *
@@ -24,7 +21,6 @@ class LoginAttempt extends \yii\db\ActiveRecord
     {
         return 'tbl_login_attempt';
     }
-
     /**
      * @inheritdoc
      */
@@ -35,10 +31,9 @@ class LoginAttempt extends \yii\db\ActiveRecord
             [['successfulattempt'], 'boolean'],
             [['lastlogin'], 'safe'],
             [['ipaddress'], 'string', 'max' => 20],
-            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => TblUser::className(), 'targetAttribute' => ['userid' => 'id']],
+            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userid' => 'id']],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -52,12 +47,11 @@ class LoginAttempt extends \yii\db\ActiveRecord
             'lastlogin' => 'Lastlogin',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(TblUser::className(), ['id' => 'userid']);
+        return $this->hasOne(User::className(), ['id' => 'userid']);
     }
 }

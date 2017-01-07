@@ -10,13 +10,15 @@ use yii\widgets\ActiveForm;
 
 <div class="weather-elements-list-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+      ['method'=>'POST']  
+      ); ?>
 
     <?= $form->field($model, 'itemname')->textInput() ?>
 
     <?= $form->field($model, 'itemcode')->textInput() ?>
 
-    <?= $form->field($model, 'elementid')->textInput() ?>
+    <?= $form->field($model, 'elementid')->hiddenInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "tbl_data_source_stations".
@@ -34,8 +36,8 @@ class DataSourceStations extends \yii\db\ActiveRecord
             [['datasourceid', 'stationid', 'datecreated'], 'required'],
             [['datasourceid', 'stationid'], 'integer'],
             [['datecreated'], 'safe'],
-            [['datasourceid'], 'exist', 'skipOnError' => true, 'targetClass' => TblDataSources::className(), 'targetAttribute' => ['datasourceid' => 'id']],
-            [['stationid'], 'exist', 'skipOnError' => true, 'targetClass' => TblStation::className(), 'targetAttribute' => ['stationid' => 'id']],
+            [['datasourceid'], 'exist', 'skipOnError' => true, 'targetClass' => DataSources::className(), 'targetAttribute' => ['datasourceid' => 'id']],
+            [['stationid'], 'exist', 'skipOnError' => true, 'targetClass' => Station::className(), 'targetAttribute' => ['stationid' => 'id']],
         ];
     }
 
@@ -57,7 +59,7 @@ class DataSourceStations extends \yii\db\ActiveRecord
      */
     public function getDatasource()
     {
-        return $this->hasOne(TblDataSources::className(), ['id' => 'datasourceid']);
+        return $this->hasOne(DataSources::className(), ['id' => 'datasourceid']);
     }
 
     /**
@@ -65,6 +67,8 @@ class DataSourceStations extends \yii\db\ActiveRecord
      */
     public function getStation()
     {
-        return $this->hasOne(TblStation::className(), ['id' => 'stationid']);
+        return $this->hasOne(Station::className(), ['id' => 'stationid']);
     }
+    
+   
 }

@@ -8,24 +8,24 @@ use app\models\StationWeatherElementsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 
 /**
  * StationWeatherElementsController implements the CRUD actions for StationWeatherElements model.
  */
-class StationWeatherElementsController extends Controller
-{
+class StationWeatherElementsController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+        'delete' => ['GET'],
+        ],
+        ],
         ];
     }
 
@@ -33,14 +33,13 @@ class StationWeatherElementsController extends Controller
      * Lists all StationWeatherElements models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new StationWeatherElementsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,10 +48,9 @@ class StationWeatherElementsController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+        'model' => $this->findModel($id),
         ]);
     }
 
@@ -61,17 +59,19 @@ class StationWeatherElementsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate($id) {
+        $id = Html::encode($id);
         $model = new StationWeatherElements();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $model->stationid = $id;
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['station/view', 'id' => $model->stationid]);
+            }
         }
+
+        return $this->render('create', [
+        'model' => $model,
+        ]);
     }
 
     /**
@@ -80,15 +80,13 @@ class StationWeatherElementsController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['station/view', 'id' => $model->stationid]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+            'model' => $model,
             ]);
         }
     }
@@ -99,11 +97,12 @@ class StationWeatherElementsController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id) {
+        $model = $this->findModel($id);
+        if ($model) {
+            $model->delete();
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
@@ -113,12 +112,13 @@ class StationWeatherElementsController extends Controller
      * @return StationWeatherElements the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
+        $id = Html::encode($id);
         if (($model = StationWeatherElements::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

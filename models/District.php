@@ -33,6 +33,7 @@ class District extends \yii\db\ActiveRecord
     {
         return [
             [['districtname', 'regionid'], 'required'],
+            [['districtname'], 'unique'],
             [['regionid'], 'integer'],
             [['datecreated'], 'safe'],
             [['districtname'], 'string', 'max' => 100],

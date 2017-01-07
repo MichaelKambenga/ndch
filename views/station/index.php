@@ -33,7 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'stationcode',
-          //  'stationtype',
+           array(
+'attribute' => 'stationtype',
+ 'value' => function ($model) {
+return $model->getStationTypeName();
+},
+ ),
          array(
 'attribute' => 'stationowner',
  'value' => function ($model) {

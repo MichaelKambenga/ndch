@@ -55,7 +55,7 @@ class Station extends \yii\db\ActiveRecord
         return [
             [['name', 'stationtype', 'stationowner', 'regionid', 'districtid', 'createdby', 'createdbyinsitutionid'], 'required'],
             [['name'], 'string', 'max' => 100],
-            //[['name'], 'unique'],
+            [['name'], 'unique'],
             [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
             [['datecreated'], 'safe'],
             [['stationcode'], 'string', 'max' => 20],

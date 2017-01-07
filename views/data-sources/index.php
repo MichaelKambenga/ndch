@@ -34,18 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'ipaddress',
             'datalocation',
          array(
-'attribute' => 'stakeholderid',
- 'value' => function ($model) {
-return Stakeholder::getStakeholderNameById($model->stakeholderid);
-},
- ),
+            'attribute' => 'stakeholderid',
+             'value' => function ($model) {
+            return Stakeholder::getStakeholderNameById($model->stakeholderid);
+            },
+         ),
 
- array(
-     'attribute' => 'datasourcetype',
-     'value' => function ($model) {
-     return $model->getDataSourceTypeName();
-     },
-     ),
+         array(
+             'attribute' => 'datasourcetype',
+             'value' => function ($model) {
+             return $model->getDataSourceTypeName();
+             },
+             ),
             ['class' => 'yii\grid\ActionColumn'],
 //            [
 //                'label' => 'Action',

@@ -136,7 +136,8 @@ LteAsset::register($this);
                                 <li><a href="index.php?r=ward"><i class="fa fa-circle-o"></i>
                                         Wards</a></li>
                                 <li><a href="index.php?r=aws-vaisala"><i class="fa fa-circle-o"></i>
-                                        AWS</a></li>
+                                        Vaisala Data Dump</a></li>    <li><a href="index.php?r=aws-seba"><i class="fa fa-circle-o"></i>
+                                        SEBA Data Dump</a></li>
                             </ul>
                         </li>';
 //                        }

@@ -67,6 +67,7 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->setPassword($model->password_hash);
             $model->status = User::STATUS_ACTIVE;
+            $model->updated_at=NULL;
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -86,6 +87,7 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->updated_at=Date('Y-m-d H:i:s',time());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
