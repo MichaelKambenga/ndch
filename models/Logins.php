@@ -1,9 +1,6 @@
 <?php
-
 namespace app\models;
-
 use Yii;
-
 /**
  * This is the model class for table "tbl_logins".
  *
@@ -24,7 +21,6 @@ class Logins extends \yii\db\ActiveRecord
     {
         return 'tbl_logins';
     }
-
     /**
      * @inheritdoc
      */
@@ -38,7 +34,6 @@ class Logins extends \yii\db\ActiveRecord
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userid' => 'id']],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -52,7 +47,6 @@ class Logins extends \yii\db\ActiveRecord
             'datecreated' => 'Datecreated',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */

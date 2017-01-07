@@ -1,9 +1,6 @@
 <?php
-
 namespace app\models;
-
 use Yii;
-
 /**
  * This is the model class for table "tbl_user_audit_trail".
  *
@@ -27,7 +24,6 @@ class UserAuditTrail extends \yii\db\ActiveRecord
     {
         return 'tbl_user_audit_trail';
     }
-
     /**
      * @inheritdoc
      */
@@ -43,7 +39,6 @@ class UserAuditTrail extends \yii\db\ActiveRecord
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userid' => 'id']],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -60,7 +55,6 @@ class UserAuditTrail extends \yii\db\ActiveRecord
             'referer' => 'Referer',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */

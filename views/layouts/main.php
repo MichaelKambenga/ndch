@@ -155,6 +155,12 @@ LteAsset::register($this);
                             <ul class="treeview-menu">
                                 <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
                                         User Management</a></li>
+                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                        Login History</a></li>
+                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                        Audit Trail</a></li>
+                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                        Login Attempts</a></li>
                                 <li><a href="index.php?r=admin/role"><i class="fa fa-circle-o"></i> 
                                         Roles</a></li>
                                 <li><a href="index.php?r=admin/permission"><i class="fa fa-circle-o"></i>
@@ -188,7 +194,7 @@ LteAsset::register($this);
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>
-                <strong>Copyright &copy; <?= '2016 - '.Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
+                <strong>Copyright &copy; <?= '2016 - ' . Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
                 All rights reserved.          
             </footer>   
         </div>  

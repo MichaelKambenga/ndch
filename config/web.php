@@ -7,6 +7,13 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+
+        'as access' => [
+            'class' => 'mdm\admin\components\AccessControl',
+            'allowActions' => [
+                '*'
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '3-5-N5uagjTNYGcLvmOUl1QV9iFCZE8F',
@@ -17,6 +24,9 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -38,14 +48,38 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
+    /*
+      'urlManager' => [
+      'enablePrettyUrl' => true,
+      'showScriptName' => false,
+      'rules' => [
+      ],
+      ],
+     */
+    ],
+    'modules' =>
+    [
+        'gridview' =>
+        [
+            'class' => 'kartik\grid\Module',
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+//            'layout' => 'top-menu', // avaliable value 'left-menu', 'right-menu' and 'top-menu'
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'app\models\Users',
+                    'idField' => 'user_id'
+                ]
+            ],
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access' // change label
+                ],
+                'route' => null, // disable menu
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
