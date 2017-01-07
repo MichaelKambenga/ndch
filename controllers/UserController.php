@@ -12,6 +12,7 @@ use app\models\Logins;
 use app\models\UserAuditTrail;
 use app\models\LoginsSearch;
 use app\models\UserAuditTrailSearch;
+use yii\helpers\Html;
 
 /**
  * UserController implements the CRUD actions for User model.
