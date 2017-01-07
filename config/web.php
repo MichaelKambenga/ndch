@@ -69,8 +69,8 @@ $config = [
             'controllerMap' => [
                 'assignment' => [
                     'class' => 'mdm\admin\controllers\AssignmentController',
-                    'userClassName' => 'app\models\Users',
-                    'idField' => 'user_id'
+                    'userClassName' => 'app\models\User',
+                    'idField' => 'id'
                 ]
             ],
             'menus' => [

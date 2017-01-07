@@ -1,42 +1,82 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\UserSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Users';
+/**
+ * @var yii\web\View $this
+ * @var yii\data\ActiveDataProvider $dataProvider
+ * @var app\models\UsersSearch $searchModel
+ */
+$this->title = 'Manage Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="users-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php /* echo Html::a('Create Users', ['create'], ['class' => 'btn btn-success']) */ ?>
     </p>
-    <?= GridView::widget([
+
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'firstname',
             'middlename',
             'lastname',
             'organizationid',
-            // 'loginname',
+             'username',
             // 'password',
-            // 'status',
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'vAlign' => 'middle',
+                'width' => '30px',
+                'value' => function($model) {
+                    return $model->status == 1 ? "<span class='glyphicon glyphicon-ok'></span>" : "<span class='glyphicon glyphicon-remove'></span>";
+                },
+                'format' => 'raw',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ['1' => 'Active', '0' => 'Inactive'],
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Search...'],
+                'format' => 'raw'
+            ],
             // 'datecreated',
             // 'datedeactivated',
             // 'lastlogin',
             // 'logins',
+            [
+                'label' => '',
+                'value' => function($model) {
+                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i>View More</span>', Yii::$app->urlManager->createUrl(['user/view', 'id' => $model->id,]), [
+                                'title' => Yii::t('yii', 'View More'),
+                    ]);
+                },
+                        'format' => 'raw',
+                    ],
+                ],
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => '<h3 class="panel-title"> </h3>',
+                    'type' => 'default',
+                    'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add User', ['create'], ['class' => 'btn btn-success']), 'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                    'showFooter' => false
+                ],
+            ]);
+            Pjax::end();
+            ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
 </div>

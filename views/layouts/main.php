@@ -155,11 +155,11 @@ LteAsset::register($this);
                             <ul class="treeview-menu">
                                 <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
                                         User Management</a></li>
-                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                <li><a href="index.php?r=logins/index"><i class="fa fa-circle-o"></i>
                                         Login History</a></li>
-                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                <li><a href="index.php?r=user-audit-trail/index"><i class="fa fa-circle-o"></i>
                                         Audit Trail</a></li>
-                                <li><a href="index.php?r=user/index"><i class="fa fa-circle-o"></i>
+                                <li><a href="index.php?r=logins-attempt/index"><i class="fa fa-circle-o"></i>
                                         Login Attempts</a></li>
                                 <li><a href="index.php?r=admin/role"><i class="fa fa-circle-o"></i> 
                                         Roles</a></li>

@@ -77,6 +77,12 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+             /* Logs the Logins History */
+            $loginsModel = new \app\models\Logins();
+            $loginsModel->userid = \yii::$app->user->identity->id;
+            $loginsModel->ipaddress = Yii::$app->getRequest()->getUserIP();
+            $loginsModel->details = 'User logged into the system successful using browser :- ' . Yii::$app->getRequest()->getUserAgent();
+            $loginsModel->save();
             return $this->goBack();
         }
         return $this->render('login', [
@@ -91,7 +97,12 @@ class SiteController extends Controller {
      */
     public function actionLogout() {
         Yii::$app->user->logout();
-
+        /* Logs the Logins History */
+        $loginsModel = new \app\models\Logins();
+        $loginsModel->userid = $userId;
+        $loginsModel->ipaddress = Yii::$app->getRequest()->getUserIP();
+        $loginsModel->details = 'User logged out the system successful using browser :- ' . Yii::$app->getRequest()->getUserAgent();
+        $loginsModel->save();
         return $this->goHome();
     }
 

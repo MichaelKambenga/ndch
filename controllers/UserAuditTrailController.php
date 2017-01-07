@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * UserAuditTrailSearchController implements the CRUD actions for UserAuditTrail model.
  */
-class UserAuditTrailSearchController extends Controller
+class UserAuditTrailController extends Controller
 {
     /**
      * @inheritdoc
