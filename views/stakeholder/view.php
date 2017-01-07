@@ -74,7 +74,7 @@ ob_start();
     
     <?php ob_start(); ?>
     <?php
-    Pjax::begin();
+   // Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider_station,
        // 'filterModel' => $model_station,
@@ -100,15 +100,15 @@ ob_start();
             return District::getDistrictNameById($model->districtid);
             },
              ],
-            [
-                'label' => 'Action',
-                'value' => function($model) {
-                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i> More</span>', Yii::$app->urlManager->createUrl(['station/view', 'id' => $model->id]), [
-                                'title' => Yii::t('yii', 'View Details'),
-                    ]);
-                },
-                        'format' => 'raw',
-                    ],
+            ['class' => 'yii\grid\ActionColumn',
+            'template' => '{view}',
+              'buttons' => [
+              'view'=> function ($url, $model) {
+                    return Html::a('view', Yii::$app->urlManager->createUrl(['station/view','id'=>$model->id]), [
+                ]);
+                }
+            ],
+            ],
                 ],
                 'responsive' => true,
                 'hover' => true,
@@ -120,7 +120,7 @@ ob_start();
                     'showFooter' => false
                 ],
             ]);
-            Pjax::end();
+           // Pjax::end();
             ?>
 
             <?php
