@@ -178,6 +178,14 @@ class Station extends \yii\db\ActiveRecord
         return NULL;
     }
     
+    static function getNameById($id){
+     $data=self::findOne($id);
+     if($data){
+         return $data->name;
+     }
+     return NULL;
+    }
+    
     
     
 }
