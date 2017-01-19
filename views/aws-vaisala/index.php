@@ -1,35 +1,35 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\AwsVaisalaSearch */
+/* @var $searchModel app\models\AwsVaisalaSearchs */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Aws Vaisala Data';
+$this->title = 'Aws Vaisalas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-vaisala-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php //echo Html::a('New Record', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Import Records', ['import'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-           // 'id',
+//            'id',
             'TIME',
-            'BAT',
-            'DP',
-            'DP1HA',
+//            'BAT',
+//            'DP',
+//            'DP1HA',
             // 'DP1HX',
             // 'DP1HM',
             // 'PA',
@@ -95,12 +95,32 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'a',
             // 'p',
             // 'ETO',
-            // 'Path',
-             'StationName',
-             'VaisalaVersion',
+            'Path',
+            'StationName',
+            // 'VaisalaVersion',
              'EntryDate',
+            [
+                'label' => '',
+                'value' => function($model) {
+                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i>View More</span>', Yii::$app->urlManager->createUrl(['aws-vaisala/view', 'id' => $model->id,]), [
+                                'title' => Yii::t('yii', 'View More'),
+                    ]);
+                },
+                        'format' => 'raw',
+                    ],
+//                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => 'Aws Vaisala',
+                    'type' => 'default',
+                    'showFooter' => true
+                ],
+            ]);
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+            Pjax::end();
+            ?>
 </div>

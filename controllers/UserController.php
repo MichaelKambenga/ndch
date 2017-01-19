@@ -64,7 +64,7 @@ class UserController extends Controller {
         $model_audit_search = new UserAuditTrailSearch;
         $model_audit_search->userid = $model->id;
         $dataProviderAuditTrail = $model_audit_search->search(NULL);
-        
+
         return $this->render('view', [
                     'model' => $model,
                     'model_logins' => $model_logins,
@@ -86,11 +86,30 @@ class UserController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $model->setPassword($model->password_hash);
             $model->status = User::STATUS_ACTIVE;
-            $model->updated_at = NULL;
+            $model->created_at = Date('Y-m-d H:i:s', time());
+            $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
+//            echo '<pre/>';
+//            var_dump($model->attributes);
+//            echo var_dump($model->user_role);
+//            
+            $user_roles = $model->user_role;
+//            echo '<pre>';print_r($model->attributes);die();
+            if (count($model->user_role) > 0) {
+                $model->user_role = count($model->user_role);
+            }
+            // echo $model->user_role;
+
             if ($model->save()) {
+                foreach ($user_roles as $key => $role) {
+                    $userRole = new \app\models\AuthAssignment;
+                    $userRole->item_name = $role;
+                    $userRole->user_id = $model->id;
+                    $userRole->save();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
+
             return $this->render('create', [
                         'model' => $model,
             ]);
@@ -106,14 +125,32 @@ class UserController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
         $model->updated_at = Date('Y-m-d H:i:s', time());
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                        'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $user_roles = $model->user_role;
+            if (count($model->user_role) > 0) {
+                $model->user_role = count($model->user_role);
+            }
+            // echo $model->user_role;            
+            if ($model->save()) {
+                \app\models\AuthAssignment::deleteAll(['user_id' =>$model->id]);
+                $count_roles = 0;
+                foreach ($user_roles as $key => $role) {
+                    $userRole = new \app\models\AuthAssignment;
+                    $userRole->item_name = $role;
+                    $userRole->user_id = $model->id;
+                    $userRole->created_at = time();
+                    if ($userRole->save()) {
+                        $count_roles++;
+                    }
+                }
+                if ($count_roles) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+        return $this->render('update', [
+                    'model' => $model,
+        ]);
     }
 
     /**

@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\AwsVaisala;
 
 /**
- * AwsVaisalaSearch represents the model behind the search form about `app\models\AwsVaisala`.
+ * AwsVaisalaSearchs represents the model behind the search form about `app\models\AwsVaisala`.
  */
 class AwsVaisalaSearch extends AwsVaisala
 {

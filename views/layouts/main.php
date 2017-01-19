@@ -17,7 +17,8 @@ LteAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <title><?= Html::encode("Welcome to NDCH System") ?></title>
+        <!--<title><?= Html::encode($this->title) ?></title>-->
         <?php $this->head() ?>
     </head>
     <!--    <body class="skin-blue sidebar-mini">-->
@@ -90,25 +91,25 @@ LteAsset::register($this);
 //                                Yii::$app->user->can('report viewer') ||
 //                                Yii::$app->user->can('consolidator') ||
 //                                Yii::$app->user->can('developer')) {
-                        echo '<li class = "treeview">
-                            <a href = "#">
-                            <i class = "fa fa-pie-chart"></i>
-                            <span>Reports</span>
-                            <span class = "pull-right-container">
-                            <i class = "fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                            <ul class = "treeview-menu">
-                            <li class="btnTrialBalance"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Trial Balance</a></li>
-                            <li class="btnEntityList"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Entity List</a></li>
-                            <li class="btnGFSList"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            GFS List</a></li>
-                            <li class="btnNotes"><a href = "#"><i class = "fa fa-circle-o"></i>
-                            Notes</a></li>
-                            </ul>
-                            </li>';
+//                        echo '<li class = "treeview">
+//                            <a href = "#">
+//                            <i class = "fa fa-pie-chart"></i>
+//                            <span>Reports</span>
+//                            <span class = "pull-right-container">
+//                            <i class = "fa fa-angle-left pull-right"></i>
+//                            </span>
+//                            </a>
+//                            <ul class = "treeview-menu">
+//                            <li class="btnTrialBalance"><a href = "#"><i class = "fa fa-circle-o"></i>
+//                            Trial Balance</a></li>
+//                            <li class="btnEntityList"><a href = "#"><i class = "fa fa-circle-o"></i>
+//                            Entity List</a></li>
+//                            <li class="btnGFSList"><a href = "#"><i class = "fa fa-circle-o"></i>
+//                            GFS List</a></li>
+//                            <li class="btnNotes"><a href = "#"><i class = "fa fa-circle-o"></i>
+//                            Notes</a></li>
+//                            </ul>
+//                            </li>';
 //                        }
                         ?>
 

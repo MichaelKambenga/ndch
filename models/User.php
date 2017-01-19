@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models;
+
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -28,16 +30,19 @@ use yii\web\IdentityInterface;
  * @property TblStakeholder $organization
  */
 class User extends ActiveRecord implements IdentityInterface {
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_BLOCKED = 2;
 
-    public $entity_sector_id;
-    public $entity_sub_sector_id;
+//    public $entity_sector_id;
+//    public $entity_sub_sector_id;
+    public $user_role; ///variable to carry the role(s) of the user in the system e.g admin,etc
 
     /**
      * @inheritdoc
      */
+
     public static function tableName() {
         return 'tbl_user';
     }
@@ -47,7 +52,7 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function behaviors() {
         return [
-        TimestampBehavior::className(),
+            TimestampBehavior::className(),
         ];
     }
 
@@ -56,14 +61,14 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function rules() {
         return [
-        [['firstname', 'lastname', 'username', 'password_hash'], 'required'],
-        [['organizationid', 'status', 'logins'], 'integer'],
-        [['created_at', 'datedeactivated', 'lastlogin', 'created_at'], 'safe'],
-        [['firstname', 'middlename'], 'string', 'max' => 100],
-        [['lastname'], 'string', 'max' => 150],
-        [['username'], 'string', 'max' => 50],
-        [['password_hash', 'auth_key'], 'string', 'max' => 255],
-        [['organizationid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['organizationid' => 'id']],
+                [['firstname', 'lastname', 'username', 'password_hash', 'user_role'], 'required'],
+                [['organizationid', 'status', 'logins'], 'integer'],
+                [['created_at', 'datedeactivated', 'lastlogin', 'created_at','updated_at'], 'safe'],
+                [['firstname', 'middlename'], 'string', 'max' => 100],
+                [['lastname'], 'string', 'max' => 150],
+                [['username'], 'string', 'max' => 50],
+                [['password_hash', 'auth_key'], 'string', 'max' => 255],
+                [['organizationid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['organizationid' => 'id']],
         ];
     }
 
@@ -72,18 +77,19 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function attributeLabels() {
         return [
-        'id' => 'ID',
-        'firstname' => 'First Name',
-        'middlename' => 'Middle Name',
-        'lastname' => 'Last Name',
-        'organizationid' => 'Organization',
-        'username' => 'User Name',
-        'password' => 'Password',
-        'status' => 'Status',
-        'created_at' => 'Date Created',
-        'datedeactivated' => 'Date Deactivated',
-        'lastlogin' => 'Lastlogin',
-        'logins' => 'Logins',
+            'id' => 'ID',
+            'firstname' => 'First Name',
+            'middlename' => 'Middle Name',
+            'lastname' => 'Last Name',
+            'organizationid' => 'Organization',
+            'username' => 'User Name',
+            'password' => 'Password',
+            'status' => 'Status',
+            'created_at' => 'Date Created',
+            'datedeactivated' => 'Date Deactivated',
+            'lastlogin' => 'Lastlogin',
+            'logins' => 'Logins',
+            'user_role' => 'User Role(s)'
         ];
     }
 
@@ -126,8 +132,8 @@ class User extends ActiveRecord implements IdentityInterface {
         }
 
         return static::findOne([
-        'password_reset_token' => $token,
-        'status' => self::STATUS_ACTIVE,
+                    'password_reset_token' => $token,
+                    'status' => self::STATUS_ACTIVE,
         ]);
     }
 
@@ -228,6 +234,20 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function getOrganization() {
         return $this->hasOne(Stakeholder::className(), ['id' => 'organizationid']);
+    }
+    
+    function getUserRolesName(){
+        $rolesList=NULL;
+        $roles= AuthAssignment::find(['user_id'=> $this->id])->orderBy('item_name ASC')->all();
+        if($roles){
+            $rolesList='<ul>';
+            foreach ($roles as $value) {
+                $rolesList .='<li>'.$value->item_name.'</li>';
+               // $rolesList = substr($rolesList, 1);
+            }
+            $rolesList .='</ul>';
+        }
+       return $rolesList;
     }
 
 }

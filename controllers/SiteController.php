@@ -96,13 +96,14 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionLogout() {
-        Yii::$app->user->logout();
         /* Logs the Logins History */
         $loginsModel = new \app\models\Logins();
-        $loginsModel->userid = $userId;
+        $loginsModel->userid =  Yii::$app->user->id;
         $loginsModel->ipaddress = Yii::$app->getRequest()->getUserIP();
         $loginsModel->details = 'User logged out the system successful using browser :- ' . Yii::$app->getRequest()->getUserAgent();
         $loginsModel->save();
+         Yii::$app->user->logout();
+       
         return $this->goHome();
     }
 

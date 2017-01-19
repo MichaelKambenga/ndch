@@ -184,7 +184,7 @@ class AwsVaisala extends \yii\db\ActiveRecord
             'a' => 'A',
             'p' => 'P',
             'ETO' => 'Eto',
-            'Path' => 'Path',
+            'Path' => 'Processed File Path',
             'StationName' => 'Station Name',
             'VaisalaVersion' => 'Vaisala Version',
             'EntryDate' => 'Entry Date',
