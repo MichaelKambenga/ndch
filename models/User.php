@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $middlename
  * @property string $lastname
  * @property integer $organizationid
+ * @property integer $stationid
  * @property string $username
  * @property string $password
  * @property integer $status
@@ -62,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface {
     public function rules() {
         return [
                 [['firstname', 'lastname', 'username', 'password_hash', 'user_role'], 'required'],
-                [['organizationid', 'status', 'logins'], 'integer'],
+                [['organizationid', 'status', 'logins','stationid'], 'integer'],
                 [['created_at', 'datedeactivated', 'lastlogin', 'created_at','updated_at'], 'safe'],
                 [['firstname', 'middlename'], 'string', 'max' => 100],
                 [['lastname'], 'string', 'max' => 150],
@@ -82,6 +83,7 @@ class User extends ActiveRecord implements IdentityInterface {
             'middlename' => 'Middle Name',
             'lastname' => 'Last Name',
             'organizationid' => 'Organization',
+            'stationid' => 'Station',
             'username' => 'User Name',
             'password' => 'Password',
             'status' => 'Status',
@@ -218,14 +220,14 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblLogs() {
+    public function getLogs() {
         return $this->hasMany(Logs::className(), ['userid' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblStations() {
+    public function getStations() {
         return $this->hasMany(Station::className(), ['createdby' => 'id']);
     }
 

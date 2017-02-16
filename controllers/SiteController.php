@@ -77,6 +77,7 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->session->set('organizationUser', 1);
              /* Logs the Logins History */
             $loginsModel = new \app\models\Logins();
             $loginsModel->userid = \yii::$app->user->identity->id;

@@ -195,6 +195,13 @@ LteAsset::register($this);
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>
+                Loged in As:- 
+                <strong>
+                <?php  if (!Yii::$app->user->isGuest) {
+                          echo Yii::$app->user->identity->id.' => '.Yii::$app->user->identity->username.' => '.Yii::$app->user->identity->firstname.' '.Yii::$app->user->identity->lastname.' => '.Yii::$app->user->identity->organizationid; 
+                 }?>
+                </strong>
+                <br/>
                 <strong>Copyright &copy; <?= '2016 - ' . Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
                 All rights reserved.          
             </footer>   
