@@ -137,7 +137,7 @@ echo GridView::widget([
         <p>
             <?php if (Yii::$app->session->get('organizationUser') == 1) { ?>
 
-            <div class="line-item-breakdown-form">
+            <div class="station-user-form">
 
                 <?php
                 $userModel = new \app\models\User();
@@ -153,16 +153,6 @@ echo GridView::widget([
                         'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter User Name']],
                     ]
                 ]);
-//                echo \kartik\builder\Form::widget([
-//                    'model' => $breakDownModel,
-//                    'form' => $form,
-//                    'columns' => 3,
-//                    'attributes' => [
-//                        'NoOfUnits' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Number of Units']],
-//                        'Quantity' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Quantity']],
-//                        'Frequency' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Frequency']],
-//                    ]
-//                ]);
 
                 echo Html::submitButton("Add new user", ['id' => 'save-new', 'class' => 'btn btn-success', 'style' => 'margin-left: 480px']);
                 \kartik\form\ActiveForm::end();

@@ -5,10 +5,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\tabs\TabsX;
-use app\models\Region;
-use app\models\District;
-use app\models\Station;
-use app\models\Stakeholder;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Stakeholder */
@@ -62,15 +59,73 @@ ob_end_clean();
 ?>
 
 <?php ob_start(); ?>
-
-<?php ob_start(); ?>
-
+<?php
+Pjax::begin();
+echo GridView::widget([
+    'dataProvider' => $dataProviderAuditTrail,
+//      'filterModel' => $model_audit_search,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+        'id',
+        'userid',
+        'datecreated',
+        'ipaddress',
+        'object',
+        // 'clientdetails:ntext',
+        // 'details:ntext',
+        // 'referer',
+        ['class' => 'yii\grid\ActionColumn'],
+    ],
+]);
+Pjax::end()
+?>
 <?php
 $userAuditTrail = ob_get_contents();
 ob_end_clean();
 ?>
 
 <?php ob_start(); ?>
+
+<?php
+Pjax::begin();
+echo GridView::widget([
+    'dataProvider' => $dataProviderLogins,
+//        'filterModel' => $model_login_search,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+//            'login_id',
+        [
+            'attribute' => 'userid',
+            'vAlign' => 'middle',
+            'width' => '200px',
+            'value' => function ($model) {
+                return ($model->user->lastname . ' ' . $model->user->firstname);
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter' => ArrayHelper::map(app\models\User::findBySql("select tbl_user.*, concat(lastname,', ',firstname,' ',middlename) AS fullname from tbl_user")->orderBy('id')->asArray()->all(), 'id', 'fullname'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => ['placeholder' => 'Search...'],
+            'format' => 'raw'
+        ],
+        'details',
+        'ipaddress',
+        ['attribute' => 'datecreated', 'format' => ['datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']],
+    ],
+    'responsive' => true,
+    'hover' => true,
+    'condensed' => true,
+    'floatHeader' => true,
+    'panel' => [
+        'heading' => ' ',
+        'type' => 'default',
+//        'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+        'showFooter' => false
+    ],
+]);
+Pjax::end();
+?>
 
 <?php
 $userLogins = ob_get_contents();

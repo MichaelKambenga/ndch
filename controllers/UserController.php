@@ -84,7 +84,7 @@ class UserController extends Controller {
     public function actionCreate() {
         $model = new User;
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->password_hash);
+            $model->setPassword($model->password_hash); 
             $model->status = User::STATUS_ACTIVE;
             $model->created_at = Date('Y-m-d H:i:s', time());
             $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
