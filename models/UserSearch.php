@@ -10,15 +10,14 @@ use app\models\User;
 /**
  * UserSearch represents the model behind the search form about `app\models\User`.
  */
-class UserSearch extends User
-{
+class UserSearch extends User {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'organizationid', 'status', 'logins'], 'integer'],
+            [['id', 'organizationid', 'status', 'logins', 'stationid'], 'integer'],
             [['firstname', 'middlename', 'lastname', 'username', 'password_hash', 'created_at', 'datedeactivated', 'lastlogin'], 'safe'],
         ];
     }
@@ -26,8 +25,7 @@ class UserSearch extends User
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class UserSearch extends User
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = User::find();
 
         // add conditions that should always apply here
@@ -61,6 +58,7 @@ class UserSearch extends User
         $query->andFilterWhere([
             'id' => $this->id,
             'organizationid' => $this->organizationid,
+            'stationid' => $this->stationid,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'datedeactivated' => $this->datedeactivated,
@@ -69,11 +67,12 @@ class UserSearch extends User
         ]);
 
         $query->andFilterWhere(['like', 'firstname', $this->firstname])
-            ->andFilterWhere(['like', 'middlename', $this->middlename])
-            ->andFilterWhere(['like', 'lastname', $this->lastname])
-            ->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash]);
+                ->andFilterWhere(['like', 'middlename', $this->middlename])
+                ->andFilterWhere(['like', 'lastname', $this->lastname])
+                ->andFilterWhere(['like', 'username', $this->username])
+                ->andFilterWhere(['like', 'password_hash', $this->password_hash]);
 
         return $dataProvider;
     }
+
 }

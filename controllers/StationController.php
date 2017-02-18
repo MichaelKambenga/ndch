@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StationWeatherElements;
 use app\models\StationWeatherElementsSearch;
+use app\models\User;
+use app\models\UserSearch;
 use yii\helpers\Html;
 
 /**
@@ -22,12 +24,12 @@ class StationController extends Controller {
      */
     public function behaviors() {
         return [
-        'verbs' => [
-        'class' => VerbFilter::className(),
-        'actions' => [
-        'delete' => ['POST'],
-        ],
-        ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
         ];
     }
 
@@ -40,8 +42,8 @@ class StationController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-        'searchModel' => $searchModel,
-        'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -53,14 +55,37 @@ class StationController extends Controller {
     public function actionView($id) {
         $id = Html::encode($id);
         $model = $this->findModel($id);
-        $model_station_weather_element = new StationWeatherElements;
+
         $searchModel_station_weather_element = new StationWeatherElementsSearch;
         $searchModel_station_weather_element->stationid = $model->id;
         $dataProvider_station_weather_element = $searchModel_station_weather_element->search(NULL);
+
+        $searchModel_station_users = new UserSearch;
+        $searchModel_station_users->stationid = $model->id;
+        $dataProvider_station_users = $searchModel_station_users->search(NULL);
+
+        if (isset($_POST['User'])) {
+            $userModel = new User();
+            $userModel->load(Yii::$app->request->post());
+            $userModel->stationid = $id;
+            $userModel->organizationid = $model->stationowner;
+            $userModel->setPassword($userModel->password_hash);
+            $userModel->status = User::STATUS_ACTIVE;
+            $userModel->created_at = Date('Y-m-d H:i:s', time());
+            $userModel->updated_at = $userModel->datedeactivated = $userModel->lastlogin = NULL;
+            if ($userModel->save()) {
+                $userRole = new \app\models\AuthAssignment;
+                $userRole->item_name = 'Data Entry';
+                $userRole->user_id = $userModel->id;
+                $userRole->save();
+            }
+        }
         return $this->render('view', [
-        'model' => $model,
-        'dataProvider_station_weather_element' => $dataProvider_station_weather_element,
-        'searchModel_station_weather_element' => $searchModel_station_weather_element
+                    'model' => $model,
+                    'dataProvider_station_weather_element' => $dataProvider_station_weather_element,
+                    'searchModel_station_weather_element' => $searchModel_station_weather_element,
+                    'dataProvider_station_users' => $dataProvider_station_users,
+                    'searchModel_station_users' => $searchModel_station_users
         ]);
     }
 
@@ -81,7 +106,7 @@ class StationController extends Controller {
             }
         }
         return $this->render('create', [
-        'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -101,7 +126,7 @@ class StationController extends Controller {
             }
         }
         return $this->render('update', [
-        'model' => $model,
+                    'model' => $model,
         ]);
     }
 

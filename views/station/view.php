@@ -9,6 +9,7 @@ use app\models\Stakeholder;
 use app\models\Region;
 use app\models\District;
 use app\models\Ward;
+use kartik\builder\Form;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Stakeholder */
@@ -134,37 +135,82 @@ echo GridView::widget([
 
         <?php ob_start(); ?>
         <p>
+            <?php if (Yii::$app->session->get('organizationUser') == 1) { ?>
+
+            <div class="line-item-breakdown-form">
+
+                <?php
+                $userModel = new \app\models\User();
+                $form = \kartik\form\ActiveForm::begin();
+                echo \kartik\builder\Form::widget([
+                    'model' => $userModel,
+                    'form' => $form,
+                    'columns' => 4,
+                    'attributes' => [
+                        'firstname' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter First Name']],
+                        'middlename' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Middle Name']],
+                        'lastname' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Last Name']],
+                        'username' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter User Name']],
+                    ]
+                ]);
+//                echo \kartik\builder\Form::widget([
+//                    'model' => $breakDownModel,
+//                    'form' => $form,
+//                    'columns' => 3,
+//                    'attributes' => [
+//                        'NoOfUnits' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Number of Units']],
+//                        'Quantity' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Quantity']],
+//                        'Frequency' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Frequency']],
+//                    ]
+//                ]);
+
+                echo Html::submitButton("Add new user", ['id' => 'save-new', 'class' => 'btn btn-success', 'style' => 'margin-left: 480px']);
+                \kartik\form\ActiveForm::end();
+                ?>
+                <br/>
+            </div>
             <?php
-            if(Yii::$app->session->get('organizationUser') == 1){
-            echo Html::a('Add User', ['update', 'id' => $model->id], ['class' => 'btn btn-success']);
-            }
-            ?>
+        }
+        ?>
         </p>
         <?php
         Pjax::begin();
         echo GridView::widget([
-            'dataProvider' => $dataProvider_station_weather_element,
+            'dataProvider' => $dataProvider_station_users,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                array(
-                    'attribute' => 'elementsid',
-                    'label' => 'Weather Element Name',
-                    'value' => function ($model) {
-                        return \app\models\WeatherElements::getElementNameById($model->elementsid);
+                'firstname',
+                'middlename',
+                'lastname',
+                'organizationid',
+                'username',
+                // 'password',
+                [
+                    'label' => 'Status',
+                    'attribute' => 'status',
+                    'vAlign' => 'middle',
+                    'width' => '30px',
+                    'value' => function($model) {
+                        return $model->status == 1 ? "<span class='glyphicon glyphicon-ok'></span>" : "<span class='glyphicon glyphicon-remove'></span>";
                     },
-                ),
-                'collectionfrequency',
-                'accuracy',
-                'surfacedistance',
+                    'format' => 'raw',
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ['1' => 'Active', '0' => 'Inactive'],
+                    'filterWidgetOptions' => [
+                        'pluginOptions' => ['allowClear' => true],
+                    ],
+                    'filterInputOptions' => ['placeholder' => 'Search...'],
+                    'format' => 'raw'
+                ],
                 ['class' => 'yii\grid\ActionColumn',
                     'template' => '{update} &nbsp;&nbsp;&nbsp;  {delete}',
                     'buttons' => [
                         'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-edit"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/update', 'id' => $model->id)), [
+                            return Html::a('<span class="glyphicon glyphicon-edit"></span>', Yii::$app->urlManager->createUrl(array('user/update', 'id' => $model->id)), [
                             ]);
                         },
                                 'delete' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-remove"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/delete', 'id' => $model->id)), [
+                            return Html::a('<span class="glyphicon glyphicon-remove"></span>', Yii::$app->urlManager->createUrl(array('user/delete', 'id' => $model->id)), [
                             ]);
                         }
                             ],

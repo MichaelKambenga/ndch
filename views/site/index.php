@@ -9,6 +9,15 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>Welcome to NDCH System</h1>
 
+ <?php       
+   if(Yii::$app->session->get('organizationUser') == 1){
+       echo 'I am an organization user';
+   }
+   
+    if(Yii::$app->session->get('stationUser') == 1){
+       echo 'I am a station user';
+   } 
+   ?>
 <!--        <p class="lead">You have successfully created your Yii-powered application.</p>-->
 
        </div>
