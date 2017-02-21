@@ -1,7 +1,8 @@
 <?php
-
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\WeatherDataSearch */
@@ -16,26 +17,35 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Weather Data', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Weather Data', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?= GridView::widget([
+ <?php
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+             'stationid',
+             'weatherelementid',
             'value',
-            'daterecorded',
+            [
+            'label'=>'daterecorded',
+            ],
             'source',
-            'entrydate',
-            // 'entryby',
-            // 'stationid',
-            // 'weatherelementid',
-            // 'weatherelementlistid',
-
-            ['class' => 'yii\grid\ActionColumn'],
+           ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+             'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => true,
+        'panel' => [
+            'heading' => ' ',
+            'type' => 'default',
+            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => false
+        ],
+    ]);
+    Pjax::end();
+    ?>
 </div>

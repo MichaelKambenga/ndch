@@ -69,12 +69,12 @@ LteAsset::register($this);
                             </a>
                         </li>
                         <?php
-                        if (Yii::$app->user->can('user') || Yii::$app->user->can('developer')) {
-                            echo '<li><a href="' . Url::to(['/gac-data-trxdet-u']) . '">'
-                            . '<i class="fa fa-files-o"></i>'
-                            . '<span>General Operation</span>'
+                       // if (Yii::$app->user->can('user') || Yii::$app->user->can('developer')) {
+                            echo '<li><a href="' . Url::to(['/weather-data']) . '">'
+                            . '<i class="fa fa-bar-chart"></i>'
+                            . '<span>Station Data</span>'
                             . '</a></li>';
-                        }
+                        //}
                         ?>
 
                         <?php
@@ -86,38 +86,13 @@ LteAsset::register($this);
                         }
                         ?>
 
-                        <?php
-//                        if (Yii::$app->user->can('user') ||
-//                                Yii::$app->user->can('report viewer') ||
-//                                Yii::$app->user->can('consolidator') ||
-//                                Yii::$app->user->can('developer')) {
-//                        echo '<li class = "treeview">
-//                            <a href = "#">
-//                            <i class = "fa fa-pie-chart"></i>
-//                            <span>Reports</span>
-//                            <span class = "pull-right-container">
-//                            <i class = "fa fa-angle-left pull-right"></i>
-//                            </span>
-//                            </a>
-//                            <ul class = "treeview-menu">
-//                            <li class="btnTrialBalance"><a href = "#"><i class = "fa fa-circle-o"></i>
-//                            Trial Balance</a></li>
-//                            <li class="btnEntityList"><a href = "#"><i class = "fa fa-circle-o"></i>
-//                            Entity List</a></li>
-//                            <li class="btnGFSList"><a href = "#"><i class = "fa fa-circle-o"></i>
-//                            GFS List</a></li>
-//                            <li class="btnNotes"><a href = "#"><i class = "fa fa-circle-o"></i>
-//                            Notes</a></li>
-//                            </ul>
-//                            </li>';
-//                        }
-                        ?>
+                
 
                         <?php
 //                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('developer')) {
                         echo '<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-cog"></i>
                                 <span>Setup</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
@@ -195,13 +170,6 @@ LteAsset::register($this);
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>
-                Loged in As:- 
-                <strong>
-                <?php  if (!Yii::$app->user->isGuest) {
-                          echo Yii::$app->user->identity->id.' => '.Yii::$app->user->identity->username.' => '.Yii::$app->user->identity->firstname.' '.Yii::$app->user->identity->lastname.' => '.Yii::$app->user->identity->organizationid; 
-                 }?>
-                </strong>
-                <br/>
                 <strong>Copyright &copy; <?= '2016 - ' . Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
                 All rights reserved.          
             </footer>   

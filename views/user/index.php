@@ -51,19 +51,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions' => ['placeholder' => 'Search...'],
                 'format' => 'raw'
             ],
-            // 'datecreated',
-            // 'datedeactivated',
-            // 'lastlogin',
-            // 'logins',
-            [
-                'label' => '',
-                'value' => function($model) {
-                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i>View More</span>', Yii::$app->urlManager->createUrl(['user/view', 'id' => $model->id,]), [
-                                'title' => Yii::t('yii', 'View More'),
-                    ]);
-                },
-                        'format' => 'raw',
-                    ],
+//            [
+//                'label' => '',
+//                'value' => function($model) {
+//                    return Html::a('<span class=" label label-primary"><i class = "glyphicon glyphicon-eye-open"></i>View More</span>', Yii::$app->urlManager->createUrl(['user/view', 'id' => $model->id,]), [
+//                                'title' => Yii::t('yii', 'View More'),
+//                    ]);
+//                },
+//                        'format' => 'raw',
+//             ],
+                        ['class' => 'yii\grid\ActionColumn'],
                 ],
                 'responsive' => true,
                 'hover' => true,

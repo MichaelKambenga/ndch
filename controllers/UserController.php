@@ -97,7 +97,7 @@ class UserController extends Controller {
             if (count($model->user_role) > 0) {
                 $model->user_role = count($model->user_role);
             }
-            // echo $model->user_role;
+           
 
             if ($model->save()) {
                 foreach ($user_roles as $key => $role) {

@@ -40,7 +40,10 @@ DetailView::widget([
         'organizationid',
         'username',
         'status',
-        'created_at',
+        [
+        'attribute'=>'created_at',
+        'format' => ['date', 'php:d-M-Y @ H:i:s']
+        ],
         'datedeactivated',
         'lastlogin',
         'logins',

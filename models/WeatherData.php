@@ -24,6 +24,10 @@ use Yii;
  */
 class WeatherData extends \yii\db\ActiveRecord
 {
+    const DATA_DOURCE_MANNED_SYSTEM=1;
+    const DATA_SOURCE_AWS_SYSTEM=2;
+    const DATA_SOURCE_EXISTING_DATABASE=3;
+
     /**
      * @inheritdoc
      */
@@ -38,7 +42,7 @@ class WeatherData extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'daterecorded', 'source'], 'required'],
+            [['value', 'daterecorded','stationid', 'source'], 'required'],
             [['value'], 'number'],
             [['daterecorded', 'entrydate'], 'safe'],
             [['source', 'entryby', 'stationid', 'weatherelementid', 'weatherelementlistid'], 'integer'],
@@ -57,13 +61,13 @@ class WeatherData extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'value' => 'Value',
-            'daterecorded' => 'Daterecorded',
+            'daterecorded' => 'Date Recorded',
             'source' => 'Source',
-            'entrydate' => 'Entrydate',
-            'entryby' => 'Entryby',
-            'stationid' => 'Stationid',
-            'weatherelementid' => 'Weatherelementid',
-            'weatherelementlistid' => 'Weatherelementlistid',
+            'entrydate' => 'Entry Date',
+            'entryby' => 'Entry By',
+            'stationid' => 'Station',
+            'weatherelementid' => 'Weather Element',
+            'weatherelementlistid' => 'Weather Element List',
         ];
     }
 

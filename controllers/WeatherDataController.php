@@ -64,10 +64,14 @@ class WeatherDataController extends Controller
     public function actionCreate()
     {
         $model = new WeatherData();
-
+        $model->source=WeatherData::DATA_DOURCE_MANNED_SYSTEM;
+        $model->entryby=\yii::$app->user->identity->id;
+        $model->entrydate=Date('Y-m-d H:i:s',  time());
+        $model->stationid=\yii::$app->user->identity->stationid;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            var_dump($model->errors);
             return $this->render('create', [
                 'model' => $model,
             ]);
