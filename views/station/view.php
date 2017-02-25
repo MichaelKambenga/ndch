@@ -73,6 +73,7 @@ DetailView::widget([
                 return Ward::getWardNameById($model->wardid);
             },
         ],
+                    'heightanemometer','heightbarometer','heightraingauge','thermometer','hygrometer','barometer','anemometer','raingauge','generalcomment'
     ],
 ])
 ?>

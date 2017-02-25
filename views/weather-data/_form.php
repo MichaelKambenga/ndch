@@ -1,9 +1,7 @@
 <?php
-use yii\helpers\ArrayHelper;
+
 use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
-use kartik\builder\Form;
-use kartik\widgets\DateTimePicker;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\WeatherData */
@@ -11,48 +9,159 @@ use kartik\widgets\DateTimePicker;
 ?>
 
 <div class="weather-data-form">
-  
-     <?php
-    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]);
-    echo Form::widget([
-        'model' => $model,
-        'form' => $form,
-        'columns' => 2,
-        'attributes' => [
-            'weatherelementid' => [
-                'type' => Form::INPUT_DROPDOWN_LIST,
-             'items' => ArrayHelper::map(app\models\WeatherElements::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => 'Select element'],
-                  'columnOptions' => ['width' => '185px']
-                ], 'weatherelementlistid' => [
-                'type' => Form::INPUT_DROPDOWN_LIST,
-                'items' => ArrayHelper::map(app\models\WeatherElementsList::find()->orderBy('itemname')->asArray()->all(), 'id', 'itemname'), 'options' => ['prompt' => 'Select element'],
-              'columnOptions' => ['width' => '185px']
-            ], 
-           
-            'value' => [
-                'type' => Form::INPUT_TEXT,
-                'options' => ['placeholder' => 'Enter value...'],
-                'columnOptions' => ['width' => '185px']
-            ],
-              
-         
-        ]
-    ]);
-   echo '<label>Date Recorded</label>';
-   echo DateTimePicker::widget([
-	'model' => $model,
-	'attribute' => 'daterecorded',
-	'options' => ['placeholder' => 'Enter Date Recorded time ...'],
-         'pluginOptions' => [
-         'autoclose' => true
-	]
-       ]);
 
-   
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
-    ActiveForm::end();
-    ?>
-    
-    
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'id')->textInput() ?>
+
+    <?= $form->field($model, 'TIME')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'DP')->textInput() ?>
+
+    <?= $form->field($model, 'DP1HA')->textInput() ?>
+
+    <?= $form->field($model, 'DP1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'DP1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PA1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PA1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PA1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR1HS')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR24HS')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS00')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS05')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS10')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS15')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS20')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS25')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS30')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS35')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS40')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS45')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS50')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'PR5MS55')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'RH')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'RH1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'RH1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'RH1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'SR')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'SR1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'SR1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'SR1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'TA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'TA1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'TA1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'TA1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD2MA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD10MA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD2MX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD10MX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD2MM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD10MM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WD1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS2MA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS10MA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS2MX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS10MX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS2MM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'WS10MM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFE')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFE1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFE1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFE1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFF')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFF1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFF1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QFF1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QNH')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QNH1HA')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QNH1HX')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'QNH1HM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'ETO')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'Path')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'StationName')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'VaisalaVersion')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EntryDate')->textInput() ?>
+
+    <?= $form->field($model, 'stationid')->textInput() ?>
+
+    <?= $form->field($model, 'source')->textInput() ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 </div>

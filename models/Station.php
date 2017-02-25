@@ -57,7 +57,7 @@ class Station extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 100],
             [['name'], 'unique'],
             [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
-            [['datecreated'], 'safe'],
+            [['datecreated','heightanemometer','heightbarometer','heightraingauge','thermometer','hygrometer','barometer','anemometer','raingauge','generalcomment'], 'safe'],
             [['stationcode'], 'string', 'max' => 20],
             [['geocode'], 'string', 'max' => 255],
             [['districtid'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['districtid' => 'id']],

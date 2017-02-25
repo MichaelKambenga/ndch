@@ -72,6 +72,54 @@ use app\models\Station;
                 'items' => ArrayHelper::map(\app\models\Ward::find()->orderBy('id')->asArray()->all(), 'id', 'wardname'), 'options' => ['prompt' => 'Select Ward'],
                 'columnOptions' => ['width' => '185px']
             ],
+             'heightanemometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'heightanemometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+             'heightbarometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'heightbarometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+             'heightraingauge' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'heightraingauge',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'thermometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'thermometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'hygrometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'hygrometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'barometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'barometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'anemometer' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'anemometer',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'raingauge' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'raingauge',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ], 'generalcomment' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'generalcomment',
+                'options' => ['placeholder' => 'Enter Station Code...'],
+                'columnOptions' => ['width' => '185px']
+            ],
         ]
     ]);
     echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
