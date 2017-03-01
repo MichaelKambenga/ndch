@@ -16,7 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Import Records', ['import'], ['class' => 'btn btn-success']) ?>
+        <?php
+        if (Yii::$app->user->can('Administrator') || Yii::$app->session->get('organizationUser') == 1) {
+            echo Html::a('Import Records', ['import'], ['class' => 'btn btn-success']);
+        }
+        ?>
     </p>
     <?php
     Pjax::begin();
@@ -98,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'Path',
             'StationName',
             // 'VaisalaVersion',
-             'EntryDate',
+            'EntryDate',
             [
                 'label' => '',
                 'value' => function($model) {

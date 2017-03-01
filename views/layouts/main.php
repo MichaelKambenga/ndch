@@ -69,27 +69,22 @@ LteAsset::register($this);
                             </a>
                         </li>
                         <?php
-                       // if (Yii::$app->user->can('user') || Yii::$app->user->can('developer')) {
-                            echo '<li><a href="' . Url::to(['/weather-data']) . '">'
-                            . '<i class="fa fa-bar-chart"></i>'
-                            . '<span>Station Data</span>'
-                            . '</a></li>';
-                        //}
+                        echo '<li><a href="' . Url::to(['/weather-data']) . '">'
+                        . '<i class="fa fa-bar-chart"></i>'
+                        . '<span>Station Data</span>'
+                        . '</a></li>';
+                        echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
+                        . '<i class="fa fa-database"></i>'
+                        . '<span>VAISALA Data</span>'
+                        . '</a></li>';
+                        echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
+                        . '<i class="fa fa-cube"></i>'
+                        . '<span>SEBA Data</span>'
+                        . '</a></li>';
                         ?>
 
                         <?php
-                        if (Yii::$app->user->can('consolidator') || Yii::$app->user->can('developer')) {
-                            echo '<li><a href="' . Url::to(['/gac-data-trx-v']) . '">
-                            <i class="fa fa-th"></i>
-                            <span>Consolidation</span>
-                            </a></li>';
-                        }
-                        ?>
-
-                
-
-                        <?php
-//                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('developer')) {
+                        if (Yii::$app->user->can('Administrator')) {
                         echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-cog"></i>
@@ -116,11 +111,11 @@ LteAsset::register($this);
                                         SEBA Data Dump</a></li>
                             </ul>
                         </li>';
-//                        }
+                        }
                         ?>
 
                         <?php
-//                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('developer')) {
+                        if (Yii::$app->user->can('Administrator')) {
                         echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-edit"></i> <span>System Security</span>
@@ -145,7 +140,7 @@ LteAsset::register($this);
                                         Routes</a></li>
                             </ul>
                         </li>';
-//                        }
+                        }
                         ?>
                     </ul>
                 </section>
