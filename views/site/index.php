@@ -1,5 +1,7 @@
 <?php
 
+use miloschuman\highcharts\Highcharts;
+
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -9,19 +11,35 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>Welcome to NDCH System</h1>
 
- <?php       
-   if(Yii::$app->session->get('organizationUser') == 1){
-       echo 'I am an organization user';
-   }
-   
-    if(Yii::$app->session->get('stationUser') == 1){
-       echo 'I am a station user';
-   } 
-   ?>
+        <?php
+        if (Yii::$app->session->get('organizationUser') == 1) {
+            echo 'I am an organization user';
+        }
 
-       </div>
+        if (Yii::$app->session->get('stationUser') == 1) {
+            echo 'I am a station user';
+        }
+        ?>
+
+    </div>
 
     <div class="body-content">
-
+        <?php
+        echo Highcharts::widget([
+            'options' => [
+                'title' => ['text' => 'Fruit Consumption'],
+                'xAxis' => [
+                    'categories' => ['Apples', 'Bananas', 'Oranges']
+                ],
+                'yAxis' => [
+                    'title' => ['text' => 'Fruit eaten']
+                ],
+                'series' => [
+                    ['name' => 'Jane', 'data' => [1, 0, 4]],
+                    ['name' => 'John', 'data' => [5, 7, 3]]
+                ]
+            ]
+        ]);
+        ?>
     </div>
 </div>
