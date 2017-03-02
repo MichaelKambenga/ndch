@@ -13,13 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
 
-    <!--<h1><?= Html::encode($this->title) ?></h1>-->
-<?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
-
-    <p>
-<?= Html::a('Create Stakeholder', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <?php
     Pjax::begin();
@@ -30,15 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'mobileno',
-            'email:email',
-            array(
-                // 'label' => 'orgtype',
-                 'attribute' => 'orgtype',
-                 'value' => function ($model) {
-                 return $model->getOrgTypeName();
-                 },
-              ),
-                         ['class' => 'yii\grid\ActionColumn'],
+            'email',
+            [
+                'attribute' => 'orgtype',
+                'value' => function ($model) {
+                    return $model->getOrgTypeName();
+                },
+            ],
+            ['class' => 'yii\grid\ActionColumn'],
 //             [
 //                'label' => 'Action',
 //                'value' => function($model) {
@@ -48,17 +41,19 @@ $this->params['breadcrumbs'][] = $this->title;
 //                },
 //                       'format' => 'raw',
 //                    ],
-                ],
-                'responsive' => true,
-                'hover' => true,
-                'condensed' => true,
-                'floatHeader' => false,
-                'panel' => [
-                    'heading' => 'STAKEHOLDERS',
-                    'type' => 'default',
-                    'showFooter' => true
-                ],
-            ]);
-            Pjax::end();
-            ?>
+        ],
+        'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => false,
+        'panel' => [
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
+            'type' => 'info',
+            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add Stakeholder', ['create'], ['class' => 'btn btn-success']),
+            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => true
+        ],
+    ]);
+    Pjax::end();
+    ?>
 </div>

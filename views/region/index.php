@@ -13,12 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
 
-    <!--<h1><?= Html::encode($this->title) ?></h1>-->
     <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
-
-    <p>
-        <?= Html::a('Create/Add Region', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php
     Pjax::begin();
@@ -28,24 +23,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'regionname',
-              array(
-                'attribute'=>'datecreated',
-                 'format' => ['date', 'php:d-M-Y @ H:i:s']
-                ),
-
-            ['class' => 'yii\grid\ActionColumn'],
-
+            [
+                'attribute' => 'datecreated',
+                'format' => ['date', 'php:d-M-Y @ H:i:s']
             ],
-                'responsive' => true,
-                'hover' => true,
-                'condensed' => true,
-                'floatHeader' => false,
-                'panel' => [
-                    'heading' => 'Regions',
-                    'type' => 'default',
-                    'showFooter' => true
-                ],
-            ]);
-            Pjax::end();
-            ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => false,
+        'panel' => [           
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
+            'type' => 'info',
+            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add Region', ['create'], ['class' => 'btn btn-success']),
+            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => true
+        ],
+    ]);
+    Pjax::end();
+    ?>
 </div>

@@ -29,41 +29,39 @@ use Yii;
  * @property TblWard $ward
  * @property TblStationWeatherElements[] $tblStationWeatherElements
  */
-class Station extends \yii\db\ActiveRecord
-{
-    
+class Station extends \yii\db\ActiveRecord {
     /*
      * contants for organiszation type
      */
-    const STATION_TYPE_MANNED=1;  /// for stations operating only manualy
-    const STATION_TYPE_AUTOMATIC=2; /// for stations operating under AWS only
-    const STATION_TYPE_BOTH=3; /// for stations operating using Manual and AWS
-    
+
+    const STATION_TYPE_MANNED = 1;  /// for stations operating only manualy
+    const STATION_TYPE_AUTOMATIC = 2; /// for stations operating under AWS only
+    const STATION_TYPE_BOTH = 3; /// for stations operating using Manual and AWS
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+
+    public static function tableName() {
         return 'tbl_station';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'stationtype', 'stationowner', 'regionid', 'districtid', 'createdby', 'createdbyinsitutionid'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['name'], 'unique'],
             [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
-            [['datecreated','heightanemometer','heightbarometer','heightraingauge','thermometer','hygrometer','barometer','anemometer','raingauge','generalcomment'], 'safe'],
+            [['datecreated', 'heightanemometer', 'heightbarometer', 'heightraingauge', 'thermometer', 'hygrometer', 'barometer', 'anemometer', 'raingauge', 'generalcomment'], 'safe'],
             [['stationcode'], 'string', 'max' => 20],
             [['geocode'], 'string', 'max' => 255],
             [['districtid'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['districtid' => 'id']],
             [['regionid'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionid' => 'id']],
             [['stationowner'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stationowner' => 'id']],
-            [['createdbyinsitutionid'], 'exist', 'skipOnError' => true, 'targetClass' =>Stakeholder::className(), 'targetAttribute' => ['createdbyinsitutionid' => 'id']],
+            [['createdbyinsitutionid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['createdbyinsitutionid' => 'id']],
             [['createdby'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['createdby' => 'id']],
             [['wardid'], 'exist', 'skipOnError' => true, 'targetClass' => Ward::className(), 'targetAttribute' => ['wardid' => 'id']],
         ];
@@ -72,8 +70,7 @@ class Station extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Station Name',
@@ -93,67 +90,59 @@ class Station extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblDataSources()
-    {
+    public function getTblDataSources() {
         return $this->hasMany(DataSources::className(), ['stationid' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDistrict()
-    {
+    public function getDistrict() {
         return $this->hasOne(District::className(), ['id' => 'districtid']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRegion()
-    {
+    public function getRegion() {
         return $this->hasOne(Region::className(), ['id' => 'regionid']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStationowner0()
-    {
+    public function getStationowner0() {
         return $this->hasOne(Stakeholder::className(), ['id' => 'stationowner']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedbyinsitution()
-    {
+    public function getCreatedbyinsitution() {
         return $this->hasOne(Stakeholder::className(), ['id' => 'createdbyinsitutionid']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedby0()
-    {
+    public function getCreatedby0() {
         return $this->hasOne(User::className(), ['id' => 'createdby']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWard()
-    {
+    public function getWard() {
         return $this->hasOne(Ward::className(), ['id' => 'wardid']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblStationWeatherElements()
-    {
+    public function getTblStationWeatherElements() {
         return $this->hasMany(StationWeatherElements::className(), ['stationid' => 'id']);
     }
-    
+
     static function getStationTypes() {
         return [
             self::STATION_TYPE_MANNED => 'Manned Station',
@@ -161,13 +150,12 @@ class Station extends \yii\db\ActiveRecord
             self::STATION_TYPE_BOTH => 'Both (Manned & Automatic)'
         ];
     }
-    
-    static function getOrganizationStatuses(){
+
+    static function getOrganizationStatuses() {
         return [
             self::ORG_STATUS_ACTIVE => 'Active',
             self::ORG_STATUS_INACTIVE => 'In Active',
-            
-        ]; 
+        ];
     }
 
     public function getStationTypeName() {
@@ -177,15 +165,13 @@ class Station extends \yii\db\ActiveRecord
         }
         return NULL;
     }
-    
-    static function getNameById($id){
-     $data=self::findOne($id);
-     if($data){
-         return $data->name;
-     }
-     return NULL;
+
+    static function getNameById($id) {
+        $data = self::findOne($id);
+        if ($data) {
+            return $data->name;
+        }
+        return NULL;
     }
-    
-    
-    
+
 }

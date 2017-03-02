@@ -13,7 +13,6 @@ use app\models\StationSearch;
 use app\models\DataSourcesSearch;
 use yii\helpers\Html;
 
-
 /**
  * StakeholderController implements the CRUD actions for Stakeholder model.
  */
@@ -56,18 +55,19 @@ class StakeholderController extends Controller
      */
     public function actionView($id)
     {
-        $id=Html::encode($id);
-        $model=$this->findModel($id);
-        $model_station = new Station;
+        $id = Html::encode($id);    //Why this   
+        $model = $this->findModel($id);
+        
+        $model_station = new Station;          
         $model_station_search = new StationSearch;
-        $model_data_source_search =new DataSourcesSearch();
-        $model_station_search->stationowner=$model->id;
+        $model_data_source_search = new DataSourcesSearch();
+        $model_station_search->stationowner = $model->id;
         $dataProviderStation = $model_station_search->search(NULL);
-        $model_data_source_search->stakeholderid=$model->id;
-        $dataProviderDataSources= $model_data_source_search->search(NULL);    
+        $model_data_source_search->stakeholderid = $model->id;
+//        $dataProviderDataSources = $model_data_source_search->search(NULL);    
         return $this->render('view', [
             'model' => $model,
-            'model_station'=>$model_station,
+            'model_station' => $model_station,
             'model_station_search' => $model_station_search,
             'model_data_source_search' => $model_data_source_search,
             'dataProvider_station' => $dataProviderStation,
@@ -84,8 +84,12 @@ class StakeholderController extends Controller
     {
         $model = new Stakeholder();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->datecreated = Date('Y-m-d h:i:sa');
+            
+            if ($model->save()) {
+             return $this->redirect(['view', 'id' => $model->id]);   
+            }           
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -120,7 +124,12 @@ class StakeholderController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        $model->status = Stakeholder::ORG_STATUS_INACTIVE;
+        $model->datedeactivated = Date('Y-m-d h:i:sa');
+        
+        $model->save();
 
         return $this->redirect(['index']);
     }

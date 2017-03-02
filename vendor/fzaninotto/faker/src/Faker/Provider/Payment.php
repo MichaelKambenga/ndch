@@ -15,7 +15,11 @@ class Payment extends Base
         'American Express', 'Discover Card'
     );
 
-    // see http://en.wikipedia.org/wiki/Bank_card_number for a reference of existing prefixes
+    /**
+     * @var array List of card brand masks for generating valid credit card numbers
+     * @see https://en.wikipedia.org/wiki/Payment_card_number Reference for existing prefixes
+     * @see https://www.mastercard.us/en-us/issuers/get-support/2-series-bin-expansion.html MasterCard 2017 2-Series BIN Expansion
+     */
     protected static $cardParams = array(
         'Visa' => array(
             "4539########",
@@ -38,6 +42,12 @@ class Payment extends Base
             "4##############"
         ),
         'MasterCard' => array(
+            "2221###########",
+            "23#############",
+            "24#############",
+            "25#############",
+            "26#############",
+            "2720###########",
             "51#############",
             "52#############",
             "53#############",
@@ -76,6 +86,7 @@ class Payment extends Base
         'DO' => array(array('c', 4),    array('n', 20)),
         'EE' => array(array('n', 2),    array('n', 2),  array('n', 11), array('n', 1)),
         'ES' => array(array('n', 4),    array('n', 4),  array('n', 1),  array('n', 1),  array('n', 10)),
+        'FI' => array(array('n', 6),    array('n', 7),  array('n', 1)),
         'FR' => array(array('n', 5),    array('n', 5),  array('c', 11), array('n', 2)),
         'GB' => array(array('a', 4),    array('n', 6),  array('n', 8)),
         'GE' => array(array('a', 2),    array('n', 16)),

@@ -1,6 +1,4 @@
 <?php
-
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
@@ -16,7 +14,7 @@ use app\models\Stakeholder;
 <div class="classes-form">
 
     <?php
-    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]);
+    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]);
     echo Form::widget([
 
         'model' => $model,
@@ -27,7 +25,7 @@ use app\models\Stakeholder;
                 'type' => Form::INPUT_TEXT,
                 'label' => 'Name',
                 'options' => ['placeholder' => 'Enter Stakeholder Name...'],
-                'columnOptions' => ['width' => '185px']
+                'columnOptions' => ['width' => '5px']
             ],
             'mobileno' => [
                 'type' => Form::INPUT_TEXT,
@@ -45,13 +43,11 @@ use app\models\Stakeholder;
                 'type' => Form::INPUT_DROPDOWN_LIST,
                 'label' => 'Org Type',
                 'options' => ['prompt' => '--select--'],
-            'items'=>  Stakeholder::getOrganizationTypes()
-                //'columnOptions' => ['width' => '100px'],
-               
+                'items' => Stakeholder::getOrganizationTypes()
             ],
         ]
     ]);
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
+    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
     ActiveForm::end();
     ?>
 

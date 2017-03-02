@@ -22,12 +22,12 @@ class WeatherElementsController extends Controller {
      */
     public function behaviors() {
         return [
-        'verbs' => [
-        'class' => VerbFilter::className(),
-        'actions' => [
-        'delete' => ['POST'],
-        ],
-        ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
         ];
     }
 
@@ -40,8 +40,8 @@ class WeatherElementsController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-        'searchModel' => $searchModel,
-        'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -59,10 +59,10 @@ class WeatherElementsController extends Controller {
         $searchModel_elementList->elementid = $model->id;
         $dataProvider_station = $searchModel_elementList->search(NULL);
         return $this->render('view', [
-        'model' => $model,
-        'dataElementList' => $dataProvider_station,
-        'searchElementList' => $searchModel_elementList,
-        'model_elements_list' => $model_elementList
+                    'model' => $model,
+                    'dataElementList' => $dataProvider_station,
+                    'searchElementList' => $searchModel_elementList,
+                    'model_elements_list' => $model_elementList
         ]);
     }
 
@@ -81,7 +81,7 @@ class WeatherElementsController extends Controller {
             }
         }
         return $this->render('create', [
-        'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -101,7 +101,7 @@ class WeatherElementsController extends Controller {
             }
         }
         return $this->render('update', [
-        'model' => $model,
+                    'model' => $model,
         ]);
     }
 

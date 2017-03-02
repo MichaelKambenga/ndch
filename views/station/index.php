@@ -16,13 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
 
-    <!--<h1><?= Html::encode($this->title) ?></h1>-->
     <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
-
-    <p>
-        <?= Html::a('Create Station', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
 
     <?php
     Pjax::begin();
@@ -33,30 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'stationcode',
-           array(
-'attribute' => 'stationtype',
- 'value' => function ($model) {
-return $model->getStationTypeName();
-},
- ),
-         array(
-'attribute' => 'stationowner',
- 'value' => function ($model) {
-return Stakeholder::getStakeholderNameById($model->stationowner);
-},
- ),
-[
-'attribute' => 'regionid',
- 'value' => function ($model) {
-return Region::getRegionNameById($model->regionid);
-},
- ],
-[
-'attribute' => 'districtid',
- 'value' => function ($model) {
-return District::getDistrictNameById($model->districtid);
-},
- ],
+            [
+                'attribute' => 'stationtype',
+                'value' => function ($model) {
+                    return $model->getStationTypeName();
+                },
+            ],
+            [
+                'attribute' => 'stationowner',
+                'value' => function ($model) {
+                    return Stakeholder::getStakeholderNameById($model->stationowner);
+                },
+            ],
+            [
+                'attribute' => 'regionid',
+                'value' => function ($model) {
+                    return Region::getRegionNameById($model->regionid);
+                },
+            ],
+            [
+                'attribute' => 'districtid',
+                'value' => function ($model) {
+                    return District::getDistrictNameById($model->districtid);
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn'],
 //            [
 //                'label' => 'Action',
@@ -68,17 +62,19 @@ return District::getDistrictNameById($model->districtid);
 //                },
 //                        'format' => 'raw',
 //            ],
-            ],
-                'responsive' => true,
-                'hover' => true,
-                'condensed' => true,
-                'floatHeader' => false,
-                'panel' => [
-                    'heading' => 'STATIONS',
-                    'type' => 'default',
-                    'showFooter' => true
-                ],
-            ]);
-            Pjax::end();
-            ?>
+        ],
+        'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => false,
+        'panel' => [
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
+            'type' => 'info',
+            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add Station', ['create'], ['class' => 'btn btn-success']),
+            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => true,
+        ],
+    ]);
+    Pjax::end();
+    ?>
 </div>

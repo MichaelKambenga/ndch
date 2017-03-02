@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AwsSebaSearch */
@@ -12,19 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-seba-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Aws Seba', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
+    <?php
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'entrydate',
             'time',
             'stationname',
@@ -35,8 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'G',
             // 'CH',
             // 'id',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+        'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => false,
+        'panel' => [
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
+            'type' => 'info',
+            'before' => Html::a('<i class="glyphicon glyphicon-import"></i> Import Data', ['create'], ['class' => 'btn btn-success']),
+            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => true
+        ],
+    ]);
+    ?>
 </div>

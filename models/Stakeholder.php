@@ -25,9 +25,10 @@ class Stakeholder extends \yii\db\ActiveRecord {
     /*
      * contants for organiszation type
      */
-    const ORG_TYPE_DATASOURCE=1;
-    const ORG_TYPE_DATAREADONLY=2;
-    const ORG_TYPE_DATAALL=3;
+
+    const ORG_TYPE_DATASOURCE = 1;
+    const ORG_TYPE_DATAREADONLY = 2;
+    const ORG_TYPE_DATAALL = 3;
 
     /*
      * constants for organization status
@@ -47,11 +48,12 @@ class Stakeholder extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-        [['name', 'orgtype'], 'required'],
-        [['name'], 'unique'],
-        [['orgtype', 'status'], 'integer'],
-        [['datecreated', 'datedeactivated'], 'safe'],
-        [['name', 'mobileno', 'email'], 'string', 'max' => 100],
+            [['name', 'orgtype'], 'required'],
+            [['name'], 'unique'],
+            [['email'], 'email'],
+            [['orgtype', 'status', 'createdby', 'deactivatedby'], 'integer'],
+            [['datecreated', 'datedeactivated'], 'safe'],
+            [['name', 'mobileno', 'email'], 'string', 'max' => 100],
         ];
     }
 
@@ -60,14 +62,14 @@ class Stakeholder extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-        'id' => 'ID',
-        'name' => 'Name',
-        'mobileno' => 'Mobile #',
-        'email' => 'Email',
-        'orgtype' => 'Organization Type',
-        'datecreated' => 'Date Created',
-        'status' => 'Status',
-        'datedeactivated' => 'Datedeactivated',
+            'id' => 'ID',
+            'name' => 'Name',
+            'mobileno' => 'Mobile #',
+            'email' => 'Email',
+            'orgtype' => 'Organization Type',
+            'datecreated' => 'Date Created',
+            'status' => 'Status',
+            'datedeactivated' => 'Datedeactivated',
         ];
     }
 
@@ -109,8 +111,8 @@ class Stakeholder extends \yii\db\ActiveRecord {
 
     static function getOrganizationStatuses() {
         return [
-        self::ORG_STATUS_ACTIVE => 'Active',
-        self::ORG_STATUS_INACTIVE => 'In Active',
+            self::ORG_STATUS_ACTIVE => 'Active',
+            self::ORG_STATUS_INACTIVE => 'In Active',
         ];
     }
 

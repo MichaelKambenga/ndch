@@ -14,7 +14,7 @@ use kartik\builder\Form;
 <div class="classes-form">
 
     <?php
-    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]);
+    $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]);
     echo Form::widget([
 
         'model' => $model,
