@@ -15,6 +15,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+<<<<<<< HEAD
+=======
+    <p>
+        <?php
+        if (Yii::$app->user->can('Administrator') || Yii::$app->session->get('organizationUser') == 1) {
+            echo Html::a('Import Records', ['import'], ['class' => 'btn btn-success']);
+        }
+        ?>
+    </p>
+>>>>>>> 3dfe496dd005e1967a83772666c0495f7399fc75
     <?php
     Pjax::begin();
     echo GridView::widget([
