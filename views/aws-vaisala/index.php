@@ -15,8 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<<<<<<< HEAD
-=======
     <p>
         <?php
         if (Yii::$app->user->can('Administrator') || Yii::$app->session->get('organizationUser') == 1) {
@@ -24,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         ?>
     </p>
->>>>>>> 3dfe496dd005e1967a83772666c0495f7399fc75
     <?php
     Pjax::begin();
     echo GridView::widget([
@@ -122,10 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'floatHeader' => false,
                 'panel' => [
-                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
-                    'type' => 'info',
-                    'before' => Html::a('<i class="glyphicon glyphicon-import"></i> Import Data', ['create'], ['class' => 'btn btn-success']),
-                    'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                    'heading' => 'Aws Vaisala',
+                    'type' => 'default',
                     'showFooter' => true
                 ],
             ]);

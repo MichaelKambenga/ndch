@@ -77,14 +77,14 @@ LteAsset::register($this);
                         . '<i class="fa fa-database"></i>'
                         . '<span>VAISALA Data</span>'
                         . '</a></li>';
-                        echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
+                        echo '<li><a href="' . Url::to(['/aws-seba']) . '">'
                         . '<i class="fa fa-cube"></i>'
                         . '<span>SEBA Data</span>'
                         . '</a></li>';
                         ?>
 
                         <?php
-                        if (Yii::$app->user->can('Administrator')) {
+                        if (Yii::$app->user->can('Super Systems Admin')) {
                         echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-cog"></i>
@@ -115,7 +115,7 @@ LteAsset::register($this);
                         ?>
 
                         <?php
-                        if (Yii::$app->user->can('Administrator')) {
+                        if (Yii::$app->user->can('Super Systems Admin')) {
                         echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-edit"></i> <span>System Security</span>

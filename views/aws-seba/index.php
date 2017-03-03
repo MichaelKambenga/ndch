@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use kartik\grid\GridView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AwsSebaSearch */
@@ -14,8 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php
-    echo GridView::widget([
+    <p>
+        <?php
+        if (Yii::$app->user->can('Administrator') || Yii::$app->session->get('organizationUser') == 1) {
+            echo Html::a('Import Records', ['import'], ['class' => 'btn btn-success']);
+        }
+        ?>
+    </p>
+
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -31,17 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'CH',
             // 'id',
             ['class' => 'yii\grid\ActionColumn'],
-        ],
-        'responsive' => true,
-        'hover' => true,
-        'condensed' => true,
-        'floatHeader' => false,
-        'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . ' </h3>',
-            'type' => 'info',
-            'before' => Html::a('<i class="glyphicon glyphicon-import"></i> Import Data', ['create'], ['class' => 'btn btn-success']),
-            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-            'showFooter' => true
         ],
     ]);
     ?>
