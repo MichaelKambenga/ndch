@@ -7,8 +7,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AwsVaisalaSearchs */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Aws Vaisalas';
+$this->title = 'Vaisala Data';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-vaisala-index">
@@ -26,10 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
     Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-//            'id',
+            'StationName',
+            // 'VaisalaVersion',
+            'EntryDate',
             'TIME',
 //            'BAT',
 //            'DP',
@@ -100,9 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'p',
             // 'ETO',
             'Path',
-            'StationName',
-            // 'VaisalaVersion',
-            'EntryDate',
+            
             [
                 'label' => '',
                 'value' => function($model) {

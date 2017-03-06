@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\AwsSeba */
 
-$this->title = 'Create Aws Seba';
-$this->params['breadcrumbs'][] = ['label' => 'Aws Sebas', 'url' => ['index']];
+$this->title = 'Create SEBA Data';
+$this->params['breadcrumbs'][] = ['label' => 'SEBA Data', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-seba-create">

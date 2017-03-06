@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AwsSebaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Aws Sebas';
+$this->title = 'SEBA data';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-seba-index">
@@ -24,22 +24,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?=
     GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'entrydate',
-            'time',
-            'stationname',
-            'D',
-            'U',
-            // 'PL',
-            // 'TL',
-            // 'G',
-            // 'CH',
-            // 'id',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+    'dataProvider' => $dataProvider,
+    // 'filterModel' => $searchModel,
+    'columns' => [
+    ['class' => 'yii\grid\SerialColumn'],
+    'stationname',
+    'entrydate',
+    'time',
+    'D',
+    'U',
+    'PL',
+    'TL',
+    'G',
+    'CH',
+    ['class' => 'yii\grid\ActionColumn'],
+    ],
     ]);
     ?>
 </div>

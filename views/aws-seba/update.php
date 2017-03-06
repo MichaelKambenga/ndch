@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\AwsSeba */
 
-$this->title = 'Update Aws Seba: ' . $model->id;
+$this->title = 'SEBA Data: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Aws Sebas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
