@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,99 +6,50 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\WeatherDataSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Weather Datas';
+$this->title = 'Station Weather Data';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="weather-data-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <?php
+    if (!is_null(\yii::$app->user->identity->stationid)) {
+    ?>
     <p>
-        <?= Html::a('Create Weather Data', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Post Station Data', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php } ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'TIME',
-            'DP',
-            'DP1HA',
-            'DP1HX',
-            // 'DP1HM',
-            // 'PA',
-            // 'PA1HA',
-            // 'PA1HX',
-            // 'PA1HM',
-            // 'PR',
-            // 'PR1HS',
-            // 'PR24HS',
-            // 'PR5MS00',
-            // 'PR5MS05',
-            // 'PR5MS10',
-            // 'PR5MS15',
-            // 'PR5MS20',
-            // 'PR5MS25',
-            // 'PR5MS30',
-            // 'PR5MS35',
-            // 'PR5MS40',
-            // 'PR5MS45',
-            // 'PR5MS50',
-            // 'PR5MS55',
-            // 'RH',
-            // 'RH1HA',
-            // 'RH1HX',
-            // 'RH1HM',
-            // 'SR',
-            // 'SR1HA',
-            // 'SR1HX',
-            // 'SR1HM',
-            // 'TA',
-            // 'TA1HA',
-            // 'TA1HX',
-            // 'TA1HM',
-            // 'WD',
-            // 'WD2MA',
-            // 'WD10MA',
-            // 'WD2MX',
-            // 'WD10MX',
-            // 'WD2MM',
-            // 'WD10MM',
-            // 'WD1HA',
-            // 'WD1HX',
-            // 'WD1HM',
-            // 'WS',
-            // 'WS2MA',
-            // 'WS10MA',
-            // 'WS2MX',
-            // 'WS10MX',
-            // 'WS2MM',
-            // 'WS10MM',
-            // 'QFE',
-            // 'QFE1HA',
-            // 'QFE1HX',
-            // 'QFE1HM',
-            // 'QFF',
-            // 'QFF1HA',
-            // 'QFF1HX',
-            // 'QFF1HM',
-            // 'QNH',
-            // 'QNH1HA',
-            // 'QNH1HX',
-            // 'QNH1HM',
-            // 'ETO',
-            // 'Path',
-            // 'StationName',
-            // 'VaisalaVersion',
-            // 'EntryDate',
-            // 'stationid',
-            // 'source',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+    <?=
+    GridView::widget([
+    'dataProvider' => $dataProvider,
+    //'filterModel' => $searchModel,
+    'columns' => [
+    ['class' => 'yii\grid\SerialColumn'],
+    [
+    'attribute' => 'StationName',
+    'value' => function ($model) {
+    return \app\models\Station::getNameById($model->stationid);
+    },
+    ],
+    [
+    'attribute' => 'TIME',
+    'format' => ['date', 'php:d-m-Y @ H:i:s']
+    ],
+    'PA',
+    'PR',
+    'RH',
+    'SR',
+    'TA',
+    // 'WD',
+    // 'WS',
+//    'QFE',
+//    'QFF',
+//    'QNH',
+    // 'ETO',
+    ['class' => 'yii\grid\ActionColumn'],
+    ],
+    ]);
+    ?>
 </div>

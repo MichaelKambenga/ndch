@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\AwsSeba */
+/* @var $model app\models\WeatherData */
 
-$this->title = 'Update Aws Seba: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Aws Sebas', 'url' => ['index']];
+$this->title = 'Update Weather Data: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Weather Datas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="aws-seba-update">
+<div class="weather-data-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

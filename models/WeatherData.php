@@ -81,114 +81,132 @@ use Yii;
  * @property int $stationid FK, reference to the station
  * @property int $source the source of the given entry 1=vaisala, 2=seba,3=manned
  */
-class WeatherData extends \yii\db\ActiveRecord
-{
+class WeatherData extends \yii\db\ActiveRecord {
+    const DATA_DOURCE_MANNED_SYSTEM=1;
+    const DATA_SOURCE_AWS_SYSTEM=2;
+    const DATA_SOURCE_EXISTING_DATABASE=3;
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'tbl_weather_data';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id'], 'required'],
-            [['id', 'stationid', 'source'], 'default', 'value' => null],
-            [['id', 'stationid', 'source'], 'integer'],
-            [['DP', 'DP1HA'], 'number'],
-            [['EntryDate'], 'safe'],
-            [['TIME'], 'string', 'max' => 40],
-            [['DP1HX', 'DP1HM', 'PA', 'PA1HA', 'PA1HX', 'PA1HM', 'PR', 'PR1HS', 'PR24HS', 'PR5MS00', 'PR5MS05', 'PR5MS10', 'PR5MS15', 'PR5MS20', 'PR5MS25', 'PR5MS30', 'PR5MS35', 'PR5MS40', 'PR5MS45', 'PR5MS50', 'PR5MS55', 'RH', 'RH1HA', 'RH1HX', 'RH1HM', 'SR', 'SR1HA', 'SR1HX', 'SR1HM', 'TA', 'TA1HA', 'TA1HX', 'TA1HM', 'WD', 'WD2MA', 'WD10MA', 'WD2MX', 'WD10MX', 'WD2MM', 'WD10MM', 'WD1HA', 'WD1HX', 'WD1HM', 'WS', 'WS2MA', 'WS10MA', 'WS2MX', 'WS10MX', 'WS2MM', 'WS10MM', 'QFE', 'QFE1HA', 'QFE1HX', 'QFE1HM', 'QFF', 'QFF1HA', 'QFF1HX', 'QFF1HM', 'QNH', 'QNH1HA', 'QNH1HX', 'QNH1HM', 'ETO'], 'string', 'max' => 20],
-            [['Path'], 'string', 'max' => 255],
-            [['StationName'], 'string', 'max' => 50],
-            [['VaisalaVersion'], 'string', 'max' => 30],
+        [['TIME', 'stationid'], 'required'],
+        [['stationid', 'source'], 'default', 'value' => null],
+        [['id', 'stationid', 'source'], 'integer'],
+        [['PA', 'DP', 'PR', 'RH', 'SR', 'WS', 'ETO'], 'number'],
+        [['EntryDate'], 'safe'],
+        [['TIME'], 'string', 'max' => 40],
+        [['DP1HX', 'DP1HM', 'PA', 'PA1HA', 'PA1HX', 'PA1HM', 'PR', 'PR1HS', 'PR24HS', 'PR5MS00', 'PR5MS05', 'PR5MS10', 'PR5MS15', 'PR5MS20', 'PR5MS25', 'PR5MS30', 'PR5MS35', 'PR5MS40', 'PR5MS45', 'PR5MS50', 'PR5MS55', 'RH', 'RH1HA', 'RH1HX', 'RH1HM', 'SR', 'SR1HA', 'SR1HX', 'SR1HM', 'TA', 'TA1HA', 'TA1HX', 'TA1HM', 'WD', 'WD2MA', 'WD10MA', 'WD2MX', 'WD10MX', 'WD2MM', 'WD10MM', 'WD1HA', 'WD1HX', 'WD1HM', 'WS', 'WS2MA', 'WS10MA', 'WS2MX', 'WS10MX', 'WS2MM', 'WS10MM', 'QFE', 'QFE1HA', 'QFE1HX', 'QFE1HM', 'QFF', 'QFF1HA', 'QFF1HX', 'QFF1HM', 'QNH', 'QNH1HA', 'QNH1HX', 'QNH1HM', 'ETO'], 'string', 'max' => 20],
+        [['Path'], 'string', 'max' => 255],
+        [['StationName'], 'string', 'max' => 50],
+        [['VaisalaVersion'], 'string', 'max' => 30],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'TIME' => 'Date Recorded',
-            'DP' => 'Due Point',
-            'DP1HA' => 'Dp1 Ha',
-            'DP1HX' => 'Dp1 Hx',
-            'DP1HM' => 'Dp1 Hm',
-            'PA' => 'Pressure',
-            'PA1HA' => 'Pa1 Ha',
-            'PA1HX' => 'Pa1 Hx',
-            'PA1HM' => 'Pa1 Hm',
-            'PR' => 'Precipitation',
-            'PR1HS' => 'Pr1 Hs',
-            'PR24HS' => 'Pr24 Hs',
-            'PR5MS00' => 'Pr5 Ms00',
-            'PR5MS05' => 'Pr5 Ms05',
-            'PR5MS10' => 'Pr5 Ms10',
-            'PR5MS15' => 'Pr5 Ms15',
-            'PR5MS20' => 'Pr5 Ms20',
-            'PR5MS25' => 'Pr5 Ms25',
-            'PR5MS30' => 'Pr5 Ms30',
-            'PR5MS35' => 'Pr5 Ms35',
-            'PR5MS40' => 'Pr5 Ms40',
-            'PR5MS45' => 'Pr5 Ms45',
-            'PR5MS50' => 'Pr5 Ms50',
-            'PR5MS55' => 'Pr5 Ms55',
-            'RH' => 'Relative Humidity',
-            'RH1HA' => 'Rh1 Ha',
-            'RH1HX' => 'Rh1 Hx',
-            'RH1HM' => 'Rh1 Hm',
-            'SR' => 'Solar Radiation',
-            'SR1HA' => 'Sr1 Ha',
-            'SR1HX' => 'Sr1 Hx',
-            'SR1HM' => 'Sr1 Hm',
-            'TA' => 'Atmospheric Temperature',
-            'TA1HA' => 'Ta1 Ha',
-            'TA1HX' => 'Ta1 Hx',
-            'TA1HM' => 'Ta1 Hm',
-            'WD' => 'Wind Direction',
-            'WD2MA' => 'Wd2 Ma',
-            'WD10MA' => 'Wd10 Ma',
-            'WD2MX' => 'Wd2 Mx',
-            'WD10MX' => 'Wd10 Mx',
-            'WD2MM' => 'Wd2 Mm',
-            'WD10MM' => 'Wd10 Mm',
-            'WD1HA' => 'Wd1 Ha',
-            'WD1HX' => 'Wd1 Hx',
-            'WD1HM' => 'Wd1 Hm',
-            'WS' => 'Wind Speed',
-            'WS2MA' => 'Ws2 Ma',
-            'WS10MA' => 'Ws10 Ma',
-            'WS2MX' => 'Ws2 Mx',
-            'WS10MX' => 'Ws10 Mx',
-            'WS2MM' => 'Ws2 Mm',
-            'WS10MM' => 'Ws10 Mm',
-            'QFE' => 'QFE',
-            'QFE1HA' => 'Qfe1 Ha',
-            'QFE1HX' => 'Qfe1 Hx',
-            'QFE1HM' => 'Qfe1 Hm',
-            'QFF' => 'QFF',
-            'QFF1HA' => 'Qff1 Ha',
-            'QFF1HX' => 'Qff1 Hx',
-            'QFF1HM' => 'Qff1 Hm',
-            'QNH' => 'QNH',
-            'QNH1HA' => 'Qnh1 Ha',
-            'QNH1HX' => 'Qnh1 Hx',
-            'QNH1HM' => 'Qnh1 Hm',
-            'ETO' => 'Evapo Transpiration',
-            'Path' => 'Path',
-            'StationName' => 'Station Name',
-            'VaisalaVersion' => 'Vaisala Version',
-            'EntryDate' => 'Entry Date',
-            'stationid' => 'Stationid',
-            'source' => 'Source',
+        'id' => 'ID',
+        'TIME' => 'Time',
+        'DP' => 'Due Point',
+        'DP1HA' => 'Dp1 Ha',
+        'DP1HX' => 'Dp1 Hx',
+        'DP1HM' => 'Dp1 Hm',
+        'PA' => 'Pressure',
+        'PA1HA' => 'Pa1 Ha',
+        'PA1HX' => 'Pa1 Hx',
+        'PA1HM' => 'Pa1 Hm',
+        'PR' => 'Precipitation',
+        'PR1HS' => 'Pr1 Hs',
+        'PR24HS' => 'Pr24 Hs',
+        'PR5MS00' => 'Pr5 Ms00',
+        'PR5MS05' => 'Pr5 Ms05',
+        'PR5MS10' => 'Pr5 Ms10',
+        'PR5MS15' => 'Pr5 Ms15',
+        'PR5MS20' => 'Pr5 Ms20',
+        'PR5MS25' => 'Pr5 Ms25',
+        'PR5MS30' => 'Pr5 Ms30',
+        'PR5MS35' => 'Pr5 Ms35',
+        'PR5MS40' => 'Pr5 Ms40',
+        'PR5MS45' => 'Pr5 Ms45',
+        'PR5MS50' => 'Pr5 Ms50',
+        'PR5MS55' => 'Pr5 Ms55',
+        'RH' => 'Relative Humidity',
+        'RH1HA' => 'Rh1 Ha',
+        'RH1HX' => 'Rh1 Hx',
+        'RH1HM' => 'Rh1 Hm',
+        'SR' => 'Solar Radiation',
+        'SR1HA' => 'Sr1 Ha',
+        'SR1HX' => 'Sr1 Hx',
+        'SR1HM' => 'Sr1 Hm',
+        'TA' => 'Atmospheric Temperature',
+        'TA1HA' => 'Ta1 Ha',
+        'TA1HX' => 'Ta1 Hx',
+        'TA1HM' => 'Ta1 Hm',
+        'WD' => 'Wind Direction',
+        'WD2MA' => 'Wd2 Ma',
+        'WD10MA' => 'Wd10 Ma',
+        'WD2MX' => 'Wd2 Mx',
+        'WD10MX' => 'Wd10 Mx',
+        'WD2MM' => 'Wd2 Mm',
+        'WD10MM' => 'Wd10 Mm',
+        'WD1HA' => 'Wd1 Ha',
+        'WD1HX' => 'Wd1 Hx',
+        'WD1HM' => 'Wd1 Hm',
+        'WS' => 'Wind Speed',
+        'WS2MA' => 'Ws2 Ma',
+        'WS10MA' => 'Ws10 Ma',
+        'WS2MX' => 'Ws2 Mx',
+        'WS10MX' => 'Ws10 Mx',
+        'WS2MM' => 'Ws2 Mm',
+        'WS10MM' => 'Ws10 Mm',
+        'QFE' => 'QFE',
+        'QFE1HA' => 'Qfe1 Ha',
+        'QFE1HX' => 'Qfe1 Hx',
+        'QFE1HM' => 'Qfe1 Hm',
+        'QFF' => 'QFF',
+        'QFF1HA' => 'Qff1 Ha',
+        'QFF1HX' => 'Qff1 Hx',
+        'QFF1HM' => 'Qff1 Hm',
+        'QNH' => 'QNH',
+        'QNH1HA' => 'Qnh1 Ha',
+        'QNH1HX' => 'Qnh1 Hx',
+        'QNH1HM' => 'Qnh1 Hm',
+        'ETO' => 'Evapo Transpiration',
+        'Path' => 'Path',
+        'StationName' => 'Station',
+        'VaisalaVersion' => 'Vaisala Version',
+        'EntryDate' => 'Entry Date',
+        'stationid' => 'Station',
+        'source' => 'Source',
         ];
     }
+
+    static function getSources() {
+        return [
+        self::DATA_DOURCE_MANNED_SYSTEM => 'Manned Recorded Data',
+        self::DATA_SOURCE_AWS_SYSTEM => 'Automatic Weather Station',
+        self::DATA_SOURCE_EXISTING_DATABASE => 'Existing Database System'
+        ];
+    }
+
+    function getSourceNameByValue() {
+        $sources = self::getSources();
+        if (isset($sources[$this->source])) {
+            return $sources[$this->source];
+        }
+        return NULL;
+    }
+
 }
+

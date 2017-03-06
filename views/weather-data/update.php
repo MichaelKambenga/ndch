@@ -5,9 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\WeatherData */
 
-$this->title = 'Update Weather Data: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Weather Datas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Station Weather Data: Update #' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Station Weather Data', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="weather-data-update">

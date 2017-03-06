@@ -11,11 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="weather-data-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->errorSummary($model); ?>
-    <?php if (!\yii::$app->user->identity->stationid) {?>
-    <?= $form->field($model, 'stationid')->textInput(['maxlength' => true]) ?>
-    <?php } ?>
-    <?= $form->field($model, 'TIME')->widget(\yii\widgets\MaskedInput::className(), ['mask' => 'D\ate: 99-99-9999  Time: 99:99',]); ?>
+    <?= $form->field($model, 'TIME')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'DP')->textInput() ?>
 
