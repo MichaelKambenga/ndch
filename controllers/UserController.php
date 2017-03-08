@@ -13,6 +13,7 @@ use app\models\UserAuditTrail;
 use app\models\LoginsSearch;
 use app\models\UserAuditTrailSearch;
 use yii\helpers\Html;
+use app\models\AuthAssignment;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -24,12 +25,12 @@ class UserController extends Controller {
      */
     public function behaviors() {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+        'delete' => ['POST'],
+        ],
+        ],
         ];
     }
 
@@ -42,8 +43,8 @@ class UserController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -66,13 +67,13 @@ class UserController extends Controller {
         $dataProviderAuditTrail = $model_audit_search->search(NULL);
 
         return $this->render('view', [
-                    'model' => $model,
-                    'model_logins' => $model_logins,
-                    'model_login_search' => $model_login_search,
-                    'dataProviderLogins' => $dataProviderLogins,
-                    'model_audit' => $model_audit,
-                    'model_audit_search' => $model_audit_search,
-                    'dataProviderAuditTrail' => $dataProviderAuditTrail,
+        'model' => $model,
+        'model_logins' => $model_logins,
+        'model_login_search' => $model_login_search,
+        'dataProviderLogins' => $dataProviderLogins,
+        'model_audit' => $model_audit,
+        'model_audit_search' => $model_audit_search,
+        'dataProviderAuditTrail' => $dataProviderAuditTrail,
         ]);
     }
 
@@ -84,24 +85,17 @@ class UserController extends Controller {
     public function actionCreate() {
         $model = new User;
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->password_hash); 
+            $model->setPassword($model->password_hash);
             $model->status = User::STATUS_ACTIVE;
             $model->created_at = Date('Y-m-d H:i:s', time());
             $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
-//            echo '<pre/>';
-//            var_dump($model->attributes);
-//            echo var_dump($model->user_role);
-//            
             $user_roles = $model->user_role;
-//            echo '<pre>';print_r($model->attributes);die();
             if (count($model->user_role) > 0) {
                 $model->user_role = count($model->user_role);
             }
-           
-
             if ($model->save()) {
                 foreach ($user_roles as $key => $role) {
-                    $userRole = new \app\models\AuthAssignment;
+                    $userRole = new AuthAssignment;
                     $userRole->item_name = $role;
                     $userRole->user_id = $model->id;
                     $userRole->save();
@@ -109,9 +103,8 @@ class UserController extends Controller {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
-
             return $this->render('create', [
-                        'model' => $model,
+            'model' => $model,
             ]);
         }
     }
@@ -132,10 +125,19 @@ class UserController extends Controller {
             }
             // echo $model->user_role;            
             if ($model->save()) {
-                \app\models\AuthAssignment::deleteAll(['user_id' =>$model->id]);
                 $count_roles = 0;
+                $roles=AuthAssignment::find()->where(['user_id' => $model->id])->All();
+                if ($roles) {
+                    //var_dump($roles);
+                    AuthAssignment::delete()->where(['user_id' => $model->id])->all();
+                    //$roles=AuthAssignment::find()->where(['user_id' => $model->id])->All();
+                    var_dump($roles);
+                }else{
+                 // echo 'hakuna' ; 
+                }
+                //exit;
                 foreach ($user_roles as $key => $role) {
-                    $userRole = new \app\models\AuthAssignment;
+                    $userRole = new AuthAssignment;
                     $userRole->item_name = $role;
                     $userRole->user_id = $model->id;
                     $userRole->created_at = time();
@@ -147,9 +149,9 @@ class UserController extends Controller {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
-        }
+           }
         return $this->render('update', [
-                    'model' => $model,
+        'model' => $model,
         ]);
     }
 

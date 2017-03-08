@@ -42,7 +42,7 @@ LteAsset::register($this);
                         <span class="sr-only">Toggle navigation</span>
                     </a>
 
-                    <div class="navbar-custom-menu">
+                    <div class="navbar-custom-menu"><div></div>
                         <ul class="nav navbar-nav">
                             <?php
                             if (Yii::$app->user->isGuest) {

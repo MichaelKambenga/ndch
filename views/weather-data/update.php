@@ -9,7 +9,7 @@ $this->title = 'Station Weather Data: Update #' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Station Weather Data', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="weather-data-update">
+<div class="weather-data-update" style="max-width: 80%;">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

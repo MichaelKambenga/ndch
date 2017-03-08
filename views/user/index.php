@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use app\models\Stakeholder;
 
 /**
  * @var yii\web\View $this
@@ -29,9 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'firstname',
-            'middlename',
+            //'middlename',
             'lastname',
-            'organizationid',
+            [
+             'attribute'=>'organizationid',
+               'value' => function($model) {
+                    return $model->organizationid == 1 ? Stakeholder::getStakeholderNameById($model->organizationid) : "";
+                },
+            ],
              'username',
             // 'password',
             [
