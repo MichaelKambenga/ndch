@@ -85,7 +85,10 @@ class WeatherData extends \yii\db\ActiveRecord {
     const DATA_DOURCE_MANNED_SYSTEM=1;
     const DATA_SOURCE_AWS_SYSTEM=2;
     const DATA_SOURCE_EXISTING_DATABASE=3;
-
+    
+    ////constants for AWS Type
+   const AWS_VAISALA=1;
+   const AWS_SEBA=2; 
     /**
      * @inheritdoc
      */
