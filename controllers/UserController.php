@@ -90,9 +90,10 @@ class UserController extends Controller {
             $model->created_at = Date('Y-m-d H:i:s', time());
             $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
             $user_roles = $model->user_role;
-            if (count($model->user_role) > 0) {
-                $model->user_role = count($model->user_role);
+            if (count($user_roles) > 0 && isset($user_roles['Station User'])) {
+                $model->scenario = User::SCENARIO_STATION_USER;
             }
+
             if ($model->save()) {
                 foreach ($user_roles as $key => $role) {
                     $userRole = new AuthAssignment;
@@ -101,12 +102,13 @@ class UserController extends Controller {
                     $userRole->save();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $model->user_role = $user_roles;
             }
-        } else {
-            return $this->render('create', [
-            'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+        'model' => $model,
+        ]);
     }
 
     /**
@@ -117,25 +119,20 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+//        $user_role=array();
+//        $user_roles=AuthAssignment::find()->where(['user_id' => $model->id])->all();
+//        if($user_roles){
+//            foreach($user_roles as $role){
+//              array_push($user_role, $role->item_name); 
+//            }
+//            $model->user_role=$user_role;
+//        }
         $model->updated_at = Date('Y-m-d H:i:s', time());
         if ($model->load(Yii::$app->request->post())) {
             $user_roles = $model->user_role;
-            if (count($model->user_role) > 0) {
-                $model->user_role = count($model->user_role);
-            }
-            // echo $model->user_role;            
             if ($model->save()) {
                 $count_roles = 0;
-                $roles=AuthAssignment::find()->where(['user_id' => $model->id])->All();
-                if ($roles) {
-                    //var_dump($roles);
-                    AuthAssignment::delete()->where(['user_id' => $model->id])->all();
-                    //$roles=AuthAssignment::find()->where(['user_id' => $model->id])->All();
-                    var_dump($roles);
-                }else{
-                 // echo 'hakuna' ; 
-                }
-                //exit;
+                AuthAssignment::deleteAll(['user_id' => $model->id]);
                 foreach ($user_roles as $key => $role) {
                     $userRole = new AuthAssignment;
                     $userRole->item_name = $role;
@@ -147,9 +144,11 @@ class UserController extends Controller {
                 }
                 if ($count_roles) {
                     return $this->redirect(['view', 'id' => $model->id]);
+                }{
+                  $model->user_role=$user_roles;
                 }
             }
-           }
+        }
         return $this->render('update', [
         'model' => $model,
         ]);
@@ -162,8 +161,11 @@ class UserController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if ($model) {
+            AuthAssignment::delete()->where(['user_id' => $model->id])->all();
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 
