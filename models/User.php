@@ -244,12 +244,11 @@ class User extends ActiveRecord implements IdentityInterface {
 
     function getUserRolesName() {
         $rolesList = NULL;
-        $roles= AuthAssignment::find(['user_id' => $this->id])->orderBy('item_name ASC')->all();
+        $roles= AuthAssignment::find()->where(['user_id' => $this->id])->orderBy('item_name ASC')->all();
         if ($roles) {
             $rolesList = '<ul>';
             foreach ($roles as $value) {
                 $rolesList .='<li>' . $value->item_name . '</li>';
-                // $rolesList = substr($rolesList, 1);
             }
             $rolesList .='</ul>';
         }

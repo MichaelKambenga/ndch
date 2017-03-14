@@ -11,10 +11,12 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Inline;
 use Symfony\Component\Yaml\Yaml;
 
-class InlineTest extends \PHPUnit_Framework_TestCase
+class InlineTest extends TestCase
 {
     /**
      * @dataProvider getTestsForParse
@@ -650,10 +652,15 @@ class InlineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider getInvalidBinaryData
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
      */
     public function testParseInvalidBinaryData($data, $expectedMessage)
     {
-        $this->setExpectedExceptionRegExp('\Symfony\Component\Yaml\Exception\ParseException', $expectedMessage);
+        if (method_exists($this, 'expectException')) {
+            $this->expectExceptionMessageRegExp($expectedMessage);
+        } else {
+            $this->setExpectedExceptionRegExp(ParseException::class, $expectedMessage);
+        }
 
         Inline::parse($data);
     }
@@ -675,5 +682,51 @@ class InlineTest extends \PHPUnit_Framework_TestCase
     public function testNotSupportedMissingValue()
     {
         Inline::parse('{this, is not, supported}');
+    }
+
+    public function testVeryLongQuotedStrings()
+    {
+        $longStringWithQuotes = str_repeat("x\r\n\\\"x\"x", 1000);
+
+        $yamlString = Inline::dump(array('longStringWithQuotes' => $longStringWithQuotes));
+        $arrayFromYaml = Inline::parse($yamlString);
+
+        $this->assertEquals($longStringWithQuotes, $arrayFromYaml['longStringWithQuotes']);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Omitting the key of a mapping is deprecated and will throw a ParseException in 4.0.
+     */
+    public function testOmittedMappingKeyIsParsedAsColon()
+    {
+        $this->assertSame(array(':' => 'foo'), Inline::parse('{: foo}'));
+    }
+
+    /**
+     * @dataProvider getTestsForNullValues
+     */
+    public function testParseMissingMappingValueAsNull($yaml, $expected)
+    {
+        $this->assertSame($expected, Inline::parse($yaml));
+    }
+
+    public function getTestsForNullValues()
+    {
+        return array(
+            'null before closing curly brace' => array('{foo:}', array('foo' => null)),
+            'null before comma' => array('{foo:, bar: baz}', array('foo' => null, 'bar' => 'baz')),
+        );
+    }
+
+    public function testBooleanMappingKeysAreConvertedToStrings()
+    {
+        $this->assertSame(array('false' => 'foo'), Inline::parse('{false: foo}'));
+        $this->assertSame(array('true' => 'foo'), Inline::parse('{true: foo}'));
+    }
+
+    public function testTheEmptyStringIsAValidMappingKey()
+    {
+        $this->assertSame(array('' => 'foo'), Inline::parse('{ "": foo }'));
     }
 }

@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'floatHeader' => false,
                 'panel' => [
-                    'heading' => 'Aws Vaisala',
+                    ///'heading' => 'Aws Vaisala',
                     'type' => 'default',
                     'showFooter' => true
                 ],

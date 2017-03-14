@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\WeatherData;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\WeatherDataSearch */
@@ -35,20 +36,30 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     [
     'attribute' => 'TIME',
-    'format' => ['date', 'php:d-m-Y @ H:i:s']
+    'format' => ['date', 'php:d-m-Y @ H:i']
     ],
     'PA',
     'PR',
     'RH',
-    'SR',
     'TA',
+    ////'SR',
     // 'WD',
     // 'WS',
 //    'QFE',
 //    'QFF',
 //    'QNH',
     // 'ETO',
-    ['class' => 'yii\grid\ActionColumn'],
+    ['class' => 'yii\grid\ActionColumn',
+    'template' => '{view}  {update}  {delete}',
+    'buttons' => [
+    'update' => function ($url, $model, $key) {
+    return (($model->source === WeatherData::DATA_DOURCE_MANNED_SYSTEM) && (Date('Y-m-d',  strtotime($model->TIME))===Date('Y-m-d',  time()))&& ($model->stationid===\yii::$app->user->identity->stationid)) ? Html::a('update', $url) : '';
+    },
+//    'delete' => function ($url, $model, $key) {
+//    return (($model->source === WeatherData::DATA_DOURCE_MANNED_SYSTEM) && ($model->stationid===\yii::$app->user->identity->stationid)) ? Html::a('delete', $url) : '';
+//    },
+    ]
+    ],
     ],
     ]);
     ?>

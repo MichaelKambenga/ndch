@@ -40,19 +40,17 @@ use yii\helpers\StringHelper;
  * @property CookieCollection $cookies The cookie collection. This property is read-only.
  * @property string $downloadHeaders The attachment file name. This property is write-only.
  * @property HeaderCollection $headers The header collection. This property is read-only.
- * @property bool $isClientError Whether this response indicates a client error. This property is
- * read-only.
+ * @property bool $isClientError Whether this response indicates a client error. This property is read-only.
  * @property bool $isEmpty Whether this response is empty. This property is read-only.
- * @property bool $isForbidden Whether this response indicates the current request is forbidden. This
- * property is read-only.
+ * @property bool $isForbidden Whether this response indicates the current request is forbidden. This property
+ * is read-only.
  * @property bool $isInformational Whether this response is informational. This property is read-only.
  * @property bool $isInvalid Whether this response has a valid [[statusCode]]. This property is read-only.
- * @property bool $isNotFound Whether this response indicates the currently requested resource is not
- * found. This property is read-only.
+ * @property bool $isNotFound Whether this response indicates the currently requested resource is not found.
+ * This property is read-only.
  * @property bool $isOk Whether this response is OK. This property is read-only.
  * @property bool $isRedirection Whether this response is a redirection. This property is read-only.
- * @property bool $isServerError Whether this response indicates a server error. This property is
- * read-only.
+ * @property bool $isServerError Whether this response indicates a server error. This property is read-only.
  * @property bool $isSuccessful Whether this response is successful. This property is read-only.
  * @property int $statusCode The HTTP status code to send with the response.
  *
@@ -273,6 +271,7 @@ class Response extends \yii\base\Response
      * @param int $value the status code
      * @param string $text the status text. If not set, it will be set automatically based on the status code.
      * @throws InvalidParamException if the status code is invalid.
+     * @return $this the response object itself
      */
     public function setStatusCode($value, $text = null)
     {
@@ -288,6 +287,7 @@ class Response extends \yii\base\Response
         } else {
             $this->statusText = $text;
         }
+        return $this;
     }
 
     /**
@@ -782,7 +782,7 @@ class Response extends \yii\base\Response
      *
      * ```javascript
      * $document.ajaxComplete(function (event, xhr, settings) {
-     *     var url = xhr.getResponseHeader('X-Redirect');
+     *     var url = xhr && xhr.getResponseHeader('X-Redirect');
      *     if (url) {
      *         window.location = url;
      *     }

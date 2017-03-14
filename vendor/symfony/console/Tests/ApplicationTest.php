@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Console\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\FormatterHelper;
@@ -31,7 +32,7 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class ApplicationTest extends TestCase
 {
     protected static $fixturesPath;
 
@@ -220,7 +221,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $application->add(new \Foo2Command());
 
         $expectedMsg = "The namespace \"f\" is ambiguous.\nDid you mean one of these?\n    foo\n    foo1";
-        $this->setExpectedException(CommandNotFoundException::class, $expectedMsg);
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(CommandNotFoundException::class);
+            $this->expectExceptionMessage($expectedMsg);
+        } else {
+            $this->setExpectedException(CommandNotFoundException::class, $expectedMsg);
+        }
+
         $application->findNamespace('f');
     }
 
@@ -265,7 +273,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindWithAmbiguousAbbreviations($abbreviation, $expectedExceptionMessage)
     {
-        $this->setExpectedException('Symfony\Component\Console\Exception\CommandNotFoundException', $expectedExceptionMessage);
+        if (method_exists($this, 'expectException')) {
+            $this->expectException('Symfony\Component\Console\Exception\CommandNotFoundException');
+            $this->expectExceptionMessage($expectedExceptionMessage);
+        } else {
+            $this->setExpectedException('Symfony\Component\Console\Exception\CommandNotFoundException', $expectedExceptionMessage);
+        }
 
         $application = new Application();
         $application->add(new \FooCommand());
@@ -958,7 +971,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     public function testRunWithError()
     {
-        $this->setExpectedException('Exception', 'dymerr');
+        if (method_exists($this, 'expectException')) {
+            $this->expectException('Exception');
+            $this->expectExceptionMessage('dymerr');
+        } else {
+            $this->setExpectedException('Exception', 'dymerr');
+        }
 
         $application = new Application();
         $application->setAutoExit(false);

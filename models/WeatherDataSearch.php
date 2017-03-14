@@ -39,7 +39,7 @@ class WeatherDataSearch extends WeatherData {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = WeatherData::find();
+        $query = WeatherData::find()->orderby('TIME DESC');
 
         // add conditions that should always apply here
 
@@ -57,16 +57,13 @@ class WeatherDataSearch extends WeatherData {
         }
 
         // grid filtering conditions
+        ///adding default station ID for station users
         if (\yii::$app->user->identity->stationid) {
-            $stationid = \yii::$app->user->identity->stationid;
-            $query->andFilterWhere(['stationid', $stationid]);
-        } else {
-            $query->andFilterWhere(
-            ['stationid' => $this->stationid,]
-            );
+            $this->stationid = \yii::$app->user->identity->stationid;
         }
-
-        $query->andFilterWhere(['ilike', 'TIME', $this->TIME])
+        //station user filter
+        $query->andFilterWhere(['stationid' => $this->stationid])
+        ->andFilterWhere(['ilike', 'TIME', $this->TIME])
         ->andFilterWhere(['ilike', 'EntryDate', $this->EntryDate])
         ->andFilterWhere(['ilike', 'DP1HX', $this->DP1HX])
         ->andFilterWhere(['ilike', 'DP1HM', $this->DP1HM])

@@ -61,6 +61,8 @@ class WeatherDataController extends Controller {
     public function actionCreate() {
         $model = new WeatherData();
         if ($model->load(Yii::$app->request->post())) {
+            $model->stationid = NULL;
+            $model->source = WeatherData::DATA_DOURCE_MANNED_SYSTEM;
             if (\yii::$app->user->identity->stationid) {
                 $model->stationid = \yii::$app->user->identity->stationid;
             }
@@ -73,9 +75,9 @@ class WeatherDataController extends Controller {
             } else {
                 $model->TIME = NULL;
             }
-//            var_dump($model->attributes);
-//
-//            exit;
+            echo $model->TIME;
+            $model->EntryDate = Date('Y-m-d H:i:s', time());
+
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

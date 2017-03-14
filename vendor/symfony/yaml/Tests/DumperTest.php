@@ -11,11 +11,12 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Yaml;
 
-class DumperTest extends \PHPUnit_Framework_TestCase
+class DumperTest extends TestCase
 {
     protected $parser;
     protected $dumper;
@@ -244,6 +245,24 @@ EOF;
     public function testObjectSupportDisabledWithExceptionsPassingTrue()
     {
         $this->dumper->dump(array('foo' => new A(), 'bar' => 1), 0, 0, true);
+    }
+
+    public function testEmptyArray()
+    {
+        $dump = $this->dumper->dump(array());
+        $this->assertEquals('{  }', $dump);
+
+        $dump = $this->dumper->dump(array(), 0, 0, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
+        $this->assertEquals('[]', $dump);
+
+        $dump = $this->dumper->dump(array(), 9, 0, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
+        $this->assertEquals('[]', $dump);
+
+        $dump = $this->dumper->dump(new \ArrayObject(), 0, 0, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE | Yaml::DUMP_OBJECT_AS_MAP);
+        $this->assertEquals('{  }', $dump);
+
+        $dump = $this->dumper->dump(new \stdClass(), 0, 0, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE | Yaml::DUMP_OBJECT_AS_MAP);
+        $this->assertEquals('{  }', $dump);
     }
 
     /**
