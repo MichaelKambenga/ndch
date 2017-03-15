@@ -113,6 +113,100 @@ class AutomateController extends Controller {
         }
     }
 
+    public function actionProcessSeba() {
+        $tma_vaisala_data_source = \app\models\DataSources::findOne(2);
+        $tma_vaisala_data_source_stations = \app\models\DataSourceStations::findAll(['datasourceid' => $tma_vaisala_data_source->id]);
+        $count = 0;
+        foreach ($tma_vaisala_data_source_stations as $tma_vaisala_data_source_station) {
+            $station = \app\models\Station::findOne($tma_vaisala_data_source_station->stationid);
+            $path = $tma_vaisala_data_source->datalocation . "\\" . Date('Ymd', time()) . "\\" . $station->name . '.txt';
+            if ($this->ProcessSebaFile($path, $station)) {
+                $count++;
+            }
+        }
+        if ($count) {
+            $message = "Successflly imported with data processed";
+        } else {
+            $message = "Successflly imported with no data processed";
+        }
+    }
+    
+    public function ProcessSebaFile($path, $station) {
+        $rows = file($path);
+        foreach ($rows as $row) {
+            $array_row = preg_split("/[\s,]+/", $row);
+            $model = new AwsSeba();
+            $model->time = str_replace("T001:", "", $array_row[0]) . ' ' . $array_row[1];
+            $model->time=Date('Y-m-d H:i:s',  strtotime($model->time));
+            $station_name_array = explode("-", $array_row[2]);
+            $station_name = $station_name_array[0];
+            $model->stationname = $station_name;
+
+            $third_element = explode("=", $array_row[3]);
+            if (!empty($third_element[0])) {
+                if (strpos($third_element[0], 'CH') !== false) {
+                    $model->CH = $third_element[1];
+                } else {
+                    $model->$third_element[0] = $third_element[1];
+                }
+            }
+            $fourth_element = explode("=", $array_row[4]);
+            if (!empty($fourth_element[0])) {
+                if (strpos($fourth_element[0], 'CH') !== false) {
+                    $model->CH = $fourth_element[1];
+                } else {
+                    $model->$fourth_element[0] = $fourth_element[1];
+                }
+            }
+            $fifth_element = explode("=", $array_row[5]);
+            if (!empty($fifth_element[0])) {
+                 if (strpos($fifth_element[0], 'CH') !== false) {
+                    $model->CH = $fifth_element[1];
+                } else {
+                $model->$fifth_element[0] = $fifth_element[1];
+                }
+            }
+            $sixth_element = explode("=", $array_row[6]);
+            if (!empty($sixth_element[0])) {
+                 if (strpos($sixth_element[0], 'CH') !== false) {
+                    $model->CH = $sixth_element[1];
+                } else {
+                $model->$sixth_element[0] = $sixth_element[1];
+                }
+            }
+            $seventh_element = explode("=", $array_row[7]);
+            if (!empty($seventh_element[0])) {
+                 if (strpos($seventh_element[0], 'CH') !== false) {
+                    $model->CH = $seventh_element[1];
+                } else {
+                $model->$seventh_element[0] = $seventh_element[1];
+                }
+            }
+            $eigth_element = explode("=", $array_row[8]);
+            if (!empty($eigth_element[0])) {
+                 if (strpos($eigth_element[0], 'CH') !== false) {
+                    $model->CH = $eigth_element[1];
+                } else {
+                $model->$eigth_element[0] = $eigth_element[1];
+                }
+            }
+            $nineth_element = explode("=", $array_row[9]);
+            if (!empty($nineth_element[0])) {
+                 if (strpos($nineth_element[0], 'CH') !== false) {
+                    $model->CH = $nineth_element[1];
+                } else {
+                $model->$nineth_element[0] = $nineth_element[1];
+                }
+            }
+            $model->entrydate = Date("Y-m-d H:i:s");
+
+           if ($model->save()) {
+                    ///insert data into common table ( weather data)
+                    $this->processWeatherData($model, WeatherData::AWS_SEBA, $station->id);
+                }
+        }
+    }
+
     function processWeatherData($data_dump_model, $aws_type, $station_id) {
         $weather_data = new WeatherData;
         $weather_data->stationid = $station_id;
@@ -205,7 +299,7 @@ class AutomateController extends Controller {
                 break;
             //add new case when new vendor for AWS available
         }
-        return $weather_data->save();
+         $weather_data->save();
     }
 
 }

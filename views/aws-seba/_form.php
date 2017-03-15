@@ -22,9 +22,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'U')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'PL')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'P_L')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'TL')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'T_L')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'G')->textInput(['maxlength' => true]) ?>
 

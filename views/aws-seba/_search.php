@@ -25,9 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'U') ?>
 
-    <?php // echo $form->field($model, 'PL') ?>
+    <?php // echo $form->field($model, 'P_L') ?>
 
-    <?php // echo $form->field($model, 'TL') ?>
+    <?php // echo $form->field($model, 'T_L') ?>
 
     <?php // echo $form->field($model, 'G') ?>
 

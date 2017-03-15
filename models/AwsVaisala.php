@@ -82,21 +82,19 @@ use Yii;
  * @property string $VaisalaVersion
  * @property string $EntryDate
  */
-class AwsVaisala extends \yii\db\ActiveRecord
-{
+class AwsVaisala extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'tbl_aws_vaisala';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['BAT', 'DP', 'DP1HA'], 'number'],
             [['EntryDate'], 'safe'],
@@ -111,8 +109,7 @@ class AwsVaisala extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'TIME' => 'Time',
@@ -190,4 +187,7 @@ class AwsVaisala extends \yii\db\ActiveRecord
             'EntryDate' => 'Entry Date',
         ];
     }
+
+   
+
 }

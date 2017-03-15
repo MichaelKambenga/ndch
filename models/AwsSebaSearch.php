@@ -10,15 +10,14 @@ use app\models\AwsSeba;
 /**
  * AwsSebaSearch represents the model behind the search form of `app\models\AwsSeba`.
  */
-class AwsSebaSearch extends AwsSeba
-{
+class AwsSebaSearch extends AwsSeba {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['entrydate', 'time', 'stationname', 'D', 'U', 'PL', 'TL', 'G', 'CH'], 'safe'],
+            [['entrydate', 'time', 'stationname', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'safe'],
             [['id'], 'integer'],
         ];
     }
@@ -26,8 +25,7 @@ class AwsSebaSearch extends AwsSeba
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class AwsSebaSearch extends AwsSeba
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = AwsSeba::find();
 
         // add conditions that should always apply here
@@ -63,15 +60,18 @@ class AwsSebaSearch extends AwsSeba
         ]);
 
         $query->andFilterWhere(['ilike', 'entrydate', $this->entrydate])
-            ->andFilterWhere(['ilike', 'time', $this->time])
-            ->andFilterWhere(['ilike', 'stationname', $this->stationname])
-            ->andFilterWhere(['ilike', 'D', $this->D])
-            ->andFilterWhere(['ilike', 'U', $this->U])
-            ->andFilterWhere(['ilike', 'PL', $this->PL])
-            ->andFilterWhere(['ilike', 'TL', $this->TL])
-            ->andFilterWhere(['ilike', 'G', $this->G])
-            ->andFilterWhere(['ilike', 'CH', $this->CH]);
+                ->andFilterWhere(['ilike', 'time', $this->time])
+                ->andFilterWhere(['ilike', 'stationname', $this->stationname])
+                ->andFilterWhere(['ilike', 'D', $this->D])
+                ->andFilterWhere(['ilike', 'U', $this->U])
+                ->andFilterWhere(['ilike', 'P_L', $this->P_L])
+                ->andFilterWhere(['ilike', 'T_L', $this->T_L])
+                ->andFilterWhere(['ilike', 'G', $this->G])
+                ->andFilterWhere(['ilike', 'CH', $this->CH])
+                ->andFilterWhere(['ilike', 'U_B', $this->U_B])
+                ->andFilterWhere(['ilike', 'H_L', $this->H_L]);
 
         return $dataProvider;
     }
+
 }

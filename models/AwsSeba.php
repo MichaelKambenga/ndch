@@ -12,10 +12,12 @@ use Yii;
  * @property string $stationname
  * @property string $D
  * @property string $U
- * @property string $PL
- * @property string $TL
+ * @property string $P_L
+ * @property string $T_L
  * @property string $G
  * @property string $CH
+ * @property string $U_B
+ * @property string $H_L
  * @property int $id
  */
 class AwsSeba extends \yii\db\ActiveRecord
@@ -35,7 +37,7 @@ class AwsSeba extends \yii\db\ActiveRecord
     {
         return [
             [['entrydate'], 'string', 'max' => 50],
-            [['time', 'D', 'U', 'PL', 'TL', 'G', 'CH'], 'string', 'max' => 10],
+            [['time', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'string', 'max' => 40],
             [['stationname'], 'string', 'max' => 100],
         ];
     }
@@ -51,12 +53,12 @@ class AwsSeba extends \yii\db\ActiveRecord
             'stationname' => 'Stationname',
             'D' => 'Wind Direction',
             'U' => 'Wind Speed',
-            'PL' => 'Pressure',
-            'TL' => 'Temperature',
+            'P_L' => 'Pressure',
+            'T_L' => 'Temperature',
             'G' => 'Solar Radiation',
             'CH' => 'Rainfall',
-            'UB' => 'Battery',
-            'HL' => 'Relative Humidity',
+            'U_B' => 'Battery',
+            'H_L' => 'Relative Humidity',
             'id' => 'ID',
         ];
     }

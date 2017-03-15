@@ -213,7 +213,11 @@ class AwsVaisalaController extends Controller {
                 $model->StationName = $station;
                 $model->VaisalaVersion = 'V 2.0';
                 $model->EntryDate = Date("Y/m/d h:i:sa");
-                return $model->save();
+//                return $model->save();
+                 if ($model->save()) {
+                    ///insert data into common table ( weather data)
+                    return \app\models\WeatherData::processWeatherData($model, WeatherData::AWS_VAISALA, $station->id);
+                }
             }
         }
     }
