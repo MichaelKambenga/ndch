@@ -17,7 +17,7 @@ class AwsSebaSearch extends AwsSeba {
      */
     public function rules() {
         return [
-            [['entrydate', 'time', 'stationname', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'safe'],
+            [['EntryDate', 'TIME', 'stationname', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'safe'],
             [['id'], 'integer'],
         ];
     }
@@ -59,8 +59,8 @@ class AwsSebaSearch extends AwsSeba {
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['ilike', 'entrydate', $this->entrydate])
-                ->andFilterWhere(['ilike', 'time', $this->time])
+        $query->andFilterWhere(['ilike', 'EntryDate', $this->EntryDate])
+                ->andFilterWhere(['ilike', 'TIME', $this->TIME])
                 ->andFilterWhere(['ilike', 'stationname', $this->stationname])
                 ->andFilterWhere(['ilike', 'D', $this->D])
                 ->andFilterWhere(['ilike', 'U', $this->U])

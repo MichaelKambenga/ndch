@@ -8,6 +8,7 @@ use app\models\AwsSebaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \app\models\WeatherData;
 
 /**
  * AwsSebaController implements the CRUD actions for AwsSeba model.
@@ -116,31 +117,52 @@ class AwsSebaController extends Controller {
     }
 
     public function actionImport() {
-        $tma_vaisala_data_source = \app\models\DataSources::findOne(2);
-        $tma_vaisala_data_source_stations = \app\models\DataSourceStations::findAll(['datasourceid' => $tma_vaisala_data_source->id]);
-        $count = 0;
-        foreach ($tma_vaisala_data_source_stations as $tma_vaisala_data_source_station) {
-            $station = \app\models\Station::findOne($tma_vaisala_data_source_station->stationid)->name;
-            $path = $tma_vaisala_data_source->datalocation . "\\" . Date('Ymd', time()) . "\\" . $station . '.txt';
-            if ($this->ProcessSebaFile($path, $station)) {
-                $count++;
+        //getting all AWS(file based) data sources
+        $data_sources = \app\models\DataSources::find()->where(['datasourcetype' => \app\models\DataSources::DATA_SOURCE_FAILEBASED])->all();
+        foreach ($data_sources as $data_source) {
+
+            //getting all stations under each AWS(file based) data sources
+            $data_source_stations = \app\models\DataSourceStations::findAll(['datasourceid' => $data_source->id]);
+            $count = 0;
+            foreach ($data_source_stations as $data_source_station) {                
+                $station = \app\models\Station::findOne($data_source_station->stationid);
+                $_directory_path = $data_source->datalocation . Date('Ymd', time());
+                //$path = $tma_vaisala_data_source->datalocation . Date('Ymd', time()) . "\\" . $station->name . '.txt';
+                $available_station_data = array(); //keeps the available files from server
+                if ($handle = opendir($_directory_path)) {
+                    /* This is the correct way to loop over the directory. */
+                    while (false !== ($entry = readdir($handle))) {
+                        if (strpos($entry, $station->name) !== false) {
+                            ///setting file location based on the availble data files for a particular station
+                            $path = $_directory_path . '\\' . $entry;
+                            //array_push($available_station_data, $path);
+                            if ($this->ProcessSebaFile($path, $station)) {
+                                $count++;
+                            }
+                        }
+                    }
+                    closedir($handle);
+                }
             }
-        }
-        if ($count) {
-            $message = "Successflly imported with data processed";
-        } else {
-            $message = "Successflly imported with no data processed";
         }
         return $this->redirect(['index']);
     }
 
     public function ProcessSebaFile($path, $station) {
-        $rows = file($path);        
+        $rows = file($path);
         foreach ($rows as $row) {
             $array_row = preg_split("/[\s,]+/", $row);
+            $elements = count($array_row);
+            //removing line terminator(;) in last item from the row
+            if ($array_row[$elements - 2]) {
+                $itemlegth = strlen($array_row[$elements - 2]);
+                $array_row[$elements - 2] = substr($array_row[$elements - 2], 0, $itemlegth - 1);
+            }
+            //end removing line terminator(;) in last item from the row
+
             $model = new AwsSeba();
-            $model->time = str_replace("T001:", "", $array_row[0]) . ' ' . $array_row[1];
-            $model->time=Date('Y-m-d H:i:s',  strtotime($model->time));
+            $model->TIME = str_replace("T001:", "", $array_row[0]) . ' ' . $array_row[1];
+            $model->TIME = Date('Y-m-d H:i:s', strtotime($model->TIME));
             $station_name_array = explode("-", $array_row[2]);
             $station_name = $station_name_array[0];
             $model->stationname = $station_name;
@@ -163,52 +185,50 @@ class AwsSebaController extends Controller {
             }
             $fifth_element = explode("=", $array_row[5]);
             if (!empty($fifth_element[0])) {
-                 if (strpos($fifth_element[0], 'CH') !== false) {
+                if (strpos($fifth_element[0], 'CH') !== false) {
                     $model->CH = $fifth_element[1];
                 } else {
-                $model->$fifth_element[0] = $fifth_element[1];
+                    $model->$fifth_element[0] = $fifth_element[1];
                 }
             }
             $sixth_element = explode("=", $array_row[6]);
             if (!empty($sixth_element[0])) {
-                 if (strpos($sixth_element[0], 'CH') !== false) {
+                if (strpos($sixth_element[0], 'CH') !== false) {
                     $model->CH = $sixth_element[1];
                 } else {
-                $model->$sixth_element[0] = $sixth_element[1];
+                    $model->$sixth_element[0] = $sixth_element[1];
                 }
             }
             $seventh_element = explode("=", $array_row[7]);
             if (!empty($seventh_element[0])) {
-                 if (strpos($seventh_element[0], 'CH') !== false) {
+                if (strpos($seventh_element[0], 'CH') !== false) {
                     $model->CH = $seventh_element[1];
                 } else {
-                $model->$seventh_element[0] = $seventh_element[1];
+                    $model->$seventh_element[0] = $seventh_element[1];
                 }
             }
             $eigth_element = explode("=", $array_row[8]);
             if (!empty($eigth_element[0])) {
-                 if (strpos($eigth_element[0], 'CH') !== false) {
+                if (strpos($eigth_element[0], 'CH') !== false) {
                     $model->CH = $eigth_element[1];
                 } else {
-                $model->$eigth_element[0] = $eigth_element[1];
+                    $model->$eigth_element[0] = $eigth_element[1];
                 }
             }
             $nineth_element = explode("=", $array_row[9]);
             if (!empty($nineth_element[0])) {
-                 if (strpos($nineth_element[0], 'CH') !== false) {
+                if (strpos($nineth_element[0], 'CH') !== false) {
                     $model->CH = $nineth_element[1];
                 } else {
-                $model->$nineth_element[0] = $nineth_element[1];
+                    $model->$nineth_element[0] = $nineth_element[1];
                 }
             }
-            $model->entrydate = Date("Y-m-d H:i:s");
-            
-            $model->save();
-            
-//            if ($model->save()) {
-//                ///insert data into common table ( weather data)
-//                return \app\models\WeatherData::processWeatherData($model, WeatherData::AWS_SEBA, $station->id);
-//            }
+            $model->EntryDate = Date("Y-m-d H:i:s");
+
+            if ($model->save()) {
+                ///insert data into common table ( weather data)
+                WeatherData::processWeatherData($model, WeatherData::AWS_SEBA, $station->id);
+            }
         }
     }
 

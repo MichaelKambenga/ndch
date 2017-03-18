@@ -71,7 +71,7 @@ LteAsset::register($this);
                         <?php
                         echo '<li><a href="' . Url::to(['/weather-data']) . '">'. '<i class="fa fa-bar-chart"></i>'
                         . '<span>Station Data</span>'
-                        . '</a></li>'; ?><?php if (Yii::$app->user->can('Super Systems Admin')) {
+                        . '</a></li>'; ?><?php //if (Yii::$app->user->can('Super Systems Admin')) {
                         
                         echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
                         . '<i class="fa fa-database"></i>'
@@ -81,7 +81,7 @@ LteAsset::register($this);
                         . '<i class="fa fa-cube"></i>'
                         . '<span>SEBA Data</span>'
                         . '</a></li>';
-                        }?>
+                       // }?>
 
                         <?php
                         if (Yii::$app->user->can('Super Systems Admin')) {

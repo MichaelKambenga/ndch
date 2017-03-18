@@ -15,9 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'entrydate') ?>
+    <?= $form->field($model, 'EntryDate') ?>
 
-    <?= $form->field($model, 'time') ?>
+    <?= $form->field($model, 'TIME') ?>
 
     <?= $form->field($model, 'stationname') ?>
 

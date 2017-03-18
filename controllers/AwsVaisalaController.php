@@ -8,6 +8,7 @@ use app\models\AwsVaisalaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \app\models\WeatherData;
 
 /**
  * AwsVaisalaController implements the CRUD actions for AwsVaisala model.
@@ -116,28 +117,38 @@ class AwsVaisalaController extends Controller {
     }
 
     public function actionImport() {
-        $tma_vaisala_data_source = \app\models\DataSources::findOne(1);
-        $tma_vaisala_data_source_stations = \app\models\DataSourceStations::findAll(['datasourceid' => $tma_vaisala_data_source->id]);
+         //getting all AWS(file based) data sources
+        $data_sources = \app\models\DataSources::find()->where(['datasourcetype' => \app\models\DataSources::DATA_SOURCE_FAILEBASED])->all();
+        foreach ($data_sources as $data_source) {
+         //getting all stations under each AWS(file based) data sources
+        $data_source_stations = \app\models\DataSourceStations::findAll(['datasourceid' => $data_source->id]);
         $count = 0;
-        foreach ($tma_vaisala_data_source_stations as $tma_vaisala_data_source_station) {
-            $station = \app\models\Station::findOne($tma_vaisala_data_source_station->stationid)->name;
-            $path = $tma_vaisala_data_source->datalocation . "\\" . $station . "\\" . Date('Y', time()) . "\\" . Date('m', time()) . "\\" . $station . "_SMSAWS_" . Date('Ymd', time()) . '.txt';
-            if ($this->ProcessVaisalaFile($path,$station)) {
+        foreach ($data_source_stations as $data_source_station) {
+            $station = \app\models\Station::findOne($data_source_station->stationid);
+            $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y', time()) . "\\" . Date('m', time()) . "\\" . $station->name . "_SMSAWS_" . Date('Ymd', time()) . '.txt';
+            if ($this->ProcessVaisalaFile($path, $station)) {
                 $count++;
             }
         }
-        if ($count) {
-            $message = "Successflly imported with data processed";
-        } else {
-            $message = "Successflly imported with no data processed";
-        }
+    }
         return $this->redirect(['index']);
     }
 
-    public function ProcessVaisalaFile($path,$station) {
+    public function ProcessVaisalaFile($path, $station) {
         $rows = file($path);
+
+
         foreach ($rows as $row) {
             $array_row = preg_split("/[\s,]+/", $row);
+            //removing "/" when element is blank for each row to be processed   
+
+            foreach ($array_row as $key => $value) {
+                if ($key > 1 && $array_row[$key] == '/') {
+                    $array_row[$key] = NULL;
+                }
+            }
+            //end removing "/" when element is blank
+            
             if ($array_row[0] != 'TIME') {
                 $model = new AwsVaisala();
                 $model->TIME = $array_row[0] . ' ' . $array_row[1];
@@ -210,13 +221,13 @@ class AwsVaisalaController extends Controller {
                 $model->p = $array_row[68];
                 $model->ETO = $array_row[69];
                 $model->Path = $path;
-                $model->StationName = $station;
+                $model->StationName = $station->name;
                 $model->VaisalaVersion = 'V 2.0';
                 $model->EntryDate = Date("Y/m/d h:i:sa");
-//                return $model->save();
-                 if ($model->save()) {
-                    ///insert data into common table ( weather data)
-                    return \app\models\WeatherData::processWeatherData($model, WeatherData::AWS_VAISALA, $station->id);
+                $model->validate();
+                if ($model->save()) {
+                    //insert data into common table ( weather data)
+                    WeatherData::processWeatherData($model, WeatherData::AWS_VAISALA, $station->id);
                 }
             }
         }

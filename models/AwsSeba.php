@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "tbl_aws_seba".
  *
- * @property string $entrydate Date data recorded from the station
- * @property string $time
+ * @property string $EntryDate Date data recorded from the station
+ * @property string $TIME
  * @property string $stationname
  * @property string $D
  * @property string $U
@@ -36,8 +36,8 @@ class AwsSeba extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['entrydate'], 'string', 'max' => 50],
-            [['time', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'string', 'max' => 40],
+            [['EntryDate'], 'string', 'max' => 50],
+            [['TIME', 'D', 'U', 'P_L', 'T_L', 'G', 'CH', 'U_B', 'H_L'], 'string', 'max' => 40],
             [['stationname'], 'string', 'max' => 100],
         ];
     }
@@ -48,8 +48,8 @@ class AwsSeba extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'entrydate' => 'Entrydate',
-            'time' => 'Time',
+            'EntryDate' => 'Entrydate',
+            'TIME' => 'Time',
             'stationname' => 'Stationname',
             'D' => 'Wind Direction',
             'U' => 'Wind Speed',

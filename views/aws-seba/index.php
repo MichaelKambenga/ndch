@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
     ['class' => 'yii\grid\SerialColumn'],
     'stationname',
-    'entrydate',
-    'time',
+    'EntryDate',
+    'TIME',
     'D',
     'U',
     'P_L',
