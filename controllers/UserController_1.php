@@ -14,8 +14,6 @@ use app\models\LoginsSearch;
 use app\models\UserAuditTrailSearch;
 use yii\helpers\Html;
 use app\models\AuthAssignment;
-use yii\base\ActionFilter;
-use yii\base\AccessFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -91,16 +89,21 @@ class UserController extends Controller {
             $model->status = User::STATUS_ACTIVE;
             $model->created_at = Date('Y-m-d H:i:s', time());
             $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
-            if ($model->user_role && $model->user_role == 'Station User') {
+            $user_roles = $model->user_role;
+            if (count($user_roles) > 0 && isset($user_roles['Station User'])) {
                 $model->scenario = User::SCENARIO_STATION_USER;
             }
 
             if ($model->save()) {
-                $userRole = new AuthAssignment;
-                $userRole->item_name = $model->user_role;
-                $userRole->user_id = $model->id;
-                $userRole->save();
+                foreach ($user_roles as $key => $role) {
+                    $userRole = new AuthAssignment;
+                    $userRole->item_name = $role;
+                    $userRole->user_id = $model->id;
+                    $userRole->save();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $model->user_role = $user_roles;
             }
         }
         return $this->render('create', [
@@ -116,24 +119,34 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+//        $user_role=array();
+//        $user_roles=AuthAssignment::find()->where(['user_id' => $model->id])->all();
+//        if($user_roles){
+//            foreach($user_roles as $role){
+//              array_push($user_role, $role->item_name); 
+//            }
+//            $model->user_role=$user_role;
+//        }
         $model->updated_at = Date('Y-m-d H:i:s', time());
-        //getting user roles
-        $user_roles=AuthAssignment::findone(['user_id' => $model->id]); //->where();
-        if ($user_roles && isset($user_roles->item_name)) {
-            $model->user_role = $user_roles->item_name;
-        }
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->user_role && $model->user_role == 'Station User') {
-                $model->scenario = User::SCENARIO_STATION_USER;
-            }
+            $user_roles = $model->user_role;
             if ($model->save()) {
+                $count_roles = 0;
                 AuthAssignment::deleteAll(['user_id' => $model->id]);
-                $userRole = new AuthAssignment;
-                $userRole->item_name = $model->user_role;
-                $userRole->user_id = $model->id;
-                $userRole->created_at = time();
-                $userRole->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+                foreach ($user_roles as $key => $role) {
+                    $userRole = new AuthAssignment;
+                    $userRole->item_name = $role;
+                    $userRole->user_id = $model->id;
+                    $userRole->created_at = time();
+                    if ($userRole->save()) {
+                        $count_roles++;
+                    }
+                }
+                if ($count_roles) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }{
+                  $model->user_role=$user_roles;
+                }
             }
         }
         return $this->render('update', [

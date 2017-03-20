@@ -41,22 +41,22 @@ use app\models\Stakeholder;
     'items' => ArrayHelper::map(Stakeholder::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => '-- Select Organization --'],
     'columnOptions' => ['width' => '185px']
     ],
+    'stationid' => [
+    'type' => Form::INPUT_DROPDOWN_LIST,
+    'items' => ArrayHelper::map(\app\models\Station::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => '-- Select station --'],
+    'columnOptions' => ['width' => '185px']
+    ],
     'username' => [
     'type' => Form::INPUT_TEXT,
     'options' => ['placeholder' => 'Enter User Name'],
     'columnOptions' => ['width' => '185px']
     ],
-    'user_role' => [
+    'user_role[]' => [
     'class' => 'user_roles',
-    'type' => Form::INPUT_DROPDOWN_LIST,
+    'type' => Form::INPUT_CHECKBOX_LIST,
     'checked' => ['Institution Normal User', 'Institution  Super User'],
-    'items' => ArrayHelper::map(\app\models\AuthItem::find()->orderBy('name')->asArray()->where(['type' => 1])->all(), 'name', 'name'), 'options' => ['prompt' => '-- Select --'],
+    'items' => ArrayHelper::map(\app\models\AuthItem::find()->orderBy('name')->asArray()->where(['type' => 1])->all(), 'name', 'name'),
     'columnOptions' => ['width' => '185px', 'height' => '10px']
-    ],
-    'stationid' => [
-    'type' => Form::INPUT_DROPDOWN_LIST,
-    'items' => ArrayHelper::map(\app\models\Station::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => '-- Select station --'],
-    'columnOptions' => ['width' => '185px']
     ],
     ]
     ]);
