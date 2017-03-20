@@ -8,11 +8,11 @@ use yii\widgets\DetailView;
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'SEBA Data', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->stationname;
 ?>
 <div class="aws-seba-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($model->stationname.' - '.$this->title) ?></h1>
 
     <?=
     DetailView::widget([
