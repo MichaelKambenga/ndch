@@ -101,6 +101,8 @@ class StationController extends Controller {
             $model->createdby = 2;
             $model->createdbyinsitutionid = 1;
             $model->name = strtoupper($model->name);
+            $model->status = Station::STATION_STATUS_ACTIVE;
+
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -121,6 +123,9 @@ class StationController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $model->name = strtoupper($model->name);
+            if ($model->operationalenddate && (date('Y-m-d', strtotime($model->operationalenddate)) < date('Y-m-d', time()))) {
+                $model->status = Station::STATION_STATUS_CLOSED;
+            }
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

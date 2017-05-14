@@ -56,7 +56,7 @@ use app\models\Stakeholder;
     'stationid' => [
     'type' => Form::INPUT_DROPDOWN_LIST,
     'items' => ArrayHelper::map(\app\models\Station::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => '-- Select station --'],
-    'columnOptions' => ['width' => '185px']
+    'columnOptions' => ['width' => '185px','id'=>'user-station']
     ],
     ]
     ]);

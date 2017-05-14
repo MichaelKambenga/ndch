@@ -35,28 +35,44 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]);
         ?>
-<?= Html::a('Set Data Source Stations', ['add-station', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Set Data Source Stations', ['add-station', 'id' => $model->id], ['class' => 'btn btn-primary','style'=>'margin-left:5%;']) ?>
     </p>
 
     <?=
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'name',
-            'ipaddress',
-            'datalocation',
+                [
+                'attribute' => 'name',
+                'label' => 'Data Source Name',
+                'value' => $model->name,
+            ],
+             [
+                'attribute' => 'awsvendor',
+                'label' => 'Vendor',
+                'value' => $model->getAWSDataSourceVendorName(),
+                'visible' => $model->awsvendor ? TRUE : FALSE
+            ],
             array(
                 'attribute' => 'stakeholderid',
+                'label' => 'Owner',
                 'value' => function ($model) {
                     return Stakeholder::getStakeholderNameById($model->stakeholderid);
                 },
             ),
             array(
-                'attribute' => 'orgtype',
+                'attribute' => 'datasourcetype',
                 'value' => function ($model) {
-                    return $model->getDataSourceTypeName();
+                    return strtoupper($model->getDataSourceTypeName());
                 },
             ),
+            'ipaddress',
+            'datalocation',
+            'loginname',
+                [
+                'attribute' => 'password',
+                'value' => $model->password ? '*********' : "",
+            ],
         ],
     ])
     ?>

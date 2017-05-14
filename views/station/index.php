@@ -39,12 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Stakeholder::getStakeholderNameById($model->stationowner);
                 },
             ],
-            [
-                'attribute' => 'regionid',
-                'value' => function ($model) {
-                    return Region::getRegionNameById($model->regionid);
-                },
-            ],
+//            [
+//                'attribute' => 'regionid',
+//                'value' => function ($model) {
+//                    return Region::getRegionNameById($model->regionid);
+//                },
+//            ],
             [
                 'attribute' => 'districtid',
                 'value' => function ($model) {

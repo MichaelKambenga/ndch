@@ -25,19 +25,19 @@ use app\models\Station;
         'attributes' => [
             'name' => [
                 'type' => Form::INPUT_TEXT,
-                //'label' => 'Name',
+                'label' => 'Station Name',
                 'options' => ['placeholder' => 'Enter Station Name...'],
                 'columnOptions' => ['width' => '185px']
             ],
             'stationcode' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'stationcode',
+                'label' => 'Station Code',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ],
             'stationtype' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
-                //'label' => 'stationtype',
+                'label' => 'Station Type',
                 'options' => ['prompt' => '--select--'],
                  'columnOptions' => ['width' => '185px'],
                 'items'=>  Station::getStationTypes()
@@ -50,9 +50,22 @@ use app\models\Station;
             ],
             'geocode' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'Geocode',
+                'label' => 'Geo Code',
                 'options' => ['placeholder' => 'Enter Geocode...'],
                 'columnOptions' => ['width' => '185px']
+            ],
+            'operationalstartdate' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'Start Date',
+                'options' => ['placeholder' => 'Enter Date The station  Stated to Operate...'],
+                'columnOptions' => ['width' => '185px']
+            ],
+            'operationalenddate' => [
+                'type' => Form::INPUT_TEXT,
+                'label' => 'End Date',
+                'options' => ['placeholder' => 'Enter Date The station  Stated to Operate...'],
+                'columnOptions' => ['width' => '185px'],
+                'visible'=>!$model->isNewRecord
             ],
             'regionid' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
@@ -74,51 +87,51 @@ use app\models\Station;
             ],
              'heightanemometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'heightanemometer',
+                //'label' => 'heightanemometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ],
              'heightbarometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'heightbarometer',
+               // 'label' => 'heightbarometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ],
              'heightraingauge' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'heightraingauge',
+               // 'label' => 'heightraingauge',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'thermometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'thermometer',
+               // 'label' => 'thermometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'hygrometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'hygrometer',
+               // 'label' => 'hygrometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'barometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'barometer',
+               // 'label' => 'barometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'anemometer' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'anemometer',
+               // 'label' => 'anemometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'raingauge' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'raingauge',
+               // 'label' => 'raingauge',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'generalcomment' => [
                 'type' => Form::INPUT_TEXT,
-                'label' => 'generalcomment',
+                //'label' => 'generalcomment',
                 'options' => ['placeholder' => 'Enter Station Code...'],
-                'columnOptions' => ['width' => '185px']
+                'columnOptions' => ['width' => '385px']
             ],
         ]
     ]);

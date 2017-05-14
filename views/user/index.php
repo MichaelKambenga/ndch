@@ -28,17 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                ['class' => 'yii\grid\SerialColumn'],
             'firstname',
             //'middlename',
             'lastname',
-            [
-             'attribute'=>'organizationid',
-               'value' => function($model) {
+                [
+                'attribute' => 'organizationid',
+                'value' => function($model) {
                     return $model->organizationid == 1 ? Stakeholder::getStakeholderNameById($model->organizationid) : "";
                 },
             ],
-             'username',
+                [
+                'attribute' => 'user_role',
+                //'value' => $model->getUserRolesName(),
+                'value' => function($model) {
+                    return $model->getUserRolesName();
+                },
+                'format' => 'html'
+            ],
+            'username',
             // 'password',
             [
                 'label' => 'Status',
@@ -66,20 +74,20 @@ $this->params['breadcrumbs'][] = $this->title;
 //                },
 //                        'format' => 'raw',
 //             ],
-                        ['class' => 'yii\grid\ActionColumn'],
-                ],
-                'responsive' => true,
-                'hover' => true,
-                'condensed' => true,
-                'floatHeader' => false,
-                'panel' => [
-                    'heading' => '<h3 class="panel-title"> </h3>',
-                    'type' => 'default',
-                    'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add User', ['create'], ['class' => 'btn btn-success']), 'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-                    'showFooter' => false
-                ],
-            ]);
-            Pjax::end();
-            ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'responsive' => true,
+        'hover' => true,
+        'condensed' => true,
+        'floatHeader' => false,
+        'panel' => [
+            'heading' => '<h3 class="panel-title"> </h3>',
+            'type' => 'default',
+            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add User', ['create'], ['class' => 'btn btn-success']), 'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'showFooter' => false
+        ],
+    ]);
+    Pjax::end();
+    ?>
 
 </div>

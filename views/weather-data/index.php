@@ -36,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     [
     'attribute' => 'TIME',
-    'format' => ['date', 'php:d-m-Y @ H:i']
+        'label'=>'TIME',
+    'format' => ['date', 'php:d-M-Y @ H:i']
     ],
     'PA',
     'PR',
