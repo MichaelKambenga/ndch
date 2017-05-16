@@ -127,11 +127,11 @@ echo GridView::widget([
             'template' => '{update} &nbsp;&nbsp;&nbsp;  {delete}',
             'buttons' => [
                 'update' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-edit"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/update', 'id' => $model->id)), [
+                    return Html::a('<span class="glyphicon glyphicon-edit"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/update', 'id' => $model->elementsid)), [
                     ]);
                 },
                 'delete' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-remove"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/delete', 'id' => $model->id)), [
+                    return Html::a('<span class="glyphicon glyphicon-remove"></span>', Yii::$app->urlManager->createUrl(array('station-weather-elements/delete', 'id' => $model->elementsid)), [
                     ]);
                 }
             ],

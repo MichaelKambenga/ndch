@@ -35,19 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]);
         ?>
-        <?= Html::a('Set Data Source Stations', ['add-station', 'id' => $model->id], ['class' => 'btn btn-primary','style'=>'margin-left:5%;']) ?>
+        <?= Html::a('Set Data Source Stations', ['add-station', 'id' => $model->id], ['class' => 'btn btn-primary', 'style' => 'margin-left:5%;']) ?>
     </p>
 
     <?=
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-                [
+            [
                 'attribute' => 'name',
                 'label' => 'Data Source Name',
                 'value' => $model->name,
             ],
-             [
+            [
                 'attribute' => 'awsvendor',
                 'label' => 'Vendor',
                 'value' => $model->getAWSDataSourceVendorName(),
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ipaddress',
             'datalocation',
             'loginname',
-                [
+            [
                 'attribute' => 'password',
                 'value' => $model->password ? '*********' : "",
             ],
@@ -86,68 +86,71 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ob_start(); ?>
     <?php
-    GridView::widget([
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider_stations,
-        // 'filterModel' => $model_station,
+//        'filterModel' => $model_station,
         'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn'],
             array(
-                'attribute' => 'stationcode',
+                'label' => 'Station Name',
+                'value' => 'station.name',
+            ),
+            array(
+                'label' => 'Station Code',
                 'value' => 'station.stationcode',
             ),
             array(
-                'attribute' => 'stationid',
-                'value' => 'station.name',
+                'attribute' => 'datecreated',
+                'label' => 'Date Created',
+                'value' => 'datecreated',
             ),
-            array(
-                'attribute' => 'stationid',
-                'value' => 'station.name',
-            ),
-                ['class' => 'yii\grid\ActionColumn',
+            ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model) {
-                        return Html::a('view', Yii::$app->urlManager->createUrl(['station/view', 'id' => $model->id]), [
+                        return Html::a('view', Yii::$app->urlManager->createUrl(['station/view', 'id' => $model->stationid]), [
                         ]);
                     }
+                        ],
+                    ],
                 ],
-            ],
-        ],
-        'responsive' => true,
-        'hover' => true,
-        'condensed' => true,
-        'floatHeader' => false,
-        'panel' => [
-            'heading' => ' ',
-            'type' => 'default',
-            'showFooter' => false
-        ],
-    ]);
-    ?>
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => false,
+                'panel' => [
+                    'heading' => ' ',
+                    'type' => 'default',
+                    'showFooter' => false
+                ],
+            ]);
+            Pjax::end();
+            ?>
 
-    <?php
-    $datasourceStations = ob_get_contents();
-    ob_end_clean();
-    ?>
+            <?php
+            $datasourceStations = ob_get_contents();
+            ob_end_clean();
+            ?>
 
-    <!--START JUI TABS-->
-    <?php
-    echo TabsX::widget([
-        'items' => [
-                [
-                'label' => ' ' . 'Data Source Details',
-                'content' => $datasourceDetails,
-                'options' => ['id' => 'datasources-tab'],
-            // 'active' => ($activeTab == 'Stakeholder-Details-tab'),
-            ],
-                [
-                'label' => ' Data Source Stations',
-                'content' => $datasourceStations,
-                'options' => ['id' => 'data-source-stations-tab'],
-            //  'active' => ($activeTab == 'Stations-tab'),
-            ],
-        ],
-        'bordered' => true,
-    ]);
-    ?>
+            <!--START JUI TABS-->
+            <?php
+            echo TabsX::widget([
+                'items' => [
+                    [
+                        'label' => ' ' . 'Data Source Details',
+                        'content' => $datasourceDetails,
+                        'options' => ['id' => 'datasources-tab'],
+                    // 'active' => ($activeTab == 'Stakeholder-Details-tab'),
+                    ],
+                    [
+                        'label' => ' Data Source Stations',
+                        'content' => $datasourceStations,
+                        'options' => ['id' => 'data-source-stations-tab'],
+                    //  'active' => ($activeTab == 'Stations-tab'),
+                    ],
+                ],
+                'bordered' => true,
+            ]);
+            ?>
 </div>

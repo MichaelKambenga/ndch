@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * WardController implements the CRUD actions for Ward model.
  */
-class WardController extends Controller {
+class WardController extends \app\components\Controller {
 
     /**
      * @inheritdoc

@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * WeatherDataController implements the CRUD actions for WeatherData model.
  */
-class WeatherDataController extends Controller {
+class WeatherDataController extends \app\components\Controller {
 
     /**
      * @inheritdoc

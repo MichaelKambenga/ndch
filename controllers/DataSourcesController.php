@@ -10,11 +10,12 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use app\models\DataSourceStations;
+use app\models\DataSourceStationsSearch;
 
 /**
  * DataSourcesController implements the CRUD actions for DataSources model.
  */
-class DataSourcesController extends Controller {
+class DataSourcesController extends \app\components\Controller {
 
     /**
      * @inheritdoc
@@ -52,8 +53,8 @@ class DataSourcesController extends Controller {
     public function actionView($id) {
         $id = \yii\bootstrap\Html::encode($id);
         $model = $this->findModel($id);
-        $stations_model = new \app\models\DataSourceStationsSearch;
-        $stations_model->datasourceid = $id;
+        $stations_model = new DataSourceStationsSearch;
+        $stations_model->datasourceid = $model->id;
         $dataProvider_stations = $stations_model->search(NULL);
         return $this->render('view', [
         'model' => $model,

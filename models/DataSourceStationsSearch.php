@@ -58,14 +58,14 @@ class DataSourceStationsSearch extends DataSourceStations
             return $dataProvider;
         }
 
-        // grid filtering conditions
-//        $query->andFilterWhere([
-//            'id' => $this->id,
-//            'datasourceid' => $this->datasourceid,
-//            'stationid' => $this->stationid,
-//        ]);
+//         grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'datasourceid' => $this->datasourceid,
+            'stationid' => $this->stationid,
+        ]);
 
-       // $query->andFilterWhere(['like', 'datecreated', $this->datecreated]);
+        $query->andFilterWhere(['like', 'datecreated', $this->datecreated]);
 
         return $dataProvider;
     }

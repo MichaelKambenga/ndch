@@ -20,7 +20,7 @@ use yii\base\AccessFilter;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller {
+class UserController extends \app\components\Controller {
 
     /**
      * @inheritdoc

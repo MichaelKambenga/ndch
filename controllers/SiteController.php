@@ -77,13 +77,13 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            if(!is_null(\yii::$app->user->identity->organizationid) && is_null(\yii::$app->user->identity->stationid)){
-            Yii::$app->session->set('organizationUser', 1);
+            if (!is_null(\yii::$app->user->identity->organizationid) && is_null(\yii::$app->user->identity->stationid)) {
+                Yii::$app->session->set('organizationUser', 1);
             }
-            if(!is_null(\yii::$app->user->identity->stationid)){
-              Yii::$app->session->set('stationUser', 1);  
+            if (!is_null(\yii::$app->user->identity->stationid)) {
+                Yii::$app->session->set('stationUser', 1);
             }
-             /* Logs the Logins History */
+            /* Logs the Logins History */
             $loginsModel = new \app\models\Logins();
             $loginsModel->userid = \yii::$app->user->identity->id;
             $loginsModel->ipaddress = Yii::$app->getRequest()->getUserIP();
@@ -104,12 +104,12 @@ class SiteController extends Controller {
     public function actionLogout() {
         /* Logs the Logins History */
         $loginsModel = new \app\models\Logins();
-        $loginsModel->userid =  Yii::$app->user->id;
+        $loginsModel->userid = Yii::$app->user->id;
         $loginsModel->ipaddress = Yii::$app->getRequest()->getUserIP();
         $loginsModel->details = 'User logged out the system successful using browser :- ' . Yii::$app->getRequest()->getUserAgent();
         $loginsModel->save();
-         Yii::$app->user->logout();
-       
+        Yii::$app->user->logout();
+
         return $this->goHome();
     }
 
@@ -137,6 +137,15 @@ class SiteController extends Controller {
      */
     public function actionAbout() {
         return $this->render('about');
+    }
+
+    /**
+     * Displays forbidden page.
+     *
+     * @return string
+     */
+    public function actionForbidden() {
+        return $this->render('forbidden');
     }
 
 }

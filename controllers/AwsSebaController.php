@@ -16,7 +16,7 @@ use \app\models\Station;
 /**
  * AwsSebaController implements the CRUD actions for AwsSeba model.
  */
-class AwsSebaController extends Controller {
+class AwsSebaController extends \app\components\Controller {
 
     /**
      * @inheritdoc

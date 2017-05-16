@@ -69,10 +69,14 @@ LteAsset::register($this);
                             </a>
                         </li>
                         <?php
-                        echo '<li><a href="' . Url::to(['/weather-data']) . '">'. '<i class="fa fa-bar-chart"></i>'
-                        . '<span>Station Data</span>'
-                        . '</a></li>'; ?><?php //if (Yii::$app->user->can('Super Systems Admin')) {
-                        
+                        if (Yii::$app->user->can('/weather-data/index')) {
+                            echo '<li><a href="' . Url::to(['/weather-data']) . '">' . '<i class="fa fa-bar-chart"></i>'
+                            . '<span>Station Data</span>'
+                            . '</a></li>';
+                        }
+                        ?><?php
+                        if (Yii::$app->user->can('/aws-vaisala/index') || Yii::$app->user->can('/aws-seba/index')) {
+
                         echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
                         . '<i class="fa fa-database"></i>'
                         . '<span>VAISALA Data</span>'
@@ -81,11 +85,12 @@ LteAsset::register($this);
                         . '<i class="fa fa-cube"></i>'
                         . '<span>SEBA Data</span>'
                         . '</a></li>';
-                       // }?>
+                         }
+                        ?>
 
                         <?php
                         if (Yii::$app->user->can('Super Systems Admin')) {
-                        echo '<li class="treeview">
+                            echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-cog"></i>
                                 <span>Setup</span>
@@ -113,7 +118,7 @@ LteAsset::register($this);
 
                         <?php
                         if (Yii::$app->user->can('Super Systems Admin')) {
-                        echo '<li class="treeview">
+                            echo '<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-edit"></i> <span>System Security</span>
                                 <span class="pull-right-container">
@@ -154,7 +159,7 @@ LteAsset::register($this);
                     ])
                     ?>
 
-                    <?= $content ?>
+<?= $content ?>
                 </section>
             </div>
 
@@ -166,7 +171,7 @@ LteAsset::register($this);
                 All rights reserved.          
             </footer>   
         </div>  
-        <?php $this->endBody() ?>
+<?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

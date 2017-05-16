@@ -16,7 +16,7 @@ use \app\models\Station;
 /**
  * AwsVaisalaController implements the CRUD actions for AwsVaisala model.
  */
-class AwsVaisalaController extends Controller {
+class AwsVaisalaController extends \app\components\Controller {
 
     /**
      * @inheritdoc

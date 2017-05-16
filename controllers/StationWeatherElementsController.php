@@ -13,7 +13,7 @@ use yii\helpers\Html;
 /**
  * StationWeatherElementsController implements the CRUD actions for StationWeatherElements model.
  */
-class StationWeatherElementsController extends Controller {
+class StationWeatherElementsController extends \app\components\Controller {
 
     /**
      * @inheritdoc

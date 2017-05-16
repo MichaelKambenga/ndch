@@ -15,7 +15,7 @@ use yii\helpers\Html;
 /**
  * WeatherElementsController implements the CRUD actions for WeatherElements model.
  */
-class WeatherElementsController extends Controller {
+class WeatherElementsController extends \app\components\Controller {
 
     /**
      * @inheritdoc

@@ -13,13 +13,12 @@ use yii\helpers\Html;
 /**
  * WeatherElementsListController implements the CRUD actions for WeatherElementsList model.
  */
-class WeatherElementsListController extends Controller
-{
+class WeatherElementsListController extends \app\components\Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,14 +33,13 @@ class WeatherElementsListController extends Controller
      * Lists all WeatherElementsList models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new WeatherElementsListSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -50,10 +48,9 @@ class WeatherElementsListController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -62,21 +59,19 @@ class WeatherElementsListController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
-    {
-        $id=Html::encode($id);
+    public function actionCreate($id) {
+        $id = Html::encode($id);
         $model = new WeatherElementsList();
         if ($model->load(Yii::$app->request->post())) {
-        if($model->save()){
-            return $this->redirect(['weather-elements/view', 'id' => $model->elementid]);
-        }        
+            if ($model->save()) {
+                return $this->redirect(['weather-elements/view', 'id' => $model->elementid]);
+            }
         }
-        $model->elementid=(int)$id;
-        
+        $model->elementid = (int) $id;
+
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
-        
     }
 
     /**
@@ -85,15 +80,14 @@ class WeatherElementsListController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -104,8 +98,7 @@ class WeatherElementsListController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -118,12 +111,12 @@ class WeatherElementsListController extends Controller
      * @return WeatherElementsList the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = WeatherElementsList::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

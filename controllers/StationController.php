@@ -17,7 +17,7 @@ use yii\helpers\Html;
 /**
  * StationController implements the CRUD actions for Station model.
  */
-class StationController extends Controller {
+class StationController extends \app\components\Controller {
 
     /**
      * @inheritdoc

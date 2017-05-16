@@ -15,11 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
 
-    <!--<h1><?= Html::encode($this->title) ?></h1>-->
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
-
     <p>
-        <?= Html::a('Create/Add Data Source', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a('Create/Add Data Source', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -63,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'floatHeader' => false,
                 'panel' => [
-                    'heading' => 'Data Sources',
+//                    'heading' => 'Data Sources',
                     'type' => 'default',
                     'showFooter' => true
                 ],
