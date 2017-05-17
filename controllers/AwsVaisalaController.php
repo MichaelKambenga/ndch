@@ -127,13 +127,13 @@ class AwsVaisalaController extends \app\components\Controller {
         $count = 0;
         if (is_object($data_source)) {
             $data_source_stations = DataSourceStations::findAll(['datasourceid' => $data_source->id]);
-           
+
             foreach ($data_source_stations as $data_source_station) {
                 $station = Station::findOne($data_source_station->stationid);
                 ////copy files from remote serrver to local path before processing
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
-                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m', strtotime($datetime)) . "\\" . $station->name . "_SMSAWS_" . Date('Ymd', strtotime($datetime)) . '.txt';
-                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m', strtotime($datetime)) . "/" . $station->name . "_SMSAWS_" . Date('Ymd', strtotime($datetime)) . '.txt';
+                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m', strtotime($datetime)) . "\\" . $station->name . "__SMSAWS__" . Date('Ymd', strtotime($datetime)) . '.txt';
+                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m', strtotime($datetime)) . "/" . $station->name . "__SMSAWS__" . Date('Ymd', strtotime($datetime)) . '.txt';
                     if ($this->ProcessVaisalaFile($path, $station)) {
                         $count++;
                     }
@@ -154,14 +154,16 @@ class AwsVaisalaController extends \app\components\Controller {
             $ftp_user_pass = $data_source->password;
             //$ftp_user_pass = '';
             $data_source_stations = DataSourceStations::findAll(['datasourceid' => $data_source->id]);
-
             foreach ($data_source_stations as $data_source_station) {
                 $station = Station::findOne($data_source_station->stationid);
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
-                    $remote_file_path = $data_source->datalocation . "/" . $station->name . "/" . Date('Y/m/', strtotime($datetime));
-                    $local_file_path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m/', strtotime($datetime));
+//                    $remote_file_path = $data_source->datalocation . "/" . $station->name . "/" . Date('Y/m/', strtotime($datetime));
+//                    $local_file_path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m/', strtotime($datetime));
+                    $remote_file_path = $station->name . "/" . Date('Y/m/');
+                    $local_file_path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m/');
                     ////creating a new folder to receive data files for a particular day
                     Yii::trace('Creating a directory ' . $local_file_path . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
+
                     if (mkdir($local_file_path, 0777, TRUE)) {
                         $datasource_files_processed = $this->downloadRemoteVaisalaFileToLocalPath($ftp_server_address, $ftp_user_name, $ftp_user_pass, $remote_file_path, $local_file_path);
                         if (count($datasource_files_processed)) {
@@ -170,6 +172,7 @@ class AwsVaisalaController extends \app\components\Controller {
                     } else {
                         Yii::trace('Failed to Create a directory into the local server...', __METHOD__);
                     }
+
                 }
             }
         }
