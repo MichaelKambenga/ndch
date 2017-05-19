@@ -1,11 +1,9 @@
 <?php
+namespace app\commands;
+use yii\console\Controller;
 
-namespace app\controllers;
-
-use Yii;
 use app\models\AwsVaisala;
 use app\models\AwsVaisalaSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \app\models\WeatherData;
@@ -16,7 +14,7 @@ use \app\models\Station;
 /**
  * AwsVaisalaController implements the CRUD actions for AwsVaisala model.
  */
-class AutomateAwsVaisalaController extends Controller {
+class VaisalaController extends Controller {
 
     /**
      * @inheritdoc
@@ -172,7 +170,6 @@ class AutomateAwsVaisalaController extends Controller {
                     } else {
                         Yii::trace('Failed to Create a directory into the local server...', __METHOD__);
                     }
-
                 }
             }
         }

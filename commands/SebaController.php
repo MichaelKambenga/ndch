@@ -1,11 +1,9 @@
 <?php
+namespace app\commands;
+use yii\console\Controller;
 
-namespace app\controllers;
-
-use Yii;
 use app\models\AwsSeba;
 use app\models\AwsSebaSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \app\models\WeatherData;
