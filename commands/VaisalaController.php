@@ -1,7 +1,8 @@
 <?php
-namespace app\commands;
-use yii\console\Controller;
 
+namespace app\commands;
+
+use yii\console\Controller;
 use app\models\AwsVaisala;
 use app\models\AwsVaisalaSearch;
 use yii\web\NotFoundHttpException;
@@ -160,7 +161,7 @@ class VaisalaController extends Controller {
                     $remote_file_path = $station->name . "/" . Date('Y/m/');
                     $local_file_path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m/');
                     ////creating a new folder to receive data files for a particular day
-                    Yii::trace('Creating a directory ' . $local_file_path . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
+//                    Yii::trace('Creating a directory ' . $local_file_path . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
 
                     if (mkdir($local_file_path, 0777, TRUE)) {
                         $datasource_files_processed = $this->downloadRemoteVaisalaFileToLocalPath($ftp_server_address, $ftp_user_name, $ftp_user_pass, $remote_file_path, $local_file_path);
@@ -168,7 +169,7 @@ class VaisalaController extends Controller {
                             $coppied_remotefiles[$data_source->id] = $datasource_files_processed;
                         }
                     } else {
-                        Yii::trace('Failed to Create a directory into the local server...', __METHOD__);
+//                        Yii::trace('Failed to Create a directory into the local server...', __METHOD__);
                     }
                 }
             }
@@ -195,14 +196,15 @@ class VaisalaController extends Controller {
                 $this->processVaisalaStationsDataFilesByDataSourceAndDate($data_source, time());
             }
         }
-        return $this->redirect(['index']);
+        echo 'Done...';
+//        return $this->redirect(['index']);
     }
 
     function downloadRemoteVaisalaFileToLocalPath($ftp_server_address, $ftp_user_name, $ftp_user_pass, $remote_file_path, $local_file_path) {
         $local_files_processed = array();
 ////copying file from windows server via ftp
 // set up basic ssl connection
-        Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
+//        Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
         $conn_id = ftp_connect($ftp_server_address);
 
 // echo $remote_file;
@@ -256,7 +258,7 @@ class VaisalaController extends Controller {
             ftp_close($conn_id);
         } else {
             // echo "Connection to address " . $ftp_server_address . " failed Please check your settings";
-            Yii::trace("Connection to address " . $ftp_server_address . " failed Please check your settings ....", __METHOD__);
+//            Yii::trace("Connection to address " . $ftp_server_address . " failed Please check your settings ....", __METHOD__);
         }
         return $local_files_processed;
     }
