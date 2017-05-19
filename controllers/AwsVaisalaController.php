@@ -132,8 +132,8 @@ class AwsVaisalaController extends \app\components\Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 ////copy files from remote serrver to local path before processing
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
-                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m', strtotime($datetime)) . "\\" . $station->name . "__SMSAWS__" . Date('Ymd', strtotime($datetime)) . '.txt';
-                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m', strtotime($datetime)) . "/" . $station->name . "__SMSAWS__" . Date('Ymd', strtotime($datetime)) . '.txt';
+                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m') . "\\" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
+                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m') . "/" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
                     if ($this->ProcessVaisalaFile($path, $station)) {
                         $count++;
                     }
