@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //    'QNH',
     // 'ETO',
     ['class' => 'yii\grid\ActionColumn',
-    'template' => '{view}  {update}  {delete}',
+    'template' => '{view}  {update}',
     'buttons' => [
     'update' => function ($url, $model, $key) {
     return (($model->source === WeatherData::DATA_DOURCE_MANNED_SYSTEM) && (Date('Y-m-d',  strtotime($model->TIME))===Date('Y-m-d',  time()))&& ($model->stationid===\yii::$app->user->identity->stationid)) ? Html::a('update', $url) : '';
