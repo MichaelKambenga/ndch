@@ -167,13 +167,22 @@ class AutomateAwsSebaController extends Controller {
             $local_file_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . $remote_file_creation_date . '/';
             ////creating a new folder to receive data files for a particular day
             Yii::trace('Creating a directory ' . $remote_file_creation_date . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
-            if (mkdir($local_file_path, 0777, TRUE)) {
+             ///check if local folder/diretory exists
+            //Check if the directory already exists.
+            try {
+                if (!is_dir($local_file_path)) {
+                    //Directory does not exist, so lets create it.
+                    mkdir($local_file_path, 0777, TRUE);
+                } else {
+                    chmod($local_file_path, 0777);
+                }
+                //
                 $datasource_files_processed = $this->downloadRemoteFileToLocalPath($ftp_server_address, $ftp_user_name, $ftp_user_pass, $remote_file_path, $local_file_path, $remote_file_creation_date);
                 if (count($datasource_files_processed)) {
                     $coppied_remotefiles[$data_source->id] = $datasource_files_processed;
                 }
-            } else {
-                Yii::trace('Failed to Create a directory into the local server...', __METHOD__);
+            } catch (Exception $exc) {
+                Yii::trace($exc->getTraceAsString(), __METHOD__);
             }
         }
     }
