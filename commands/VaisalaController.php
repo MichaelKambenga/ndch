@@ -177,7 +177,7 @@ class VaisalaController extends Controller {
                             $coppied_remotefiles[$data_source->id] = $datasource_files_processed;
                         }
                     } catch (Exception $exc) {
-                        Yii::trace($exc->getTraceAsString(), __METHOD__);
+//                        Yii::trace($exc->getTraceAsString(), __METHOD__);
                     }
                 }
             }
@@ -254,7 +254,7 @@ class VaisalaController extends Controller {
                     }
                 } {
                     // echo "Can not open the directory specified ....";
-                    Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
+                 //   Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
                 }
                 \Yii::endProfile('end looping files to download');
             } else {

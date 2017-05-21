@@ -166,7 +166,7 @@ class AutomateAwsSebaController extends Controller {
             $remote_file_path = $data_source->datalocation . '/' . $remote_file_creation_date;
             $local_file_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . $remote_file_creation_date . '/';
             ////creating a new folder to receive data files for a particular day
-            Yii::trace('Creating a directory ' . $remote_file_creation_date . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
+//            Yii::trace('Creating a directory ' . $remote_file_creation_date . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
              ///check if local folder/diretory exists
             //Check if the directory already exists.
             try {
@@ -182,7 +182,7 @@ class AutomateAwsSebaController extends Controller {
                     $coppied_remotefiles[$data_source->id] = $datasource_files_processed;
                 }
             } catch (Exception $exc) {
-                Yii::trace($exc->getTraceAsString(), __METHOD__);
+//                Yii::trace($exc->getTraceAsString(), __METHOD__);
             }
         }
     }
@@ -218,14 +218,14 @@ class AutomateAwsSebaController extends Controller {
         $local_files_processed = array();
 ////copying file from windows server via ftp
 // set up basic ssl connection
-        Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
+//        Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
         $conn_id = ftp_connect($ftp_server_address);
 
 // echo $remote_file;
         if ($conn_id) {
 
 // login with username and password
-            Yii::trace('try login to the remote ftp server' . $ftp_server_address . ' ....', __METHOD__);
+//            Yii::trace('try login to the remote ftp server' . $ftp_server_address . ' ....', __METHOD__);
             if (ftp_login($conn_id, $ftp_user_name, $ftp_user_pass)) {
 //listing files from the firectory
 //                echo $remote_file_path;
@@ -263,7 +263,7 @@ class AutomateAwsSebaController extends Controller {
                     }
                 } {
                     // echo "Can not open the directory specified ....";
-                    Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
+//                    Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
                 }
                 \Yii::endProfile('end looping files to download');
             } else {
@@ -275,7 +275,7 @@ class AutomateAwsSebaController extends Controller {
             ftp_close($conn_id);
         } else {
             // echo "Connection to address " . $ftp_server_address . " failed Please check your settings";
-            Yii::trace("Connection to address " . $ftp_server_address . " failed Please check your settings ....", __METHOD__);
+//            Yii::trace("Connection to address " . $ftp_server_address . " failed Please check your settings ....", __METHOD__);
         }
         return $local_files_processed;
     }
