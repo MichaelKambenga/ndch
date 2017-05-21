@@ -211,7 +211,7 @@ class VaisalaController extends Controller {
         if ($conn_id) {
 
 // login with username and password
-            Yii::trace('try login to the remote ftp server' . $ftp_server_address . ' ....', __METHOD__);
+//            Yii::trace('try login to the remote ftp server' . $ftp_server_address . ' ....', __METHOD__);
             if (ftp_login($conn_id, $ftp_user_name, $ftp_user_pass)) {
 //listing files from the firectory
 //                echo $remote_file_path;
@@ -252,7 +252,7 @@ class VaisalaController extends Controller {
             } else {
 
                 //echo "Login to " . $ftp_server_address . " using provided credetials failed";
-                Yii::trace("Login to " . $ftp_server_address . " using provided credetials failed ....", __METHOD__);
+//                Yii::trace("Login to " . $ftp_server_address . " using provided credetials failed ....", __METHOD__);
             }
 // close the connection
             ftp_close($conn_id);
