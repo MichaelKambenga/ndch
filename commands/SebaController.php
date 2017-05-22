@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
-use yii\console\Controller;
 
+use yii\console\Controller;
 use app\models\AwsSeba;
 use app\models\AwsSebaSearch;
 use yii\web\NotFoundHttpException;
@@ -14,7 +14,7 @@ use \app\models\Station;
 /**
  * AwsSebaController implements the CRUD actions for AwsSeba model.
  */
-class AutomateAwsSebaController extends Controller {
+class SebaController extends Controller {
 
     /**
      * @inheritdoc
