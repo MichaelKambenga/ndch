@@ -132,7 +132,7 @@ class AwsSebaController extends \app\components\Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
                     ///$_directory_path = $data_source->datalocation . Date('Ymd', time());
-                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd', strtotime($datetime));
+                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd');
                     $handle = opendir($directory_path);
                     if ($handle) {
                         /* This is the correct way to loop over the directory. */
@@ -165,8 +165,9 @@ class AwsSebaController extends \app\components\Controller {
             $ftp_user_name = $data_source->loginname;
             $ftp_user_pass = $data_source->password;
             //$ftp_user_pass = '';
-            $remote_file_creation_date = date('Ymd', strtotime($datetime));
-            $remote_file_path = $data_source->datalocation . '/' . $remote_file_creation_date;
+            $remote_file_creation_date = date('Ymd');
+//            $remote_file_path = $data_source->datalocation . '/' . $remote_file_creation_date;
+            $remote_file_path = $remote_file_creation_date;
             $local_file_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . $remote_file_creation_date . '/';
             ////creating a new folder to receive data files for a particular day
             Yii::trace('Creating a directory ' . $remote_file_creation_date . ' into the local server to keep the received files from ' . $ftp_server_address . ' ....', __METHOD__);
