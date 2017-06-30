@@ -1,6 +1,9 @@
 <?php
+
 use miloschuman\highcharts\Highcharts;
 use yii\helpers\Html;
+use app\models\Station;
+use app\models\WeatherData;
 
 /* @var $this yii\web\View */
 
@@ -49,27 +52,22 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>OWNER</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td>MOW</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+                        <?php
+                        $vaisala_org_sql = "select distinct stationid from tbl_weather_data where source = 2 limit 3";
+                        $vaisala_org_models = WeatherData::findBySql($vaisala_org_sql)->all();
+                        foreach ($vaisala_org_models as $vaisala_org_model) {
+                            $station_details = Station::findOne(['id' => $vaisala_org_model->stationid]);
+                            ?>
+                            <tr>
+                                <td><?php echo $station_details->name; ?></td>
+                                <td><?php echo $station_details->stationcode; ?></td>
+                                <td><?php echo $station_details->stationtype; ?></td>                          
+                                <td><?php echo $station_details->stationowner; ?></td>
+                                <td><span class="label label-success">View Station</span></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -92,27 +90,22 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>OWNER</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td>MOW</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+                        <?php
+                        $seba_org_sql = "select distinct stationid from tbl_weather_data where source = 1 limit 3";
+                        $seba_org_models = WeatherData::findBySql($seba_org_sql)->all();
+                        foreach ($seba_org_models as $seba_org_model) {
+                            $station_details = Station::findOne(['id' => $seba_org_model->stationid]);
+                            ?>
+                            <tr>
+                                <td><?php echo $station_details->name; ?></td>
+                                <td><?php echo $station_details->stationcode; ?></td>
+                                <td><?php echo $station_details->stationtype; ?></td>                          
+                                <td><?php echo $station_details->stationowner; ?></td>
+                                <td><span class="label label-success">View Station</span></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -168,29 +161,30 @@ if (Yii::$app->session->get('stationUser') == 1) {
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>NAME</th>
-                            <th>CODE</th>
-                            <th>TYPE</th>
+                            <th>TIME</th>
+                            <th>PA</th>
+                            <th>RH</th>
+                            <th>SR</th>
+                            <th>TA</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+
+                        <?php
+                        $vaisala_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->andWhere(['source' => 2])->limit(3)->all();
+                        foreach ($vaisala_station_models as $vaisala_station_model) {
+                            ?>
+                            <tr>
+                                <td><?php echo $vaisala_station_model->TIME; ?></td>
+                                <td><?php echo $vaisala_station_model->PA; ?></td>
+                                <td><?php echo $vaisala_station_model->RH; ?></td>                          
+                                <td><?php echo $vaisala_station_model->SR; ?></td>
+                                <td><?php echo $vaisala_station_model->TA; ?></td>
+                                <td><span class="label label-success">View More</span></td>
+
+                            </tr>
+                            <?php
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -207,29 +201,30 @@ if (Yii::$app->session->get('stationUser') == 1) {
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>NAME</th>
-                            <th>CODE</th>
-                            <th>TYPE</th>
+                            <th>TIME</th>
+                            <th>PA</th>
+                            <th>RH</th>
+                            <th>SR</th>
+                            <th>TA</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+
+                        <?php
+                        $seba_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->andWhere(['source' => 1])->limit(3)->all();
+                        foreach ($seba_station_models as $seba_station_model) {
+                            ?>
+                            <tr>
+                                <td><?php echo $seba_station_model->TIME; ?></td>
+                                <td><?php echo $seba_station_model->PA; ?></td>
+                                <td><?php echo $seba_station_model->RH; ?></td>                          
+                                <td><?php echo $seba_station_model->SR; ?></td>
+                                <td><?php echo $seba_station_model->TA; ?></td>
+                                <td><span class="label label-success">View More</span></td>
+
+                            </tr>
+                            <?php
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -253,32 +248,6 @@ if (Yii::$app->session->get('stationUser') == 1) {
                 <canvas id="areaChart" style="height:250px"></canvas>
             </div>
         </div>
-        <!-- /.box-body -->
     </div>
 <?php } ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-
-
-    </div>
-
-    <?php
-    echo Highcharts::widget([
-        'options' => [
-            'title' => ['text' => 'Fruit Consumption'],
-            'xAxis' => [
-                'categories' => ['Apples', 'Bananas', 'Oranges']
-            ],
-            'yAxis' => [
-                'title' => ['text' => 'Fruit eaten']
-            ],
-            'series' => [
-                ['name' => 'Jane', 'data' => [1, 0, 4]],
-                ['name' => 'John', 'data' => [5, 7, 3]]
-            ]
-        ]
-    ]);
-    ?>
-</div>
-</div>
