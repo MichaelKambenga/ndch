@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\WeatherData;
 
 class SiteController extends Controller {
 
@@ -58,7 +59,14 @@ class SiteController extends Controller {
      */
     public function actionIndex() {
         if (!\Yii::$app->user->isGuest) {
-            return $this->render('index');
+            $content = array();
+            ///TOP VAISALA REPORTING STATIONS 
+            $vaisala_org_sql = "select distinct stationid from tbl_weather_data where source=" . \app\models\WeatherData::AWS_VAISALA . " limit 3";
+            $content['vaisala_org_models'] = WeatherData::findBySql($vaisala_org_sql)->all();
+            ///TOP SEBA REPORTING STATIONS   
+            $seba_org_sql = "select distinct stationid from tbl_weather_data where source =" . \app\models\WeatherData::AWS_SEBA . " limit 3";
+            $content['seba_org_models'] = WeatherData::findBySql($seba_org_sql)->all();
+            return $this->render('index', $content);
         } else {
             return $this->redirect(['/site/login']);
         }

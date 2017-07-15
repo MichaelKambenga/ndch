@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-vaisala-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php
@@ -29,19 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
     ['class' => 'yii\grid\SerialColumn'],
     'StationName',
-    // 'VaisalaVersion',
-    'EntryDate',
     'TIME',
 //            'BAT',
 //            'DP',
 //            'DP1HA',
     // 'DP1HX',
     // 'DP1HM',
-    // 'PA',
+//     'PA',
     // 'PA1HA',
     // 'PA1HX',
     // 'PA1HM',
-    // 'PR',
+     'PR',
     // 'PR1HS',
     // 'PR24HS',
     // 'PR5MS00',
@@ -56,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
     // 'PR5MS45',
     // 'PR5MS50',
     // 'PR5MS55',
-    // 'RH',
+     'RH',
     // 'RH1HA',
     // 'RH1HX',
     // 'RH1HM',
@@ -64,11 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
     // 'SR1HA',
     // 'SR1HX',
     // 'SR1HM',
-    // 'TA',
+    'TA',
     // 'TA1HA',
     // 'TA1HX',
     // 'TA1HM',
-    // 'WD',
+//     'WD',
     // 'WD2MA',
     // 'WD10MA',
     // 'WD2MX',
@@ -78,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
     // 'WD1HA',
     // 'WD1HX',
     // 'WD1HM',
-    // 'WS',
+//     'WS',
     // 'WS2MA',
     // 'WS10MA',
     // 'WS2MX',
@@ -99,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
     // 'QNH1HM',
     // 'a',
     // 'p',
-    // 'ETO',
+     'ETO',
     'Path',
 //            [
 //                'label' => '',

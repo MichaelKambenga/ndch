@@ -90,6 +90,7 @@ class WeatherData extends \yii\db\ActiveRecord {
     const AWS_VAISALA = 1;
     const AWS_SEBA = 2;
 
+
     /**
      * @inheritdoc
      */
@@ -193,7 +194,7 @@ class WeatherData extends \yii\db\ActiveRecord {
             'StationName' => 'Station Name',
             'VaisalaVersion' => 'Vaisala Version',
             'EntryDate' => 'Entry Date',
-            'stationid' => 'Stationid',
+            'stationid' => 'Station',
             'source' => 'Source',
         ];
     }
@@ -288,7 +289,7 @@ class WeatherData extends \yii\db\ActiveRecord {
                 break;
             //add new case when new vendor for AWS available
         }
-         $weather_data->save();
+        $weather_data->save();
     }
 
     static function getSources() {
@@ -333,6 +334,13 @@ class WeatherData extends \yii\db\ActiveRecord {
             }
             return TRUE;
         }
+    }
+
+    static function getAWSTypes() {
+        return [
+            self::AWS_SEBA => 'Seba',
+            self::AWS_VAISALA => 'Vaisala',
+        ];
     }
 
 }

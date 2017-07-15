@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aws-seba-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
     ['class' => 'yii\grid\SerialColumn'],
     'stationname',
-    'EntryDate',
+//    'EntryDate',
     'TIME',
     'D',
     'U',

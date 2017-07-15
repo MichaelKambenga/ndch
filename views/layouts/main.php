@@ -30,9 +30,9 @@ LteAsset::register($this);
             <header class="main-header">
                 <!-- Logo -->
                 <a href="index.php" class="logo">
-                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                     <!--mini logo for sidebar mini 50x50 pixels--> 
                     <span class="logo-mini"><b>NDCH</b> System</span>
-                    <!-- logo for regular state and mobile devices -->
+                     <!--logo for regular state and mobile devices--> 
                     <span class="logo-lg"><b>NDCH</b> System</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
@@ -68,25 +68,53 @@ LteAsset::register($this);
                                 <span>Home</span>
                             </a>
                         </li>
-                        <?php
-                        if (Yii::$app->user->can('/weather-data/index')) {
-                            echo '<li><a href="' . Url::to(['/weather-data']) . '">' . '<i class="fa fa-bar-chart"></i>'
-                            . '<span>Station Data</span>'
-                            . '</a></li>';
-                        }
-                        ?><?php
-                        if (Yii::$app->user->can('/aws-vaisala/index') || Yii::$app->user->can('/aws-seba/index')) {
+                        <?php if (Yii::$app->user->can('/weather-data/index')) { ?>
+                            <li>
+                                <a href="<?php echo Url::to(['/weather-data/']); ?>">
+                                    <i class="fa fa-bar-chart"></i>
+                                    <span>Station Data</span>
+                                </a>
+                            </li>
+                        <?php } ?>
 
-                        echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
-                        . '<i class="fa fa-database"></i>'
-                        . '<span>VAISALA Data</span>'
-                        . '</a></li>';
-                        echo '<li><a href="' . Url::to(['/aws-seba']) . '">'
-                        . '<i class="fa fa-cube"></i>'
-                        . '<span>SEBA Data</span>'
-                        . '</a></li>';
-                         }
-                        ?>
+                        <?php if (Yii::$app->user->can('/aws-vaisala/index') || Yii::$app->user->can('/aws-seba/index')) { ?>
+                            <li>
+                                <a href="<?php echo Url::to(['/aws-vaisala/']); ?>">
+                                    <i class="fa fa-database"></i>
+                                    <span>VAISALA Data</span>
+                                </a>
+                            </li>
+                            <li><a href="<?php echo Url::to(['/aws-seba/']); ?>">
+                                    <i class="fa fa-cube"></i>
+                                    <span>SEBA Data</span>
+                                </a>
+                            </li>
+
+                            <!--//DATA MANAGEMENT MENU-->
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-cog"></i>
+                                    <span>Data Management</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="<?php echo Url::to(['/data-management/import-aws-data']); ?>">
+                                            <i class="fa fa-circle-o"></i>Import AWS Data
+                                        </a>
+                                    </li>
+<!--                                    <li>
+                                        <a href="<?php // echo Url::to(['/weather-data/process']); ?>">
+                                            <i class="fa fa-circle-o"></i> 
+                                            Process Previous Data
+                                        </a>
+                                    </li> -->
+                                </ul>
+                            </li>
+                        <?php } ?>
+
 
                         <?php
                         if (Yii::$app->user->can('Super Systems Admin')) {
@@ -159,7 +187,7 @@ LteAsset::register($this);
                     ])
                     ?>
 
-<?= $content ?>
+                    <?= $content ?>
                 </section>
             </div>
 
@@ -167,11 +195,13 @@ LteAsset::register($this);
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.1
                 </div>
-                <strong>Copyright &copy; <?= '2016 - ' . Date('Y') ?> &nbsp;&nbsp;<a href="#">PMO - DMD</a>.</strong>
+                <strong>Copyright &copy; <?= '2016 - ' . Date('Y') ?> &nbsp;&nbsp;
+                    <a href="#">PMO - DMD</a>.
+                </strong>
                 All rights reserved.          
             </footer>   
         </div>  
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

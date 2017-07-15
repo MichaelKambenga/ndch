@@ -10,7 +10,7 @@ class Controller extends \yii\web\Controller {
         $controller = \Yii::$app->controller->id;
         $action = \Yii::$app->controller->action->id;
         $controller_action = "/" . \Yii::$app->controller->id . "/" . $action;
-        if (!\Yii::$app->user->isGuest && \Yii::$app->user->can($controller_action)) {
+        if (\Yii::$app->user->can($controller_action)) {
             return true;
         } else {
             $this->redirect(['/site/forbidden']);

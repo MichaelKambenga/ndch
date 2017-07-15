@@ -4,42 +4,27 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\AwsSebaSearch */
+/* @var $model app\models\AwsVaisalaSearchs */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="aws-seba-search">
+<div class="search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-
-    <?= $form->field($model, 'EntryDate') ?>
-
-    <?= $form->field($model, 'TIME') ?>
-
-    <?= $form->field($model, 'stationname') ?>
-
-    <?= $form->field($model, 'D') ?>
-
-    <?= $form->field($model, 'U') ?>
-
-    <?php // echo $form->field($model, 'P_L') ?>
-
-    <?php // echo $form->field($model, 'T_L') ?>
-
-    <?php // echo $form->field($model, 'G') ?>
-
-    <?php // echo $form->field($model, 'CH') ?>
-
-    <?php // echo $form->field($model, 'id') ?>
+    <?php
+    $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+    ]);
+    ?>
+    <?= $form->field($model, 'TIME')->widget(yii\jui\DatePicker::className(), ['clientOptions' => ['dateFormat' => 'yy-mm-dd']]);
+    ?>
+    
+    <?= $form->field($model, 'stationname')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Station::find()->all(), 'name', 'name'), ['prompt' => '--select--']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'style' => 'margin-top:2%;']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>

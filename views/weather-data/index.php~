@@ -43,6 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
     'PR',
     'RH',
     'TA',
+    ////'SR',
+    // 'WD',
+    // 'WS',
+//    'QFE',
+//    'QFF',
+//    'QNH',
+    // 'ETO',
     ['class' => 'yii\grid\ActionColumn',
     'template' => '{view}  {update}',
     'buttons' => [
