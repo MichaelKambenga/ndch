@@ -15,12 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php
-    if (!is_null(\yii::$app->user->identity->stationid)) {
+//    if (!is_null(\yii::$app->user->identity->stationid)) {
     ?>
     <p>
         <?= Html::a('Post Station Data', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php } ?>
+    <?php // } ?>
 
     <?=
     GridView::widget([
