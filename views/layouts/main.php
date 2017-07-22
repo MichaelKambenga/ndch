@@ -77,16 +77,33 @@ LteAsset::register($this);
                         ?><?php
                         if (Yii::$app->user->can('/aws-vaisala/index') || Yii::$app->user->can('/aws-seba/index')) {
 
-                        echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
-                        . '<i class="fa fa-database"></i>'
-                        . '<span>VAISALA Data</span>'
-                        . '</a></li>';
-                        echo '<li><a href="' . Url::to(['/aws-seba']) . '">'
-                        . '<i class="fa fa-cube"></i>'
-                        . '<span>SEBA Data</span>'
-                        . '</a></li>';
-                         }
+                            echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
+                            . '<i class="fa fa-database"></i>'
+                            . '<span>VAISALA Data</span>'
+                            . '</a></li>';
+                            echo '<li><a href="' . Url::to(['/aws-seba']) . '">'
+                            . '<i class="fa fa-cube"></i>'
+                            . '<span>SEBA Data</span>'
+                            . '</a></li>';
+                        }
                         ?>
+
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Reports</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                        Report 1
+                                    </a>
+                                </li>                          
+                            </ul>
+                        </li>
 
                         <?php
                         if (Yii::$app->user->can('Super Systems Admin')) {
@@ -159,7 +176,7 @@ LteAsset::register($this);
                     ])
                     ?>
 
-<?= $content ?>
+                    <?= $content ?>
                 </section>
             </div>
 
@@ -171,7 +188,7 @@ LteAsset::register($this);
                 All rights reserved.          
             </footer>   
         </div>  
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>
