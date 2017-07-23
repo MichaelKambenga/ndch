@@ -161,11 +161,7 @@ LteAsset::register($this);
                                 <li><a href="index.php?r=user-audit-trail/index"><i class="fa fa-circle-o"></i>
                                         Audit Trail</a></li>
                                 <li><a href="index.php?r=admin/role"><i class="fa fa-circle-o"></i> 
-                                        Roles</a></li>
-                                <li><a href="index.php?r=admin/permission"><i class="fa fa-circle-o"></i>
-                                        Permission</a></li>
-                                <li><a href="index.php?r=admin/route"><i class="fa fa-circle-o"></i>
-                                        Routes</a></li>
+                                        Roles</a></li>                              
                             </ul>
                         </li>';
                         }

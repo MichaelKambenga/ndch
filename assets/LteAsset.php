@@ -38,7 +38,7 @@ class LteAsset extends AssetBundle {
         'plugins/fastclick/fastclick.min.js',
         'js/app.min.js',
 //        'js/dashboard.js',
-        'js/main.js',
+//        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
