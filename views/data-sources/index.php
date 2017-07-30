@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'ipaddress',
-            'datalocation',
+//            'datalocation',
          array(
             'attribute' => 'stakeholderid',
              'value' => function ($model) {

@@ -104,6 +104,11 @@ class StationController extends \app\components\Controller {
             $model->status = Station::STATION_STATUS_ACTIVE;
 
             if ($model->save()) {
+                $userAuditTrail = new \app\models\UserAuditTrail;
+                $userAuditTrail->userid = \yii::$app->user->identity->id;
+                $userAuditTrail->ipaddress = Yii::$app->getRequest()->getUserIP();
+                $userAuditTrail->clientdetails = 'User created new station into the system successful with a name:- ' . $model->name;
+                $userAuditTrail->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -127,6 +132,11 @@ class StationController extends \app\components\Controller {
                 $model->status = Station::STATION_STATUS_CLOSED;
             }
             if ($model->save()) {
+                $userAuditTrail = new \app\models\UserAuditTrail;
+                $userAuditTrail->userid = \yii::$app->user->identity->id;
+                $userAuditTrail->ipaddress = Yii::$app->getRequest()->getUserIP();
+                $userAuditTrail->clientdetails = 'User updated details of a station named:- ' . $model->name;
+                $userAuditTrail->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

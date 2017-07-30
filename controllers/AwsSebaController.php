@@ -132,7 +132,7 @@ class AwsSebaController extends \app\components\Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
                     ///$_directory_path = $data_source->datalocation . Date('Ymd', time());
-                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd');
+                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd',$datetime);
                     $handle = opendir($directory_path);
                     if ($handle) {
                         /* This is the correct way to loop over the directory. */
@@ -165,7 +165,7 @@ class AwsSebaController extends \app\components\Controller {
             $ftp_user_name = $data_source->loginname;
             $ftp_user_pass = $data_source->password;
             //$ftp_user_pass = '';
-            $remote_file_creation_date = date('Ymd');
+            $remote_file_creation_date = date('Ymd',$datetime);
 //            $remote_file_path = $data_source->datalocation . '/' . $remote_file_creation_date;
             $remote_file_path = $remote_file_creation_date;
             $local_file_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . $remote_file_creation_date . '/';
@@ -284,8 +284,7 @@ class AwsSebaController extends \app\components\Controller {
         return $local_files_processed;
     }
 
-    public
-            function ProcessSebaFile($path, $station) {
+    public function ProcessSebaFile($path, $station) {
         $rows = file($path);
 //        var_dump($rows);
 //        exit;

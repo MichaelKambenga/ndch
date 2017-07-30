@@ -15,32 +15,17 @@ use kartik\date\DatePicker;
 <div class="weather-data-search search">
     <?php
     $form = ActiveForm::begin([
-    'action' => ['index'],
-    'method' => 'get',
+                'action' => ['index'],
+                'method' => 'get',
     ]);
     ?>
     <?php if (is_null(\yii::$app->user->identity->stationid)): ?>
         <?= $form->field($model, 'stationid')->dropDownList(ArrayHelper::map(Station::find()->all(), 'id', 'name'), ['prompt' => '--select--']) ?>
     <?php endif; ?>
-    <?=
-    $form->field($model, 'TIME')->widget(\yii\jui\DatePicker::classname(), [
-    'dateFormat' => 'yyyy-MM-dd',
-    ])
-    ?>
+    <?= $form->field($model, 'TIME')->widget(yii\jui\DatePicker::className(), ['clientOptions' => ['dateFormat' => 'YY-MM-dd']]); ?>
 
     <?php
     echo Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']);
     ActiveForm::end();
     ?>
-
-
-
-
-
-
-
-
-
-
-
 </div>

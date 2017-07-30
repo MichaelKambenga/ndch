@@ -1,10 +1,10 @@
 <?php
 
 use miloschuman\highcharts\Highcharts;
-use yii\web\JsExpression;
+use app\models\Station;
+use app\models\WeatherData;
 
 /* @var $this yii\web\View */
-
 //$this->title = 'My Yii Application';
 ?>
 
@@ -19,14 +19,13 @@ use yii\web\JsExpression;
     </ol>
 </section>
 
-
 <?php
 if (Yii::$app->session->get('organizationUser') == 1) {
     ?>
     <div class="callout callout-info">
         <h4>Introduction!</h4>
 
-        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).As Organization user,you can:- 
+        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).You can perform the following:- 
         <ul>
             <li>View Weather Data for different Stations of different Organizations</li>
             <li>Manage Stations of your Organization including Station's users and Weather Elements</li>
@@ -50,27 +49,22 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>OWNER</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td>MOW</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+                        <?php
+                        if (isset($vaisala_org_models) && $vaisala_org_models) {
+                            foreach ($vaisala_org_models as $vaisala_org_model) {
+                                $station_details = Station::findOne(['id' => $vaisala_org_model->stationid]);
+                                ?>
+                                <tr>
+                                    <td><?php echo $station_details->name; ?></td>
+                                    <td><?php echo $station_details->stationcode; ?></td>
+                                    <td><?php echo $station_details->getStationTypeName(); ?></td>                          
+                                    <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
+                                    <td><span class="label label-success">More</span></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -93,27 +87,22 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>OWNER</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td>TMA</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td>MOW</td>
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+                        <?php
+                        if (isset($seba_org_models) && $seba_org_models) {
+                            foreach ($seba_org_models as $seba_org_model) {
+                                $station_details = Station::findOne(['id' => $seba_org_model->stationid]);
+                                ?>
+                                <tr>
+                                    <td><?php echo $station_details->name; ?></td>
+                                    <td><?php echo $station_details->stationcode; ?></td>
+                                    <td><?php echo $station_details->getStationTypeName(); ?></td>                          
+                                    <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
+                                    <td><span class="label label-success">More</span></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -122,25 +111,6 @@ if (Yii::$app->session->get('organizationUser') == 1) {
         </div>
     </div>
 
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">VAISALA vs SEBA REPORTINGS</h3>
-
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-            </div>
-        </div>
-        <!-- /.box-body -->
-    </div>
-
-
 <?php } ?>
 
 <?php
@@ -148,11 +118,10 @@ if (Yii::$app->session->get('stationUser') == 1) {
     ?>
     <div class="callout callout-info">
         <h4>Introduction!</h4>
-
-        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).As a Station user,you can:- 
+        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).At station Level, You can perform the following:- 
         <ul>
-            <li>View your station's Weather Data</li>
             <li>Post your station's Weather Data</li>
+            <li>View your station's Weather Data</li>
             <li>Generate Reports for different Weather Data for your Station</li>
         </ul>
     </p>
@@ -163,35 +132,38 @@ if (Yii::$app->session->get('stationUser') == 1) {
         <div class="col-xs-6">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">MY STATION VAISALA LAST ENTRIES</h3>
+                    <h3 class="box-title">MY STATION:  LATEST OBSERVATIONS</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>NAME</th>
-                            <th>CODE</th>
-                            <th>TYPE</th>
+                            <th>TIME</th>
+                            <th>PA</th>
+                            <th>RH</th>
+                            <th>SR</th>
+                            <th>TA</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+
+                        <?php
+                        $vaisala_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->andWhere(['source' => 2])->limit(3)->all();
+                        if (isset($vaisala_station_models) && $vaisala_station_models) {
+                            foreach ($vaisala_station_models as $vaisala_station_model) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $vaisala_station_model->TIME; ?></td>
+                                    <td><?php echo $vaisala_station_model->PA; ?></td>
+                                    <td><?php echo $vaisala_station_model->RH; ?></td>                          
+                                    <td><?php echo $vaisala_station_model->SR; ?></td>
+                                    <td><?php echo $vaisala_station_model->TA; ?></td>
+                                    <td><span class="label label-success">View More</span></td>
+
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -202,35 +174,37 @@ if (Yii::$app->session->get('stationUser') == 1) {
         <div class="col-xs-6">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">MY STATION SEBA LAST ENTRIES</h3>
+                    <h3 class="box-title">MY STATION:  LATEST OBSERVATIONS</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>NAME</th>
-                            <th>CODE</th>
-                            <th>TYPE</th>
+                            <th>TIME</th>
+                            <th>PA</th>
+                            <th>RH</th>
+                            <th>SR</th>
+                            <th>TA</th>
                             <th>More</th>
                         </tr>
-                        <tr>
-                            <td>KIA</td>
-                            <td>KIA-292</td>
-                            <td>AUTOMATIC STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>JNIA</td>
-                            <td>JNIA-865</td>
-                            <td>MANNED STATION</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
-                        <tr>
-                            <td>PANGANI BASIN HQ</td>
-                            <td>PANGANI-435</td>
-                            <td>BOTH (MANNED & AUTOMATIC)</td>                          
-                            <td><span class="label label-success">View Station</span></td>
-                        </tr>
+                        <?php
+                        $seba_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->andWhere(['source' => 1])->limit(3)->all();
+                        if ($seba_station_models) {
+                            foreach ($seba_station_models as $seba_station_model) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $seba_station_model->TIME; ?></td>
+                                    <td><?php echo $seba_station_model->PA; ?></td>
+                                    <td><?php echo $seba_station_model->RH; ?></td>                          
+                                    <td><?php echo $seba_station_model->SR; ?></td>
+                                    <td><?php echo $seba_station_model->TA; ?></td>
+                                    <td><span class="label label-success">View More</span></td>
+
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -239,121 +213,38 @@ if (Yii::$app->session->get('stationUser') == 1) {
         </div>
     </div>
 
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">VAISALA vs SEBA REPORTINGS</h3>
-
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-            </div>
-        </div>
-        <!-- /.box-body -->
-    </div>
 <?php } ?>
 
-<?php
-echo Highcharts::widget([
-    'options' => [
-        'title' => ['text' => 'Fruit Consumption'],
-        'xAxis' => [
-            'categories' => ['Apples', 'Bananas', 'Oranges']
-        ],
-        'yAxis' => [
-            'title' => ['text' => 'Fruit eaten']
-        ],
-        'series' => [
-            ['name' => 'Jane', 'data' => [1, 0, 4]],
-            ['name' => 'John', 'data' => [5, 7, 3]]
-        ]
-    ]
-]);
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">VAISALA vs SEBA REPORTINGS</h3>
 
-echo Highcharts::widget([
-    'scripts' => [
-        'modules/exporting',
-        'themes/grid-light',
-    ],
-    'options' => [
-        'title' => [
-            'text' => 'Combination chart',
-        ],
-        'xAxis' => [
-            'categories' => ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums'],
-        ],
-        'labels' => [
-            'items' => [
-                [
-                    'html' => 'Total fruit consumption',
-                    'style' => [
-                        'left' => '50px',
-                        'top' => '18px',
-                        'color' => new JsExpression('(Highcharts.theme && Highcharts.theme.textColor) || "black"'),
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="chart">
+            <!--<canvas id="areaChart" style="height:250px"></canvas>-->
+            <?php
+            echo Highcharts::widget([
+                'options' => [
+                    'title' => ['text' => ''],
+                    'xAxis' => [
+                        'categories' => ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July']
                     ],
-                ],
-            ],
-        ],
-        'series' => [
-            [
-                'type' => 'column',
-                'name' => 'Jane',
-                'data' => [3, 2, 1, 3, 4],
-            ],
-            [
-                'type' => 'column',
-                'name' => 'John',
-                'data' => [2, 3, 5, 7, 6],
-            ],
-            [
-                'type' => 'column',
-                'name' => 'Joe',
-                'data' => [4, 3, 3, 9, 0],
-            ],
-            [
-                'type' => 'spline',
-                'name' => 'Average',
-                'data' => [3, 2.67, 3, 6.33, 3.33],
-                'marker' => [
-                    'lineWidth' => 2,
-                    'lineColor' => new JsExpression('Highcharts.getOptions().colors[3]'),
-                    'fillColor' => 'white',
-                ],
-            ],
-            [
-                'type' => 'pie',
-                'name' => 'Total consumption',
-                'data' => [
-                    [
-                        'name' => 'Jane',
-                        'y' => 13,
-                        'color' => new JsExpression('Highcharts.getOptions().colors[0]'), // Jane's color
+                    'yAxis' => [
+                        'title' => ['text' => 'Number of Days Reported in a Month']
                     ],
-                    [
-                        'name' => 'John',
-                        'y' => 23,
-                        'color' => new JsExpression('Highcharts.getOptions().colors[1]'), // John's color
-                    ],
-                    [
-                        'name' => 'Joe',
-                        'y' => 19,
-                        'color' => new JsExpression('Highcharts.getOptions().colors[2]'), // Joe's color
-                    ],
-                ],
-                'center' => [100, 80],
-                'size' => 100,
-                'showInLegend' => false,
-                'dataLabels' => [
-                    'enabled' => false,
-                ],
-            ],
-        ],
-    ]
-]);
-
-echo 'mateso';
+                    'series' => [
+                        ['name' => 'VAISALA', 'data' => [18,14,22,17,21,23,19]],
+                        ['name' => 'SEBA', 'data' => [21,24,23,19,30,25,29]]
+                    ]
+                ]
+            ]);
+            ?>
+        </div>
+    </div>
+</div>
