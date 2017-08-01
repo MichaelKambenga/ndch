@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use kartik\mpdf\Pdf;
 
 class ReportsController extends \yii\web\Controller {
@@ -22,6 +23,26 @@ class ReportsController extends \yii\web\Controller {
             ]);
             return $pdf->render();
         }
+    }
+
+    public function actionReportFilterForm() {
+
+        $model = new \app\models\ReportFilterForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+
+                // form inputs are valid, do something here
+//                return $this->redirect(['reportico/mode/prepare&project=NdchReports&project_password=@User123&new_reportico_window=1&report=DailyAvgRptPerStation.xml']);
+//                return $this->redirect(['reportico/mode/prepare&project=crr&project_password=password&new_reportico_window=1&report=all_contracts.xml']);
+
+                return $this->redirect('http://localhost:8080/ndch/web/index.php?r=reportico/mode/prepare&project=NdchReports&project_password=@User123&new_reportico_window=1&report=DailyAvgRptPerStation.xml');
+            }
+        }
+        return $this->render('ReportFilterForm', [
+                    'model' => $model,
+        ]);
     }
 
 }

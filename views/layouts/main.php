@@ -115,20 +115,6 @@ LteAsset::register($this);
                             </li>
                         <?php } ?>
 
-<<<<<<< HEAD
-                            echo '<li><a href="' . Url::to(['/aws-vaisala']) . '">'
-                            . '<i class="fa fa-database"></i>'
-                            . '<span>VAISALA Data</span>'
-                            . '</a></li>';
-                            echo '<li><a href="' . Url::to(['/aws-seba']) . '">'
-                            . '<i class="fa fa-cube"></i>'
-                            . '<span>SEBA Data</span>'
-                            . '</a></li>';
-                        }
-                        ?>
-=======
->>>>>>> 055fa2721f51e3c2996f83d1c508413ca54785a1
-
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-dashboard"></i>
@@ -137,12 +123,33 @@ LteAsset::register($this);
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="treeview-menu"> 
                                 <li>
                                     <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
-                                        Report 1
+                                        Daily Trends 
                                     </a>
-                                </li>                          
+                                </li> 
+                                <li>
+                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                        Daily Average Values
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                        Daily Min/Max Values
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                        Range average Values
+                                    </a>
+                                </li> 
+
+                                <li>
+                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                        Range Min/Max Values
+                                    </a>
+                                </li> 
                             </ul>
                         </li>
 
