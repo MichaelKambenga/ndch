@@ -30,9 +30,9 @@ LteAsset::register($this);
             <header class="main-header">
                 <!-- Logo -->
                 <a href="index.php" class="logo">
-                     <!--mini logo for sidebar mini 50x50 pixels--> 
+                    <!--mini logo for sidebar mini 50x50 pixels--> 
                     <span class="logo-mini"><b>NDCH</b> System</span>
-                     <!--logo for regular state and mobile devices--> 
+                    <!--logo for regular state and mobile devices--> 
                     <span class="logo-lg"><b>NDCH</b> System</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
@@ -105,12 +105,12 @@ LteAsset::register($this);
                                             <i class="fa fa-circle-o"></i>Import AWS Data
                                         </a>
                                     </li>
-<!--                                    <li>
-                                        <a href="<?php // echo Url::to(['/weather-data/process']); ?>">
-                                            <i class="fa fa-circle-o"></i> 
-                                            Process Previous Data
-                                        </a>
-                                    </li> -->
+                                    <!--                                    <li>
+                                                                            <a href="<?php // echo Url::to(['/weather-data/process']);  ?>">
+                                                                                <i class="fa fa-circle-o"></i> 
+                                                                                Process Previous Data
+                                                                            </a>
+                                                                        </li> -->
                                 </ul>
                             </li>
                         <?php } ?>
@@ -125,7 +125,7 @@ LteAsset::register($this);
                             </a>
                             <ul class="treeview-menu"> 
                                 <li>
-                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
                                         Daily Trends 
                                     </a>
                                 </li> 
@@ -135,18 +135,17 @@ LteAsset::register($this);
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
                                         Daily Min/Max Values
                                     </a>
                                 </li> 
                                 <li>
-                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
                                         Range average Values
                                     </a>
                                 </li> 
-
                                 <li>
-                                    <a href="index.php?r=reports" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
                                         Range Min/Max Values
                                     </a>
                                 </li> 
