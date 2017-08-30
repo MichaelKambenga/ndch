@@ -19,6 +19,7 @@ class ReportFilterForm extends Model
     public $district_id;
     public $ward_id;
     public $station_id;
+    public $date;
 
     /**
      * @return array the validation rules.
@@ -27,8 +28,8 @@ class ReportFilterForm extends Model
     {
         return [
             // username and password are both required
-            // [['weather_element', 'geo_level'], 'required'],
-            [['weather_element', 'geo_level','region_id', 'district_id', 'ward_id', 'station_id'], 'safe'],
+             [['date', 'geo_level'], 'required'],
+            [['weather_element', 'geo_level','region_id', 'district_id', 'ward_id', 'station_id', 'date'], 'safe'],
         ];
     }
 }

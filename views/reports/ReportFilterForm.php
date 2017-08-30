@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\WeatherElements;
+use kartik\datecontrol\DateControl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ReportFilterForm */
@@ -13,22 +12,29 @@ use app\models\WeatherElements;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?=
-    $form->field($model, 'weather_element')->dropDownList(
-            ArrayHelper::map(WeatherElements::find()->all(), 'name', 'name'), [
-        'prompt' => 'Select Fiscal Year',
-    ]);
-    ?>
-    <?=
-    $form->field($model, 'geo_level')->dropDownList(
-            ['StationData' => 'Station Data', 'WardData' => 'Ward Data', 'DistrictData' => 'District Data', 'RegionData' => 'Region Data'], [
-        'prompt' => 'Select Fiscal Year',
-    ]);
-    ?>
-    <?= $form->field($model, 'region_id') ?>
-    <?= $form->field($model, 'district_id') ?>
-    <?= $form->field($model, 'ward_id') ?>
-    <?= $form->field($model, 'station_id') ?>
+    <div class="form-group">
+        <?=
+        $form->field($model, 'geo_level')->dropDownList(
+                ['StationData' => 'Stations Data', 'WardData' => 'Wards Data', 'DistrictData' => 'Districts Data', 'RegionData' => 'Regions Data'], [
+            'prompt' => 'Select Geo Level',
+        ]);
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?=
+        // Use DatePicker input with ActiveForm and model validation enabled (without ajax conversion). 
+        $form->field($model, 'date')->widget(DateControl::classname(), [
+            'type' => DateControl::FORMAT_DATE,
+            'ajaxConversion' => false,
+            'widgetOptions' => [
+                'pluginOptions' => [
+                    'autoclose' => true
+                ]
+            ]
+        ]);
+        ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>

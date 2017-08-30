@@ -125,27 +125,27 @@ LteAsset::register($this);
                             </a>
                             <ul class="treeview-menu"> 
                                 <li>
-                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/daily-trends" target="_blank"><i class="fa fa-circle-o"></i>
                                         Daily Trends 
                                     </a>
                                 </li> 
                                 <li>
-                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/daily-avg-values" target="_blank"><i class="fa fa-circle-o"></i>
                                         Daily Average Values
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/daily-optimal-values" target="_blank"><i class="fa fa-circle-o"></i>
                                         Daily Min/Max Values
                                     </a>
                                 </li> 
                                 <li>
-                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/range-avg-values" target="_blank"><i class="fa fa-circle-o"></i>
                                         Range average Values
                                     </a>
                                 </li> 
                                 <li>
-                                    <a href="index.php?r=reports/report-filter-form" target="_blank"><i class="fa fa-circle-o"></i>
+                                    <a href="index.php?r=reports/range-optimal-values" target="_blank"><i class="fa fa-circle-o"></i>
                                         Range Min/Max Values
                                     </a>
                                 </li> 
