@@ -15,7 +15,7 @@ use kartik\datecontrol\DateControl;
     <div class="form-group">
         <?=
         $form->field($model, 'geo_level')->dropDownList(
-                ['StationData' => 'Stations Data', 'WardData' => 'Wards Data', 'DistrictData' => 'Districts Data', 'RegionData' => 'Regions Data'], [
+                ['AllStations' => 'All Stations', 'WardData' => 'Wards Data', 'DistrictData' => 'Districts Data', 'RegionData' => 'Regions Data'], [
             'prompt' => 'Select Geo Level',
         ]);
         ?>
