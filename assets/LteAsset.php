@@ -19,7 +19,7 @@ class LteAsset extends AssetBundle {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/bootstrap.min.css',
+//        'css/bootstrap.min.css',
 //        'css/font-awesome.min.css',
 //        'css/ionicons.min.css',
         'css/AdminLTE.min.css',
@@ -30,7 +30,7 @@ class LteAsset extends AssetBundle {
         'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
     ];
     public $js = [
-        'js/bootstrap/bootstrap.min.js',
+//        'js/bootstrap/bootstrap.min.js',
         'plugins/jQueryUI/jquery-ui.min.js',
         'js/raphael.min.js',
         'plugins/sparkline/jquery.sparkline.min.js',
