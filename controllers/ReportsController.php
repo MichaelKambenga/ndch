@@ -112,59 +112,45 @@ group by " . '"name"' .
     }
 
     public function actionDailyOptimalValues() {
-
         $model = new \app\models\ReportFilterForm();
+        //echo $model->date; die();
+        $query = \app\models\WeatherData::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'TIME' => SORT_DESC,
+                ]
+            ],
+        ]);
 
         if ($model->load(Yii::$app->request->post())) {
+            //echo 'hapa'; die();
+            $query = \app\models\WeatherData::find()->where(['TIME' => '2016-06-03 03:28:00']);
 
-            if ($model->validate()) {
-
-                $date = $model->date . "%";
-
-                $query = "select " . '"name"' . "as station_name, MIN(cast(" . '"TA"' . " as double precision)) as min_temperature
-from
-tbl_station a
-inner join
-tbl_weather_data b
-on a.id=b.stationid
-where " . '"TIME"' . " like '$date'
-group by " . '"name"' .
-                        " order by " . '"name"' . "";
-
-//                echo $query;
-//                die();
-
-                $reportico = \Yii::$app->getModule('reportico');
-                $engine = $reportico->getReporticoEngine();
-                $engine->initial_execute_mode = "PREPARE";
-                $engine->access_mode = "REPORTOUTPUT";
-                $engine->initial_project = "NdchReports";
-                $engine->initial_project_password = "@User123"; // If project password required
-                $engine->reportico_ajax_mode = TRUE;
-                $engine->embedded_report = true;
-                $engine->initial_sql = $query;
-                $engine->set_attribute("ReportTitle", "Daily Average Report");
-                $engine->initial_show_criteria = "hide";
-                $engine->clear_reportico_session = true;
-                $engine->show_refresh_button = true;
-                $engine->set_report_title = "Halla";
-                $engine->execute();
-
-//                $reportico = \Yii::$app->getModule('reportico');
-//                $engine = $reportico->getReporticoEngine();        // Fetches reportico engine
-//                $engine->access_mode = "REPORTOUTPUT";             // Allows access to report output only
-//                $engine->initial_execute_mode = "PREPARE";         // Just executes specified report
-//                $engine->initial_project = "northwind";            // Name of report project folder    
-//                $engine->initial_report = "salestotals";           // Name of report to run
-//                $engine->bootstrap_styles = "3";                   // Set to "3" for bootstrap v3, "2" for V2 or false for no bootstrap
-//                $engine->force_reportico_mini_maintains = true;    // Often required
-//                $engine->bootstrap_preloaded = true;               // true if you dont need Reportico to load its own bootstrap
-//                $engine->clear_reportico_session = true;           // Normally required
-//                $engine->execute();
-            }
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'TIME' => SORT_DESC,
+                    ]
+                ],
+            ]);
+            return $this->render('AvgValues', [
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+            ]);
         }
-        return $this->render('ReportFilterForm', [
+        return $this->render('AvgValues', [
                     'model' => $model,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -366,7 +352,11 @@ group by " . '"name"' .
 
         if ($model->load(Yii::$app->request->post())) {
             //echo 'hapa'; die();
-            $query = \app\models\WeatherData::find()->where(['TIME' => '2016-06-03 03:28:00']);
+            if ($model->date) {
+                $date = $model->date;
+            }
+                                         
+            $query = \app\models\WeatherData::find()->where(['like', 'TIME', $date]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
