@@ -348,23 +348,32 @@ group by " . '"name"' .
     }
 
     public function actionAvgValues() {
+        $model = new \app\models\ReportFilterForm();
 
-        $query = \app\models\WeatherData::find();
+        if ($model->load(Yii::$app->request->post())) {
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'TIME' => SORT_DESC,
-                ]
-            ],
-        ]);
-        
-        return $this->render('AvgValues', [
-        'dataProvider' => $dataProvider,
+            //echo $model->date; die();
+            $query = \app\models\WeatherData::find();
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'TIME' => SORT_DESC,
+                    ]
+                ],
+            ]);
+
+            return $this->render('ReportFilterForm', [
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->render('ReportFilterForm', [
+                    'model' => $model,
         ]);
     }
 
