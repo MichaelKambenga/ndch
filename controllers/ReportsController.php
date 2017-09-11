@@ -365,13 +365,26 @@ group by " . '"name"' .
         ]);
 
         if ($model->load(Yii::$app->request->post())) {
+            //echo 'hapa'; die();
+            $query = \app\models\WeatherData::find()->where(['TIME == 2016-06-03 03:28:00']);
 
-            return $this->render('ReportFilterForm', [
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'TIME' => SORT_DESC,
+                    ]
+                ],
+            ]);
+            return $this->render('AvgValues', [
                         'model' => $model,
                         'dataProvider' => $dataProvider,
             ]);
         }
-        return $this->render('ReportFilterForm', [
+        return $this->render('AvgValues', [
                     'model' => $model,
                     'dataProvider' => $dataProvider,
         ]);

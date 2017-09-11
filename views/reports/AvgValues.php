@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
 
-    <?php echo $this->render('ReportFilterForm', ['model' => $model]);  ?>
+    <?php echo $this->render('ReportFilterForm', ['model' => $model]); ?>
 
 
     <?php
@@ -47,5 +47,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     Pjax::end();
     ?>   
-    }
+
 </div>
