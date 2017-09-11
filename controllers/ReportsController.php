@@ -366,7 +366,7 @@ group by " . '"name"' .
 
         if ($model->load(Yii::$app->request->post())) {
             //echo 'hapa'; die();
-            $query = \app\models\WeatherData::find()->where(['TIME == 2016-06-03 03:28:00']);
+            $query = \app\models\WeatherData::find()->where(['TIME' => '2016-06-03 03:28:00']);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
