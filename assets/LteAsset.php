@@ -30,7 +30,7 @@ class LteAsset extends AssetBundle {
         'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
     ];
     public $js = [
-        'js/bootstrap/bootstrap.min.js',
+        //'js/bootstrap/bootstrap.min.js',
         'plugins/jQueryUI/jquery-ui.min.js',
         'js/raphael.min.js',
         'plugins/sparkline/jquery.sparkline.min.js',
