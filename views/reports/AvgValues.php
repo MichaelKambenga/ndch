@@ -23,7 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['attribute' => 'TIME'],
-            ['attribute' => 'stationid'],
+               [
+                'attribute' => 'stationid',
+                'value' => function ($model) {
+                    return \app\models\Station::getNameById($model->stationid);
+                },
+            ],
 //            ['attribute' => 'DP'],
             ['attribute' => 'PA'],
             ['attribute' => 'PR'],

@@ -19,7 +19,7 @@ class LteAsset extends AssetBundle {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/bootstrap.min.css',
+//        'css/bootstrap.min.css',
 //        'css/font-awesome.min.css',
 //        'css/ionicons.min.css',
         'css/AdminLTE.min.css',
