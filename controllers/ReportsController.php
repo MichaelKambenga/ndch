@@ -346,9 +346,25 @@ group by " . '"name"' .
                 $date = $model->date;
             }
                                          
-            $query = \app\models\WeatherData::find()
-                    ->where(['like', 'TIME', $date])
-                    ->sum();
+//            $query = \app\models\WeatherData::find()
+//                    ->where(['like', 'TIME', $date]);
+//                    //->sum();
+            
+//            $query = 'select 
+//"TIME", 
+//avg(cast("PA" as double precision)) AS "PA",
+//avg(cast("PR" as double precision)) AS "PR",
+//avg(cast("RH" as double precision)) AS "RH",
+//avg(cast("TA" as double precision)) AS "TA",
+//avg(cast("WS" as double precision)) AS "WS"
+//from tbl_weather_data
+//group by "TIME"
+//order by "TIME" desc';
+            
+            $query = (new \yii\db\Query())
+                    ->select(['TIME','PA','PR','RH','TA','WS'])
+                    ->from('tbl_weather_data')
+                    ->all();
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,

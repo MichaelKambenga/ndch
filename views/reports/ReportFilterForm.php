@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -16,9 +15,8 @@ use kartik\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
 
-     <?php
+    <?php
     echo Form::widget([
-
         'model' => $model,
         'form' => $form,
         'columns' => 3,
@@ -43,34 +41,46 @@ use kartik\widgets\ActiveForm;
             ],
         ]
     ]);
-//    ActiveForm::end();
     ?>
 
-    <!--<div class="form-group">-->
-        <?=
-        // Use DatePicker input with ActiveForm and model validation enabled (without ajax conversion). 
-        $form->field($model, 'date')->widget(DateControl::classname(), [
-            'type' => DateControl::FORMAT_DATE,
-            'ajaxConversion' => false,
-            'widgetOptions' => [
-                'pluginOptions' => [
-                    'autoclose' => true
-                ]
-            ]
-        ]);
-        ?>
+    <div class="row">
+        <div class="col-md-3">
+            <?php
+            echo Form::widget([
+                'model' => $model,
+                'form' => $form,
+                'attributes' => [
+                    'date' => [
+                        'type' => Form::INPUT_WIDGET,
+                        'widgetClass' => '\kartik\widgets\DatePicker',
+                        'options' => [
+                            'pluginOptions' => [
+                                'format' => 'yyyy-mm-dd',
+                                'autoclose' => true,
+                            //'endDate' => '0d'
+                            ],
+                        ],
+                        'hint' => 'Enter Date (yyyy-mm-dd)'
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
     </div>
 
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
     </div>
-    <?php ActiveForm::end(); ?>
 
-</div><!-- ReportFilterForm -->
+</div>
+
+<?php ActiveForm::end(); ?>
+
+<!-- ReportFilterForm -->
 
 <div class="stakeholder-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
 
     <?php
 //    Pjax::begin();
