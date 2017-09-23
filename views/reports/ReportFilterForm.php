@@ -1,10 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+//use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\builder\Form;
+use kartik\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ReportFilterForm */
@@ -12,16 +14,37 @@ use yii\widgets\Pjax;
 ?>
 <div class="ReportFilterForm">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
 
-    <div class="form-group">
-        <?=
-        $form->field($model, 'geo_level')->dropDownList(
-                ['AllStations' => 'All Stations', 'WardData' => 'Wards Data', 'DistrictData' => 'Districts Data', 'RegionData' => 'Regions Data'], [
-            'prompt' => 'Select Geo Level',
-        ]);
-        ?>
-    </div>
+     <?php
+    echo Form::widget([
+
+        'model' => $model,
+        'form' => $form,
+        'columns' => 3,
+        'attributes' => [
+            'owner' => [
+                'label' => 'Owner',
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                'items' => ['' => 'Select Owner', 'TMA' => 'TMA', 'PMO' => 'PMO'], [
+                ],
+            ],
+            'region_id' => [
+                'label' => 'Region',
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                'items' => ['' => 'Select Region', 'Dar es salaam' => 'Dar es salaam', 'Mtwara' => 'Mtwara'], [
+                ],
+            ],
+            'district_id' => [
+                'label' => 'District',
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                'items' => ['' => 'Select District', 'Ilala' => 'Ilala', 'Masasi' => 'Masasi'], [
+                ],
+            ],
+        ]
+    ]);
+//    ActiveForm::end();
+    ?>
 
     <!--<div class="form-group">-->
         <?=

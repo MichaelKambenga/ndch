@@ -368,5 +368,49 @@ group by " . '"name"' .
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+     public function actionRegStations() {
+        $model = new \app\models\ReportFilterForm();
+        $query = \app\models\Station::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+
+            ],
+        ]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            //echo 'hapa'; die();
+            if ($model->date) {
+                $date = $model->date;
+            }
+                                         
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+                'sort' => [
+        
+                ],
+            ]);
+            return $this->render('RegStations', [
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->render('RegStations', [
+                    'model' => $model,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
 }
+
+
+
