@@ -17,13 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php
+if($dataProvider):
     Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             ['attribute' => 'TIME'],
-            ['attribute' => 'stationid'],
+            [
+    'attribute' => 'StationName',
+    'value' => function ($model) {
+    return \app\models\Station::getNameById($model->stationid);
+    },
+    ],
 //            ['attribute' => 'DP'],
             ['attribute' => 'PA'],
             ['attribute' => 'PR'],
@@ -46,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     Pjax::end();
+endif;
     ?>   
 
 </div>

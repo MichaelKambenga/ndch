@@ -335,28 +335,20 @@ group by " . '"name"' .
 
     public function actionAvgValues() {
         $model = new \app\models\ReportFilterForm();
-        //echo $model->date; die();
+
         $query = \app\models\WeatherData::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'TIME' => SORT_DESC,
-                ]
-            ],
-        ]);
+        $dataProvider = NULL;
 
         if ($model->load(Yii::$app->request->post())) {
-            //echo 'hapa'; die();
+            
             if ($model->date) {
                 $date = $model->date;
             }
                                          
-            $query = \app\models\WeatherData::find()->where(['like', 'TIME', $date]);
+            $query = \app\models\WeatherData::find()
+                    ->where(['like', 'TIME', $date])
+                    ->sum();
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -369,11 +361,8 @@ group by " . '"name"' .
                     ]
                 ],
             ]);
-            return $this->render('AvgValues', [
-                        'model' => $model,
-                        'dataProvider' => $dataProvider,
-            ]);
         }
+        
         return $this->render('AvgValues', [
                     'model' => $model,
                     'dataProvider' => $dataProvider,
