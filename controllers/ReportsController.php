@@ -341,16 +341,15 @@ group by " . '"name"' .
         $dataProvider = NULL;
 
         if ($model->load(Yii::$app->request->post())) {
-            
+
             if ($model->date) {
                 $date = $model->date;
             }
-                                         
+
 //            $query = \app\models\WeatherData::find()
 //                    ->where(['like', 'TIME', $date]);
 //                    //->sum();
-            
-//            $query = 'select 
+//$query = select 
 //"TIME", 
 //avg(cast("PA" as double precision)) AS "PA",
 //avg(cast("PR" as double precision)) AS "PR",
@@ -358,11 +357,12 @@ group by " . '"name"' .
 //avg(cast("TA" as double precision)) AS "TA",
 //avg(cast("WS" as double precision)) AS "WS"
 //from tbl_weather_data
+//where "TIME" like '2016-06-03%'
 //group by "TIME"
-//order by "TIME" desc';
-            
+//order by "TIME" desc
+
             $query = (new \yii\db\Query())
-                    ->select(['TIME','PA','PR','RH','TA','WS'])
+                    ->select(['TIME', 'PA', 'PR', 'RH', 'TA', 'WS'])
                     ->from('tbl_weather_data')
                     ->all();
 
@@ -378,14 +378,14 @@ group by " . '"name"' .
                 ],
             ]);
         }
-        
+
         return $this->render('AvgValues', [
                     'model' => $model,
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
-     public function actionRegStations() {
+
+    public function actionRegStations() {
         $model = new \app\models\ReportFilterForm();
         $query = \app\models\Station::find();
 
@@ -395,7 +395,6 @@ group by " . '"name"' .
                 'pageSize' => 10,
             ],
             'sort' => [
-
             ],
         ]);
 
@@ -404,7 +403,7 @@ group by " . '"name"' .
             if ($model->date) {
                 $date = $model->date;
             }
-                                         
+
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -412,7 +411,6 @@ group by " . '"name"' .
                     'pageSize' => 10,
                 ],
                 'sort' => [
-        
                 ],
             ]);
             return $this->render('RegStations', [
@@ -427,6 +425,3 @@ group by " . '"name"' .
     }
 
 }
-
-
-
