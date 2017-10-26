@@ -1,0 +1,5 @@
+RewriteEngine on 
+# Otherwise forward it to index.php 
+RewriteRule . index.php
+RewriteRule ^/api/ api.php
+
