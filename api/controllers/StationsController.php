@@ -76,8 +76,80 @@ class StationsController extends \yii\web\Controller {
         }
     }
 
-    public function actionStationValues() {
-        die('Some issues need to be fixed first...');
+    public function actionStationsValues() {
+        // http://localhost:8080/ndch/api/stations/stations-values?from='2014-07-19 00:00:00'
+        //  http://localhost:8080/ndch/api/stations/stations-values?param='PA'&from='2014-07-19 00:00:00'
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = new \app\models\Station();
+        $attributes = \yii::$app->request->get();
+        if (array_key_exists("param", $attributes)) {
+            /*
+             *  PA => Instant Atmospheric pressure
+             *  DP => Instant Dew point
+             *  PR => Precipitation
+             *  RH => Instant Relative Humidity
+             *  SR => Instant Solar Radiation
+             *  TA => Instant Temperature
+             *  WD => Instant Wind Direction
+             *  WS => Instant Wind Speed 
+             */
+            $parameter = $attributes['param'];
+        }
+        if (array_key_exists("from", $attributes)) {
+            $timestamp = $attributes['from'];
+            if ($parameter) {
+                $parameter = str_replace("'", '"', $parameter);
+                $values = \app\models\WeatherData::find()->select(['stationid', 'StationName', 'TIME', $parameter])->where(['>=', 'TIME', $timestamp])->all();
+            } else {
+                $values = \app\models\WeatherData::find()->where(['>=', 'TIME', $timestamp])->all();
+            }
+            if (count($values) > 0) {
+                return ['status' => true, 'data' => $values];
+            } else {
+                return ['status' => false, 'data' => 'No record found.'];
+            }
+        } else {
+            return ['status' => false, 'data' => 'Invalid Parameters Supplied.'];
+        }
+    }
+
+    public function actionValue() {
+        // http://localhost:8080/ndch/api/stations/value/1?from='2014-07-19 00:00:00'
+        // http://localhost:8080/ndch/api/stations/value/1?param='PA'&from='2014-07-19 00:00:00'
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = new \app\models\Station();
+        $attributes = \yii::$app->request->get();
+        if (array_key_exists("param", $attributes)) {
+            /*
+             *  PA => Instant Atmospheric pressure
+             *  DP => Instant Dew point
+             *  PR => Precipitation
+             *  RH => Instant Relative Humidity
+             *  SR => Instant Solar Radiation
+             *  TA => Instant Temperature
+             *  WD => Instant Wind Direction
+             *  WS => Instant Wind Speed 
+             */
+            $parameter = $attributes['param'];
+        }
+        if (array_key_exists("from", $attributes)) {
+            $timestamp = $attributes['from'];
+            if ($parameter) {
+                $parameter = str_replace("'", '"', $parameter);
+                $values = \app\models\WeatherData::find()->select(['stationid', 'StationName', 'TIME', $parameter])->where(['stationid' => $attributes['id']])->andWhere(['>=', 'TIME', $timestamp])->all();
+            } else {
+                $values = \app\models\WeatherData::find()->where(['stationid' => $attributes['id']])->andWhere(['>=', 'TIME', $timestamp])->all();
+            }
+            if (count($values) > 0) {
+                return ['status' => true, 'data' => $values];
+            } else {
+                return ['status' => false, 'data' => 'No record found.'];
+            }
+        } else {
+            return ['status' => false, 'data' => 'Invalid Parameters Supplied.'];
+        }
     }
 
 }
