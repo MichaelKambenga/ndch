@@ -13,29 +13,16 @@ use app\models\WeatherData;
         Welcome
         <small>to the National Database for Climate and Hydroclimate-(NDCH)</small>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Welcome...</a></li>
-    </ol>
+  
 </section>
 
 <?php
 if (Yii::$app->session->get('organizationUser') == 1) {
     ?>
-    <div class="callout callout-info">
-        <h4>Introduction!</h4>
-
-        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).You can perform the following:- 
-        <ul>
-            <li>View Weather Data for different Stations of different Organizations</li>
-            <li>Manage Stations of your Organization including Station's users and Weather Elements</li>
-            <li>Generate Reports for different Weather Data for all the Stations of different Organizations</li>
-        </ul>
-    </p>
-    </div>
-    <div class="row">
+   
+<div class="row" style="margin-top: 2%;">
         <div class="col-xs-6">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">TOP 3 VAISALA REPORTING STATIONS</h3>
                 </div>
@@ -73,7 +60,7 @@ if (Yii::$app->session->get('organizationUser') == 1) {
         </div>
 
         <div class="col-xs-6">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">TOP 3 SEBA REPORTING STATIONS</h3>
                 </div>
@@ -117,20 +104,13 @@ if (Yii::$app->session->get('organizationUser') == 1) {
 if (Yii::$app->session->get('stationUser') == 1) {
     ?>
     <div class="callout callout-info">
-        <h4>Introduction!</h4>
-        <p>This is an integrated database for climate/hydro information housed at Tanzania Meteorology Agency(TMA).At station Level, You can perform the following:- 
-        <ul>
-            <li>Post your station's Weather Data</li>
-            <li>View your station's Weather Data</li>
-            <li>Generate Reports for different Weather Data for your Station</li>
-        </ul>
-    </p>
+      
     </div>
 
 
     <div class="row">
         <div class="col-xs-6">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">MY STATION:  LATEST OBSERVATIONS</h3>
                 </div>

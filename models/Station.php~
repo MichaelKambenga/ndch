@@ -53,19 +53,19 @@ class Station extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['name', 'stationtype', 'stationowner', 'regionid', 'districtid', 'createdby', 'createdbyinsitutionid', 'operationalstartdate'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['name'], 'unique'],
-            [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
-            [['datecreated', 'heightanemometer', 'heightbarometer', 'heightraingauge', 'thermometer', 'hygrometer', 'barometer', 'anemometer', 'raingauge', 'generalcomment', 'operationalenddate'], 'safe'],
-            [['stationcode'], 'string', 'max' => 20],
-            [['geocode'], 'string', 'max' => 255],
-            [['districtid'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['districtid' => 'id']],
-            [['regionid'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionid' => 'id']],
-            [['stationowner'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stationowner' => 'id']],
-            [['createdbyinsitutionid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['createdbyinsitutionid' => 'id']],
-            [['createdby'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['createdby' => 'id']],
-            [['wardid'], 'exist', 'skipOnError' => true, 'targetClass' => Ward::className(), 'targetAttribute' => ['wardid' => 'id']],
+                [['name', 'stationtype', 'stationowner', 'regionid', 'districtid', 'createdby', 'createdbyinsitutionid','operationalstartdate'], 'required'],
+                [['name'], 'string', 'max' => 100],
+                [['name'], 'unique'],
+                [['stationtype', 'stationowner', 'regionid', 'districtid', 'wardid', 'createdby', 'createdbyinsitutionid'], 'integer'],
+                [['datecreated', 'heightanemometer', 'heightbarometer', 'heightraingauge', 'thermometer', 'hygrometer', 'barometer', 'anemometer', 'raingauge', 'generalcomment','operationalenddate'], 'safe'],
+                [['stationcode'], 'string', 'max' => 20],
+                [['geocode'], 'string', 'max' => 255],
+                [['districtid'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['districtid' => 'id']],
+                [['regionid'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionid' => 'id']],
+                [['stationowner'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['stationowner' => 'id']],
+                [['createdbyinsitutionid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['createdbyinsitutionid' => 'id']],
+                [['createdby'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['createdby' => 'id']],
+                [['wardid'], 'exist', 'skipOnError' => true, 'targetClass' => Ward::className(), 'targetAttribute' => ['wardid' => 'id']],
         ];
     }
 
@@ -75,7 +75,7 @@ class Station extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'name' => 'Station Name',
+            'name' => 'Station AAAA',
             'stationcode' => 'Station No (Code)',
             'stationtype' => 'Station Type',
             'stationowner' => 'Station Owner',
@@ -94,7 +94,7 @@ class Station extends \yii\db\ActiveRecord {
             'anemometer' => 'Anemometer',
             'raingauge' => 'Rain gauge',
             'generalcomment' => 'General Comment',
-            'operationalenddate' => 'Launch Date',
+            'operationalenddate' => 'Date Started',
             'operationalenddate' => 'Date Closed'
         ];
     }
@@ -209,16 +209,6 @@ class Station extends \yii\db\ActiveRecord {
             }
         }
         return NULL;
-    }
-
-    static function getUserStations() {
-        $condition = NULL;
-        if (\yii::$app->user->identity->organizationid) {
-            $condition = array(
-                'stationowner' => \yii::$app->user->identity->organizationid
-            );
-        }
-        return self::find()->where($condition)->all();
     }
 
 }

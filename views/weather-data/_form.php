@@ -12,9 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->errorSummary($model); ?>
-    <?php if (!\yii::$app->user->identity->stationid) {?>
-    <?= $form->field($model, 'stationid')->textInput(['maxlength' => true]) ?>
-    <?php } ?>
+    <?php if (is_null(\yii::$app->user->identity->stationid)): ?>
+        <?= $form->field($model, 'stationid')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Station::getUserStations(), 'id', 'name'), ['prompt' => '--select--']) ?>
+    <?php endif; ?>
     <?= $form->field($model, 'TIME')->widget(\yii\widgets\MaskedInput::className(), ['mask' => 'D\ate: 99-99-9999  Time: 99:99',]); ?>
 
     <?= $form->field($model, 'DP')->textInput() ?>

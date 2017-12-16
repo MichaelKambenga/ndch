@@ -89,7 +89,7 @@ class User extends ActiveRecord implements IdentityInterface {
             'organizationid' => 'Organization',
             'stationid' => 'Station',
             'username' => 'User Name',
-            'password' => 'Password',
+            'password_hash' => 'Password',
             'status' => 'Status',
             'created_at' => 'Date Created',
             'datedeactivated' => 'Date Deactivated',
@@ -248,9 +248,9 @@ class User extends ActiveRecord implements IdentityInterface {
         if ($roles) {
             $rolesList = '<ul>';
             foreach ($roles as $value) {
-                $rolesList .='<li>' . $value->item_name . '</li>';
+                $rolesList .= '<li>' . $value->item_name . '</li>';
             }
-            $rolesList .='</ul>';
+            $rolesList .= '</ul>';
         }
         return $rolesList;
     }
@@ -261,6 +261,22 @@ class User extends ActiveRecord implements IdentityInterface {
         }
         $this->addError('stationid', 'Station required');
         return FALSE;
+    }
+
+    static function getStatusList() {
+        return array(
+            self::STATUS_INACTIVE => 'In Active',
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_BLOCKED => 'Blocked'
+        );
+    }
+
+    function getStatus() {
+        $statuses = self::getStatusList();
+        if (isset($statuses[$this->status])) {
+            return $statuses[$this->status];
+        }
+        return NULL;
     }
 
 }

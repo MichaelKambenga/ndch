@@ -27,12 +27,12 @@ class UserController extends \app\components\Controller {
      */
     public function behaviors() {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+        'delete' => ['POST'],
+        ],
+        ],
         ];
     }
 
@@ -45,8 +45,8 @@ class UserController extends \app\components\Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -69,13 +69,13 @@ class UserController extends \app\components\Controller {
         $dataProviderAuditTrail = $model_audit_search->search(NULL);
 
         return $this->render('view', [
-                    'model' => $model,
-                    'model_logins' => $model_logins,
-                    'model_login_search' => $model_login_search,
-                    'dataProviderLogins' => $dataProviderLogins,
-                    'model_audit' => $model_audit,
-                    'model_audit_search' => $model_audit_search,
-                    'dataProviderAuditTrail' => $dataProviderAuditTrail,
+        'model' => $model,
+        'model_logins' => $model_logins,
+        'model_login_search' => $model_login_search,
+        'dataProviderLogins' => $dataProviderLogins,
+        'model_audit' => $model_audit,
+        'model_audit_search' => $model_audit_search,
+        'dataProviderAuditTrail' => $dataProviderAuditTrail,
         ]);
     }
 
@@ -87,7 +87,7 @@ class UserController extends \app\components\Controller {
     public function actionCreate() {
         $model = new User;
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->lastname);
+            $model->setPassword($model->password_hash);
             $model->status = User::STATUS_ACTIVE;
             $model->created_at = Date('Y-m-d H:i:s', time());
             $model->updated_at = $model->datedeactivated = $model->lastlogin = NULL;
@@ -104,7 +104,7 @@ class UserController extends \app\components\Controller {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
+        'model' => $model,
         ]);
     }
 
@@ -116,9 +116,9 @@ class UserController extends \app\components\Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $password = $model->password_hash;
+        $model->updated_at = Date('Y-m-d H:i:s', time());
         //getting user roles
-        $user_roles = AuthAssignment::findone(['user_id' => $model->id]); //->where();
+        $user_roles=AuthAssignment::findone(['user_id' => $model->id]); //->where();
         if ($user_roles && isset($user_roles->item_name)) {
             $model->user_role = $user_roles->item_name;
         }
@@ -126,14 +126,6 @@ class UserController extends \app\components\Controller {
             if ($model->user_role && $model->user_role == 'Station User') {
                 $model->scenario = User::SCENARIO_STATION_USER;
             }
-
-            if (!empty($model->password_hash) && !is_null($model->password_hash) && $password != $model->password_hash) {
-                $model->setPassword($model->password_hash);
-            }
-
-
-            $model->updated_at = Date('Y-m-d H:i:s', time());
-
             if ($model->save()) {
                 AuthAssignment::deleteAll(['user_id' => $model->id]);
                 $userRole = new AuthAssignment;
@@ -145,7 +137,7 @@ class UserController extends \app\components\Controller {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
+        'model' => $model,
         ]);
     }
 
@@ -158,13 +150,8 @@ class UserController extends \app\components\Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         if ($model) {
-            if (!AuthAssignment::find(['user_id' => $model->id]) && !\app\models\LoginAttempt::find(['userid' => $model->id])) {
-                $this->findModel($id)->delete();
-            } else {
-                $model->status = User::STATUS_INACTIVE;
-                $model->user_role=1;
-                $model->save();
-            }
+            AuthAssignment::delete()->where(['user_id' => $model->id])->all();
+            $model->delete();
         }
         return $this->redirect(['index']);
     }

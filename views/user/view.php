@@ -43,9 +43,14 @@ DetailView::widget([
             'format' => 'html'
         ],
         'username',
-        'status',
         [
-            'attribute' => 'created_at',
+            'attribute' => 'status',
+            'value' => function ($model) {
+                return $model->getStatus();
+            }
+        ],
+        [
+        'attribute' => 'created_at',
             'format' => ['date', 'php:d-M-Y @ H:i:s']
         ],
         'datedeactivated',

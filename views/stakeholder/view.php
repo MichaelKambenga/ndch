@@ -170,7 +170,7 @@ echo GridView::widget([
         echo TabsX::widget([
             'items' => [
                 [
-                    'label' => ' ' . 'Basic Details',
+                    'label' => ' ' . 'Details',
                     'content' => $stakeholdeDetails,
                     'options' => ['id' => 'stakeholder-details-tab'],
                 // 'active' => ($activeTab == 'Stakeholder-Details-tab'),

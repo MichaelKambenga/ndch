@@ -61,7 +61,8 @@ class StakeholderController extends \app\components\Controller {
         $model_station_search->stationowner = $model->id;
         $dataProviderStation = $model_station_search->search(NULL);
         $model_data_source_search->stakeholderid = $model->id;
-//        $dataProviderDataSources = $model_data_source_search->search(NULL);    
+        $dataProviderDataSources = $model_data_source_search->search(NULL);
+       
         return $this->render('view', [
                     'model' => $model,
                     'model_station' => $model_station,

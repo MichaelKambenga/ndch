@@ -49,7 +49,7 @@ use yii\web\View;
             ],
             'stakeholderid' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
-                'items' => ArrayHelper::map(Stakeholder::find()->orderBy('name')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
+                'items' => ArrayHelper::map(Stakeholder::find()->orderBy('name')->asArray()->where('orgtype != :orgtype',[':orgtype'=>Stakeholder::ORG_TYPE_DATAREADONLY])->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
                 'columnOptions' => ['width' => '185px']
             ],
             'loginname' => [

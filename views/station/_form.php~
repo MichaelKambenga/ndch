@@ -18,34 +18,22 @@ use app\models\Station;
     <?php
     $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]);
     echo Form::widget([
+
         'model' => $model,
         'form' => $form,
         'columns' => 2,
         'attributes' => [
-            'name' => [
-                'type' => Form::INPUT_TEXT,
-                'label' => 'Station Name',
-                'options' => ['placeholder' => 'Enter Station Name...'],
-                'columnOptions' => ['width' => '185px']
-            ],
-            'stationcode' => [
-                'type' => Form::INPUT_TEXT,
-                'label' => 'Station Code',
-                'options' => ['placeholder' => 'Enter Station Code...'],
-                'columnOptions' => ['width' => '185px']
-            ],
-            'stationtype' => [
+                    'stationtype' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
                 'label' => 'Station Type',
                 'options' => ['prompt' => '--select--'],
-                'columnOptions' => ['width' => '185px'],
-                'items' => Station::getStationTypes()
+                 'columnOptions' => ['width' => '185px'],
+                'items'=>  Station::getStationTypes()
             ],
             'stationowner' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
                 'label' => 'Owner',
-                'items' => ArrayHelper::map(\app\models\Stakeholder::find()->orderBy('name')->asArray()->where('orgtype != :orgtype', [':orgtype' => \app\models\Stakeholder::ORG_TYPE_DATAREADONLY])->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
-                //'items' => ArrayHelper::map(\app\models\Stakeholder::find()->orderBy('id')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
+                'items' => ArrayHelper::map(\app\models\Stakeholder::find()->orderBy('id')->asArray()->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
                 'columnOptions' => ['width' => '185px']
             ],
             'geocode' => [
@@ -65,7 +53,7 @@ use app\models\Station;
                 'label' => 'End Date',
                 'options' => ['placeholder' => 'Enter Date The station  Stated to Operate...'],
                 'columnOptions' => ['width' => '185px'],
-                'visible' => !$model->isNewRecord
+                'visible'=>!$model->isNewRecord
             ],
             'regionid' => [
                 'type' => Form::INPUT_DROPDOWN_LIST,
@@ -85,46 +73,46 @@ use app\models\Station;
                 'items' => ArrayHelper::map(\app\models\Ward::find()->orderBy('id')->asArray()->all(), 'id', 'wardname'), 'options' => ['prompt' => 'Select Ward'],
                 'columnOptions' => ['width' => '185px']
             ],
-            'heightanemometer' => [
+             'heightanemometer' => [
                 'type' => Form::INPUT_TEXT,
                 //'label' => 'heightanemometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ],
-            'heightbarometer' => [
+             'heightbarometer' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'heightbarometer',
+               // 'label' => 'heightbarometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ],
-            'heightraingauge' => [
+             'heightraingauge' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'heightraingauge',
+               // 'label' => 'heightraingauge',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'thermometer' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'thermometer',
+               // 'label' => 'thermometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'hygrometer' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'hygrometer',
+               // 'label' => 'hygrometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'barometer' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'barometer',
+               // 'label' => 'barometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'anemometer' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'anemometer',
+               // 'label' => 'anemometer',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'raingauge' => [
                 'type' => Form::INPUT_TEXT,
-                // 'label' => 'raingauge',
+               // 'label' => 'raingauge',
                 'options' => ['placeholder' => 'Enter Station Code...'],
                 'columnOptions' => ['width' => '185px']
             ], 'generalcomment' => [

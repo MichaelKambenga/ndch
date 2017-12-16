@@ -51,7 +51,7 @@ class Stakeholder extends \yii\db\ActiveRecord {
             [['name', 'orgtype'], 'required'],
             [['name'], 'unique'],
             [['email'], 'email'],
-            [['orgtype', 'status', 'createdby', 'deactivatedby'], 'integer'],
+            [['orgtype', 'status'], 'integer'],
             [['datecreated', 'datedeactivated'], 'safe'],
             [['name', 'mobileno', 'email'], 'string', 'max' => 100],
         ];
