@@ -132,10 +132,12 @@ class AwsVaisalaController extends \app\components\Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 ////copy files from remote serrver to local path before processing
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
-                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m') . "\\" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
-                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m') . "/" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
-                    if ($this->ProcessVaisalaFile($path, $station)) {
-                        $count++;
+                   // $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m') . "\\" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
+                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . strtoupper($station->name) . "/" . Date('Y/m') . "/" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
+                    if (file_exists($path)) {
+                        if ($this->ProcessVaisalaFile($path, $station)) {
+                            $count++;
+                        }
                     }
                 }
             }
@@ -215,7 +217,7 @@ class AwsVaisalaController extends \app\components\Controller {
 // set up basic ssl connection
         Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
         $conn_id = ftp_connect($ftp_server_address);
-
+        ftp_set_option($conn_id, FTP_TIMEOUT_SEC, 180);
 // echo $remote_file;
         if ($conn_id) {
 

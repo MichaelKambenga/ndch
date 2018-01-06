@@ -131,10 +131,12 @@ class VaisalaController extends Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 ////copy files from remote serrver to local path before processing
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
-                    $path = $data_source->datalocation . "\\" . $station->name . "\\" . Date('Y\\m') . "\\" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
-                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . $station->name . "/" . Date('Y/m') . "/" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
-                    if ($this->ProcessVaisalaFile($path, $station)) {
-                        $count++;
+                    //$path = $data_source->datalocation . "\\" . strtoupper($station->name) . "\\" . Date('Y\\m') . "\\" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
+                    $path = \Yii::$app->params['dataFileStorage']['vaisala'] . $data_source->name . '/' . strtoupper($station->name) . "/" . Date('Y/m') . "/" . $station->name . "__SMSAWS__" . Date('Ymd') . '.txt';
+                    if (file_exists($path)) {
+                        if ($this->ProcessVaisalaFile($path, $station)) {
+                            $count++;
+                        }
                     }
                 }
             }
@@ -214,7 +216,7 @@ class VaisalaController extends Controller {
 // set up basic ssl connection
 //        Yii::trace('Try connecting to the ftp server ' . $ftp_server_address . ' ....', __METHOD__);
         $conn_id = ftp_connect($ftp_server_address);
-
+        ftp_set_option($conn_id, FTP_TIMEOUT_SEC, 180);
 // echo $remote_file;
         if ($conn_id) {
 
@@ -254,7 +256,7 @@ class VaisalaController extends Controller {
                     }
                 } {
                     // echo "Can not open the directory specified ....";
-                 //   Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
+                    //   Yii::trace("Can not open the directory " . $remote_file_path . " specified ....");
                 }
                 \Yii::endProfile('end looping files to download');
             } else {

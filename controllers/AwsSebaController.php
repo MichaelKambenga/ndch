@@ -132,7 +132,7 @@ class AwsSebaController extends \app\components\Controller {
                 $station = Station::findOne($data_source_station->stationid);
                 if ($station && $station->status == Station::STATION_STATUS_ACTIVE) {
                     ///$_directory_path = $data_source->datalocation . Date('Ymd', time());
-                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd',$datetime);
+                    $directory_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . date('Ymd', $datetime);
                     $handle = opendir($directory_path);
                     if ($handle) {
                         /* This is the correct way to loop over the directory. */
@@ -159,13 +159,13 @@ class AwsSebaController extends \app\components\Controller {
      */
 
     function downloadSEBAStationsFilesByDataSourceAndDate($data_source, $datetime) {
-        $coppied_remotefiles=array();
+        $coppied_remotefiles = array();
         if (is_object($data_source)) {
             $ftp_server_address = $data_source->ipaddress;
             $ftp_user_name = $data_source->loginname;
             $ftp_user_pass = $data_source->password;
             //$ftp_user_pass = '';
-            $remote_file_creation_date = date('Ymd',$datetime);
+            $remote_file_creation_date = date('Ymd', $datetime);
 //            $remote_file_path = $data_source->datalocation . '/' . $remote_file_creation_date;
             $remote_file_path = $remote_file_creation_date;
             $local_file_path = \Yii::$app->params['dataFileStorage']['seba'] . $data_source->name . '/' . $remote_file_creation_date . '/';
