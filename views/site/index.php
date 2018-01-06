@@ -13,14 +13,14 @@ use app\models\WeatherData;
         Welcome
         <small>to the National Database for Climate and Hydroclimate-(NDCH)</small>
     </h1>
-  
+
 </section>
 
 <?php
 if (Yii::$app->session->get('organizationUser') == 1) {
     ?>
-   
-<div class="row" style="margin-top: 2%;">
+
+    <div class="row" style="margin-top: 2%;">
         <div class="col-xs-6">
             <div class="box box-primary">
                 <div class="box-header">
@@ -34,7 +34,6 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>CODE</th>
                             <th>TYPE</th>
                             <th>OWNER</th>
-                            <th>More</th>
                         </tr>
                         <?php
                         if (isset($vaisala_org_models) && $vaisala_org_models) {
@@ -46,7 +45,6 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                                     <td><?php echo $station_details->stationcode; ?></td>
                                     <td><?php echo $station_details->getStationTypeName(); ?></td>                          
                                     <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
-                                    <td><span class="label label-success">More</span></td>
                                 </tr>
                                 <?php
                             }
@@ -72,7 +70,6 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                             <th>CODE</th>
                             <th>TYPE</th>
                             <th>OWNER</th>
-                            <th>More</th>
                         </tr>
                         <?php
                         if (isset($seba_org_models) && $seba_org_models) {
@@ -84,7 +81,6 @@ if (Yii::$app->session->get('organizationUser') == 1) {
                                     <td><?php echo $station_details->stationcode; ?></td>
                                     <td><?php echo $station_details->getStationTypeName(); ?></td>                          
                                     <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
-                                    <td><span class="label label-success">More</span></td>
                                 </tr>
                                 <?php
                             }
@@ -104,7 +100,7 @@ if (Yii::$app->session->get('organizationUser') == 1) {
 if (Yii::$app->session->get('stationUser') == 1) {
     ?>
     <div class="callout callout-info">
-      
+
     </div>
 
 
@@ -219,8 +215,8 @@ if (Yii::$app->session->get('stationUser') == 1) {
                         'title' => ['text' => 'Number of Days Reported in a Month']
                     ],
                     'series' => [
-                        ['name' => 'VAISALA', 'data' => [18,14,22,17,21,23,19]],
-                        ['name' => 'SEBA', 'data' => [21,24,23,19,30,25,29]]
+                        ['name' => 'VAISALA', 'data' => [18, 14, 22, 17, 21, 23, 19]],
+                        ['name' => 'SEBA', 'data' => [21, 24, 23, 19, 30, 25, 29]]
                     ]
                 ]
             ]);

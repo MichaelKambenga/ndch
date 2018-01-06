@@ -12,46 +12,46 @@ use kartik\builder\Form;
 /* @var $model app\models\ReportFilterForm */
 /* @var $form ActiveForm */
 ?>
-<div class="ReportFilterForm">
+<div class="ReportFilterForm" style="max-width: 90%">
 
-    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL,'method'=>'GET']); ?>
 
     <?php
     echo Form::widget([
-
         'model' => $model,
         'form' => $form,
-        'columns' => 3,
+        'columns' => 4,
         'attributes' => [
+            'station_type' => [
+                'label' => 'Type',
+                'type' => Form::INPUT_DROPDOWN_LIST,
+                'options' => ['prompt' => 'Select Type'],
+                'items' => \app\models\Station::getStationTypes(),
+            ],
             'owner' => [
                 'label' => 'Owner',
                 'type' => Form::INPUT_DROPDOWN_LIST,
-                'items' => ['' => 'Select Owner', 'TMA' => 'TMA', 'PMO' => 'PMO'], [
-                ],
+                'items' => yii\helpers\ArrayHelper::map(\app\models\Stakeholder::find()->orderBy('name')->asArray()->where('orgtype != :orgtype', [':orgtype' => \app\models\Stakeholder::ORG_TYPE_DATAREADONLY])->all(), 'id', 'name'), 'options' => ['prompt' => 'Select Owner'],
             ],
             'region_id' => [
                 'label' => 'Region',
                 'type' => Form::INPUT_DROPDOWN_LIST,
-                'items' => ['' => 'Select Region', 'Dar es salaam' => 'Dar es salaam', 'Mtwara' => 'Mtwara'], [
-                ],
+                'items' => yii\helpers\ArrayHelper::map(\app\models\Region::find()->orderBy('regionname')->asArray()->all(), 'id', 'regionname'), 'options' => ['prompt' => 'Select Region'],
             ],
             'district_id' => [
-                'label' => 'District',
+                'label' => 'District ',
                 'type' => Form::INPUT_DROPDOWN_LIST,
-                'items' => ['' => 'Select District', 'Ilala' => 'Ilala', 'Masasi' => 'Masasi'], [
-                ],
+                'options' => ['prompt' => 'Select District'],
+                'items' => yii\helpers\ArrayHelper::map(\app\models\District::find()->orderBy('districtname')->asArray()->all(), 'id', 'districtname'),
             ],
         ]
     ]);
-//    ActiveForm::end();
     ?>
-
-    <!--<div class="form-group">-->
 
 </div>
 
 <div class="form-group">
-<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
 </div>
 <?php ActiveForm::end(); ?>
 

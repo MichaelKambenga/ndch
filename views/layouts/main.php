@@ -64,14 +64,14 @@ LteAsset::register($this);
                         <li class="header">MAIN NAVIGATION</li>
                         <li>
                             <a href="index.php">
-                                <i class="fa fa-dashboard"></i> 
+                                <i class="fa fa-home"></i> 
                                 <span>Home</span>
                             </a>
                         </li>
                         <?php if (Yii::$app->user->can('/weather-data/index')) { ?>
                             <li>
                                 <a href="<?php echo Url::to(['/weather-data/']); ?>">
-                                    <i class="fa fa-bar-chart"></i>
+                                    <i class="fa fa-dashboard "></i>
                                     <span>Station Data</span>
                                 </a>
                             </li>
@@ -117,8 +117,8 @@ LteAsset::register($this);
                         <?php if (!Yii::$app->user->isGuest) { ?>
                             <li class="treeview">
                                 <a href="#">
-                                    <i class="fa fa-dashboard"></i>
-                                    <span>General Reports</span>
+                                    <i class="fa fa-bar-chart"></i>
+                                    <span>Reports</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -129,19 +129,6 @@ LteAsset::register($this);
                                             Registered Stations
                                         </a>
                                     </li>
-                                </ul>
-                            </li>
-                        <?php } ?>
-                        <?php if (!Yii::$app->user->isGuest) { ?>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-dashboard"></i>
-                                    <span>Weather Reports</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu"> 
                                     <li>
                                         <a href="index.php?r=reports/avg-values"><i class="fa fa-circle-o"></i>
                                             Daily Average Values
@@ -203,7 +190,7 @@ LteAsset::register($this);
                         if (Yii::$app->user->can('Super Systems Admin')) {
                             echo '<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-edit"></i> <span>System Security</span>
+                                <i class="fa fa-lock"></i> <span>System Security</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>

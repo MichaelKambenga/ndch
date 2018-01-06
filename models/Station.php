@@ -177,6 +177,13 @@ class Station extends \yii\db\ActiveRecord {
         }
         return NULL;
     }
+     public function getStationTypeNameByValue($stationtype) {
+        $stationTypes = self::getStationTypes();
+        if (isset($stationTypes[$stationtype])) {
+            return $stationTypes[$stationtype];
+        }
+        return NULL;
+    }
 
     static function getNameById($id) {
         $data = self::findOne($id);
