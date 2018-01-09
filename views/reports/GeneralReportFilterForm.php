@@ -15,7 +15,6 @@ use kartik\builder\Form;
 <div class="ReportFilterForm" style="max-width: 90%">
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL,'method'=>'GET']); ?>
-
     <?php
     echo Form::widget([
         'model' => $model,

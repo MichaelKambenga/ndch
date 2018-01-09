@@ -61,11 +61,11 @@ class SiteController extends Controller {
         if (!\Yii::$app->user->isGuest) {
             $content = array();
             ///TOP VAISALA REPORTING STATIONS 
-            $vaisala_org_sql = "select stationid, count(stationid) as counts from tbl_weather_data group by stationid order by counts desc limit 5";
-            $content['top_reporting_stations'] = WeatherData::findBySql($vaisala_org_sql)->all();
+            $vaisala_org_sql = "select distinct stationid from tbl_weather_data where source=" . \app\models\WeatherData::AWS_VAISALA . " limit 3";
+            $content['vaisala_org_models'] = WeatherData::findBySql($vaisala_org_sql)->all();
             ///TOP SEBA REPORTING STATIONS   
-            $seba_org_sql = 'select MAX("TIME") AS "TIME", stationid from tbl_weather_data group by stationid order by "TIME" desc limit 5';
-            $content['recent_observations'] = WeatherData::findBySql($seba_org_sql)->all();
+            $seba_org_sql = "select distinct stationid from tbl_weather_data where source =" . \app\models\WeatherData::AWS_SEBA . " limit 3";
+            $content['seba_org_models'] = WeatherData::findBySql($seba_org_sql)->all();
             return $this->render('index', $content);
         } else {
             return $this->redirect(['/site/login']);

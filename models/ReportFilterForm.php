@@ -20,6 +20,8 @@ class ReportFilterForm extends Model {
     public $ward_id;
     public $station_id;
     public $date;
+    public $date_start;
+    public $date_end;
     public $owner;
     public $station_type;
 
@@ -29,7 +31,8 @@ class ReportFilterForm extends Model {
     public function rules() {
         return [
             // username and password are both required
-            [['date', 'geo_level'], 'required'],
+            //[['date', 'geo_level'], 'required'],
+            [['date_start', 'date_end', 'station_id'], 'required', 'on' => ['daily']],
             [['weather_element', 'geo_level', 'region_id', 'district_id', 'ward_id', 'station_id', 'date', 'owner', 'station_type'], 'safe'],
         ];
     }
@@ -52,7 +55,7 @@ class ReportFilterForm extends Model {
 
         $query = \app\models\Station::find()->where($where);
 
-       return new \yii\data\ActiveDataProvider([
+        return new \yii\data\ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'pageSize' => 25,
@@ -65,6 +68,38 @@ class ReportFilterForm extends Model {
                     'stationtype' => SORT_ASC,
                     'name' => SORT_ASC,
                     'stationcode' => SORT_ASC,
+                ],
+            ],
+        ]);
+    }
+
+    function getStationsDailyObservations() {
+        $where = array();
+        $select = '*';
+
+        if (isset($this->station_id) && !empty($this->station_id)) {
+            $where['stationid'] = $this->station_id;
+        }
+
+        if (isset($this->weather_element) && !empty($this->weather_element)) {
+            $select = $this->weather_element;
+        } else {
+            $select = '*';
+        }
+
+        $query = \app\models\WeatherData::find()->select($select)
+                ->where('"TIME" >= :date_start AND "TIME" <= :date_end')
+                ->addParams([':date_end' => $this->date_end, ':date_start' => $this->date_start])
+                ->andWhere($where);
+
+        return new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 25,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'TIME' => SORT_DESC,
                 ],
             ],
         ]);

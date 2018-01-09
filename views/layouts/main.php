@@ -130,28 +130,29 @@ LteAsset::register($this);
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index.php?r=reports/avg-values"><i class="fa fa-circle-o"></i>
-                                            Daily Average Values
+                                        <a href="index.php?r=reports/stations-daily-observations"><i class="fa fa-circle-o"></i>
+                                            Station Observations by Date
                                         </a>
                                     </li>
                                     <li>
                                         <a href="index.php?r=reports/daily-trends"><i class="fa fa-circle-o"></i>
-                                            Daily Trends 
+                                            Stations Observation report 
                                         </a>
-                                    </li>                                    
+                                    </li>  
+                                     <li>
+                                        <a href="index.php?r=reports/range-avg-values"><i class="fa fa-circle-o"></i>
+                                            Stations Latest Observation 
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="index.php?r=reports/daily-optimal-values"><i class="fa fa-circle-o"></i>
                                             Daily Min/Max Values
                                         </a>
                                     </li> 
-                                    <li>
-                                        <a href="index.php?r=reports/range-avg-values"><i class="fa fa-circle-o"></i>
-                                            Range average Values
-                                        </a>
-                                    </li> 
+                                   
                                     <li>
                                         <a href="index.php?r=reports/range-optimal-values"><i class="fa fa-circle-o"></i>
-                                            Range Min/Max Values
+                                            Min/Max Observation
                                         </a>
                                     </li> 
                                 </ul>

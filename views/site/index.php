@@ -10,39 +10,39 @@ use app\models\WeatherData;
 
 <section class="content-header">
     <h1>
-        Welcome
-        <small>to the National Database for Climate and Hydroclimate-(NDCH)</small>
+        NDCH System- Dashboard
+<!--        <small>to the National Database for Climate and Hydrology-(NDCH)</small>-->
     </h1>
 
 </section>
 
 <?php
-if (Yii::$app->session->get('organizationUser') == 1) {
+if (Yii::$app->session->has('organizationUser')) {
     ?>
 
     <div class="row" style="margin-top: 2%;">
         <div class="col-xs-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">TOP 3 VAISALA REPORTING STATIONS</h3>
+                    <h3 class="box-title">TOP 5 REPORTING STATIONS</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
                             <th>NAME</th>
-                            <th>CODE</th>
-                            <th>TYPE</th>
+                            <th>OBSERVATIONS</th>
+                            <th>STATION TYPE</th>
                             <th>OWNER</th>
                         </tr>
                         <?php
-                        if (isset($vaisala_org_models) && $vaisala_org_models) {
-                            foreach ($vaisala_org_models as $vaisala_org_model) {
-                                $station_details = Station::findOne(['id' => $vaisala_org_model->stationid]);
+                        if (isset($top_reporting_stations) && $top_reporting_stations) {
+                            foreach ($top_reporting_stations as $top_reporting_station) {
+                                $station_details = Station::findOne(['id' => $top_reporting_station->stationid]);
                                 ?>
                                 <tr>
                                     <td><?php echo $station_details->name; ?></td>
-                                    <td><?php echo $station_details->stationcode; ?></td>
+                                    <td><?php echo $top_reporting_station->counts; ?></td>
                                     <td><?php echo $station_details->getStationTypeName(); ?></td>                          
                                     <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
                                 </tr>
@@ -60,25 +60,25 @@ if (Yii::$app->session->get('organizationUser') == 1) {
         <div class="col-xs-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">TOP 3 SEBA REPORTING STATIONS</h3>
+                    <h3 class="box-title">LATEST 5 OBSERVATIONS</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            <th>NAME</th>
-                            <th>CODE</th>
+                            <th>TIME</th>
+                            <th>STATION</th>
                             <th>TYPE</th>
                             <th>OWNER</th>
                         </tr>
                         <?php
-                        if (isset($seba_org_models) && $seba_org_models) {
-                            foreach ($seba_org_models as $seba_org_model) {
-                                $station_details = Station::findOne(['id' => $seba_org_model->stationid]);
+                        if (isset($recent_observations) && $recent_observations) {
+                            foreach ($recent_observations as $recent_observations) {
+                                $station_details = Station::findOne(['id' => $recent_observations->stationid]);
                                 ?>
                                 <tr>
+                                    <td><?php echo Date('d-M-Y H:i:s', strtotime($recent_observations->TIME)); ?></td>
                                     <td><?php echo $station_details->name; ?></td>
-                                    <td><?php echo $station_details->stationcode; ?></td>
                                     <td><?php echo $station_details->getStationTypeName(); ?></td>                          
                                     <td><?php echo \app\models\Stakeholder::getStakeholderNameById($station_details->stationowner); ?></td>
                                 </tr>
@@ -97,7 +97,7 @@ if (Yii::$app->session->get('organizationUser') == 1) {
 <?php } ?>
 
 <?php
-if (Yii::$app->session->get('stationUser') == 1) {
+if (Yii::$app->session->has('stationUser')) {
     ?>
     <div class="callout callout-info">
 
@@ -123,7 +123,7 @@ if (Yii::$app->session->get('stationUser') == 1) {
                         </tr>
 
                         <?php
-                        $vaisala_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->andWhere(['source' => 2])->limit(3)->all();
+                        $vaisala_station_models = WeatherData::find()->where('stationid = :stationid', [':stationid' => \yii::$app->user->identity->stationid])->orderBy('TIME DESC')->limit(5)->all();
                         if (isset($vaisala_station_models) && $vaisala_station_models) {
                             foreach ($vaisala_station_models as $vaisala_station_model) {
                                 ?>
@@ -193,7 +193,7 @@ if (Yii::$app->session->get('stationUser') == 1) {
 
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">VAISALA vs SEBA REPORTINGS</h3>
+        <h3 class="box-title">OBSERVATION REPORTING TRENDS</h3>
 
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -209,14 +209,14 @@ if (Yii::$app->session->get('stationUser') == 1) {
                 'options' => [
                     'title' => ['text' => ''],
                     'xAxis' => [
-                        'categories' => ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July']
+                        'categories' => [ 'May', 'June', 'July','Aug','Sept','Oct','Nov','Dec','Jan', 'Feb', 'March', 'April']
                     ],
                     'yAxis' => [
-                        'title' => ['text' => 'Number of Days Reported in a Month']
+                        'title' => ['text' => 'No of Days Reported']
                     ],
                     'series' => [
-                        ['name' => 'VAISALA', 'data' => [18, 14, 22, 17, 21, 23, 19]],
-                        ['name' => 'SEBA', 'data' => [21, 24, 23, 19, 30, 25, 29]]
+                        ['name' => 'Months', 'data' => [21, 50, 23,55,0,0,0,0, 20, 0, 0,0]],
+                       // ['name' => 'SEBA', 'data' => [0, 0, 0, 0, 0, 0, 0,0,0,0,0,0]]
                     ]
                 ]
             ]);
