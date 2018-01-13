@@ -106,7 +106,7 @@ LteAsset::register($this);
                                         </a>
                                     </li>
                                     <!--                                    <li>
-                                                                            <a href="<?php // echo Url::to(['/weather-data/process']);      ?>">
+                                                                            <a href="<?php // echo Url::to(['/weather-data/process']);         ?>">
                                                                                 <i class="fa fa-circle-o"></i> 
                                                                                 Process Previous Data
                                                                             </a>
@@ -135,26 +135,22 @@ LteAsset::register($this);
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index.php?r=reports/daily-trends"><i class="fa fa-circle-o"></i>
+                                        <a href="index.php?r=reports/stations-observations"><i class="fa fa-circle-o"></i>
                                             Stations Observation report 
                                         </a>
                                     </li>  
-                                     <li>
-                                        <a href="index.php?r=reports/range-avg-values"><i class="fa fa-circle-o"></i>
+                                    <li>
+                                        <a href="index.php?r=reports/stations-latest-observations"><i class="fa fa-circle-o"></i>
                                             Stations Latest Observation 
                                         </a>
                                     </li> 
                                     <li>
-                                        <a href="index.php?r=reports/daily-optimal-values"><i class="fa fa-circle-o"></i>
-                                            Daily Min/Max Values
-                                        </a>
-                                    </li> 
-                                   
-                                    <li>
-                                        <a href="index.php?r=reports/range-optimal-values"><i class="fa fa-circle-o"></i>
+                                        <a href="index.php?r=reports/min-max-observations"><i class="fa fa-circle-o"></i>
                                             Min/Max Observation
                                         </a>
-                                    </li> 
+                                    </li>
+                                                                   
+
                                 </ul>
                             </li>
                         <?php } ?>
@@ -209,6 +205,30 @@ LteAsset::register($this);
                         </li>';
                         }
                         ?>
+                        <!--USER ACCOUNT MANAGERMENT-->
+                        <?php if (!Yii::$app->user->isGuest) { ?>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-users"></i>
+                                    <span>My Account</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu"> 
+                                    <li>
+                                        <a href="index.php?r=site/account-profile"><i class="fa fa-user"></i>
+                                            View Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="index.php?r=site/account-password"><i class="fa fa-key"></i>
+                                            Change Password
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

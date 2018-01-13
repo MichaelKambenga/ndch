@@ -10,10 +10,11 @@ use app\models\WeatherData;
 $this->title = 'Station Weather Data';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+ <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
 <div class="weather-data-index">
 
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
+   
     <?php
 //    if (!is_null(\yii::$app->user->identity->stationid)) {
     ?>

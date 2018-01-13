@@ -35,17 +35,19 @@ class User extends ActiveRecord implements IdentityInterface {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_BLOCKED = 2;
-    ///constant scenarions
+///constant scenarions
     const SCENARIO_STATION_USER = 1;
 
 //    public $entity_sector_id;
 //    public $entity_sub_sector_id;
     public $user_role; ///variable to carry the role(s) of the user in the system e.g admin,etc
+    public $current_password;
+    public $new_password;
+    public $new_repeat_password;
 
     /**
      * @inheritdoc
      */
-
     public static function tableName() {
         return 'tbl_user';
     }
@@ -68,11 +70,17 @@ class User extends ActiveRecord implements IdentityInterface {
             [['firstname', 'lastname', 'username', 'password_hash', 'organizationid', 'user_role'], 'required'],
             [['organizationid', 'status', 'logins', 'stationid'], 'integer'],
             [['stationid'], 'validStation', 'on' => User::SCENARIO_STATION_USER],
-            [['created_at', 'datedeactivated', 'lastlogin', 'created_at', 'updated_at', 'user_role'], 'safe'],
+            [['created_at', 'datedeactivated', 'lastlogin', 'created_at', 'updated_at', 'user_role', 'current_password', 'new_password', 'new_repeat_password'], 'safe'],
             [['firstname', 'middlename'], 'string', 'max' => 100],
             [['lastname'], 'string', 'max' => 150],
             [['username'], 'string', 'max' => 50],
+            [['username'], 'string', 'max' => 50],
             [['password_hash', 'auth_key'], 'string', 'max' => 255],
+            [['current_password', 'new_password', 'new_repeat_password'], 'required', 'on' => 'account_password_change'],
+            [['current_password'], 'validateCurrentPassword', 'on' => 'account_password_change'],
+            [['new_password', 'new_repeat_password'], 'string', 'min' => 8, 'on' => 'account_password_change'],
+            [['new_password'], 'validateNewPassword', 'on' => 'account_password_change'],
+            [['new_repeat_password'], 'compare', 'compareAttribute' => 'new_password', 'on' => 'account_password_change'],
             [['organizationid'], 'exist', 'skipOnError' => true, 'targetClass' => Stakeholder::className(), 'targetAttribute' => ['organizationid' => 'id']],
         ];
     }
@@ -95,7 +103,10 @@ class User extends ActiveRecord implements IdentityInterface {
             'datedeactivated' => 'Date Deactivated',
             'lastlogin' => 'Lastlogin',
             'logins' => 'Logins',
-            'user_role' => 'User Role(s)'
+            'user_role' => 'User Role(s)',
+            'current_password' => 'Current Password',
+            'new_password' => 'New Password',
+            'new_repeat_password' => 'Repeat New Password'
         ];
     }
 
@@ -198,6 +209,23 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function setPassword($password) {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    public function validateCurrentPassword() {
+      //  echo $this->password_hash.'='.$this->current_password.'='.Yii::$app->security->generatePasswordHash($this->current_password).'='.$this->password_hash;
+        if (!Yii::$app->security->validatePassword(Yii::$app->security->generatePasswordHash($this->current_password), $this->password_hash)) {
+            $this->addError('current_password', 'Wrong current password');
+        }
+    }
+
+    public function validateNewPassword() {
+        if (!empty($this->new_password)) {
+            if (preg_match('@[A-Z]@', $this->new_password) && preg_match('@[a-z]@', $this->new_password) && preg_match('@[0-9]@', $this->new_password)) {
+                return TRUE;
+            }
+            $this->addError($this->new_password, 'Please create a strong Password');
+        }
+        return FALSE;
     }
 
     /**

@@ -45,10 +45,10 @@ class SiteController extends Controller {
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+//            'captcha' => [
+//                'class' => 'yii\captcha\CaptchaAction',
+//                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+//            ],
         ];
     }
 
@@ -145,6 +145,51 @@ class SiteController extends Controller {
      */
     public function actionAbout() {
         return $this->render('about');
+    }
+
+    /*
+     * Change Password action
+     */
+
+    public function actionAccountProfile() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $id = Yii::$app->user->id;
+        $model = \app\models\User::find()->where('id =:id')->addParams([':id' => $id])->one();
+        return $this->render('profile', ['model' => $model]);
+    }
+
+    /*
+     * Change Password action
+     */
+
+    public function actionAccountPassword() {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $id = Yii::$app->user->id;
+        $model = \app\models\User::find()->where('id =:id')->addParams([':id' => $id])->one();
+        if ($model) {
+            $model->scenario = 'account_password_change';
+            if ($model->load(Yii::$app->request->post())) {
+                $user = Yii::$app->request->post('User');
+                //var_dump($user);
+                $model->current_password = $user['current_password'];
+                $model->new_password = $user['new_password'];
+                $model->new_repeat_password = $user['new_repeat_password'];
+                $model->user_role = 1;
+                if ($model->validate()) {
+                    $model->setPassword($model->new_password);
+                    if ($model->save()) {
+                        $this->redirect('site/account-profile');
+                    }
+                }
+            }
+            return $this->render('password', ['model' => $model]);
+        } else {
+            return $this->goHome();
+        }
     }
 
     /**

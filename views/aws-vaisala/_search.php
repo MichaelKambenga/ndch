@@ -18,7 +18,8 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
     <?php 
-    echo $form->field($model,'TIME')->widget(yii\jui\DatePicker::className(),['clientOptions' => ['dateFormat' => 'yy-mm-dd', 'defaultDate' => '2014-01-01']]); 
+    echo $form->field($model,'TIME')->widget(yii\jui\DatePicker::className(),
+            ['clientOptions' => ['dateFormat' => 'yy-mm-dd']]); 
     ?>
     <?php
 //    echo DatePicker::widget([
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
 //         ]       
 //    ]);
     ?>
-    <?= $form->field($model, 'StationName')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Station::find()->all(), 'name', 'name'), ['prompt' => '--select--']) ?>
+    <?= $form->field($model, 'StationName')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Station::find()->orderBy('name')->all(), 'name', 'name'), ['prompt' => '--select--']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'style' => 'margin-top:2%;']) ?>

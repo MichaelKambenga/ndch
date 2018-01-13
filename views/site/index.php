@@ -9,8 +9,8 @@ use app\models\WeatherData;
 ?>
 
 <section class="content-header">
-    <h1>
-        NDCH System- Dashboard
+    <h1 id="header2">
+       Dashboard
 <!--        <small>to the National Database for Climate and Hydrology-(NDCH)</small>-->
     </h1>
 

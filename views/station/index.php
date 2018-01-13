@@ -15,14 +15,11 @@ $this->title = 'Stations';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stakeholder-index">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
-
     <?php
     Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
@@ -32,24 +29,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return $model->getStationTypeName();
                 },
+                'filter' => app\models\Station::getStationTypes(),
             ],
             [
                 'attribute' => 'stationowner',
                 'value' => function ($model) {
                     return Stakeholder::getStakeholderNameById($model->stationowner);
                 },
+                'filter' => yii\helpers\ArrayHelper::map(\app\models\Stakeholder::find()->orderBy('name')->asArray()->where('orgtype != :orgtype', [':orgtype' => \app\models\Stakeholder::ORG_TYPE_DATAREADONLY])->all(), 'id', 'name'),
             ],
-//            [
-//                'attribute' => 'regionid',
-//                'value' => function ($model) {
-//                    return Region::getRegionNameById($model->regionid);
-//                },
-//            ],
+            [
+                'attribute' => 'regionid',
+                'value' => function ($model) {
+                    return Region::getRegionNameById($model->regionid);
+                },
+                'filter' => yii\helpers\ArrayHelper::map(\app\models\Region::find()->orderBy('regionname')->asArray()->all(), 'id', 'regionname'),
+            ],
             [
                 'attribute' => 'districtid',
                 'value' => function ($model) {
                     return District::getDistrictNameById($model->districtid);
                 },
+                'filter' => yii\helpers\ArrayHelper::map(\app\models\District::find()->orderBy('districtname')->asArray()->all(), 'id', 'districtname'),
             ],
             ['class' => 'yii\grid\ActionColumn'],
 //            [
