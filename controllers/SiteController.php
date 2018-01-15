@@ -22,7 +22,7 @@ class SiteController extends Controller {
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','contact','about','account-profile','account-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,12 +60,12 @@ class SiteController extends Controller {
     public function actionIndex() {
         if (!\Yii::$app->user->isGuest) {
             $content = array();
-            ///TOP VAISALA REPORTING STATIONS 
-            $vaisala_org_sql = "select stationid, count(stationid) as counts from tbl_weather_data group by stationid order by counts desc limit 5";
-            $content['top_reporting_stations'] = WeatherData::findBySql($vaisala_org_sql)->all();
-            ///TOP SEBA REPORTING STATIONS   
-            $seba_org_sql = 'select MAX("TIME") AS "TIME", stationid from tbl_weather_data group by stationid order by "TIME" desc limit 5';
-            $content['recent_observations'] = WeatherData::findBySql($seba_org_sql)->all();
+            ///TOP 5 REPORTING STATIONS 
+            $top_reporting_stations = "select stationid, count(stationid) as counts from tbl_weather_data group by stationid order by counts desc limit 5";
+            $content['top_reporting_stations'] = WeatherData::findBySql($top_reporting_stations)->all();
+            ///TOP 5 LATEST OBSERVATION REPORTING STATIONS   
+            $latest_observation_sql = 'select MAX("TIME") AS "TIME", stationid from tbl_weather_data group by stationid order by "TIME" desc limit 5';
+            $content['recent_observations'] = WeatherData::findBySql($latest_observation_sql)->all();
             return $this->render('index', $content);
         } else {
             return $this->redirect(['/site/login']);
@@ -85,6 +85,7 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+           
             if (!is_null(\yii::$app->user->identity->organizationid) && is_null(\yii::$app->user->identity->stationid)) {
                 Yii::$app->session->set('organizationUser', 1);
             }
@@ -180,11 +181,16 @@ class SiteController extends Controller {
                 $model->new_repeat_password = $user['new_repeat_password'];
                 $model->user_role = 1;
                 if ($model->validate()) {
+                    echo $model->new_password;
+                    exit;
                     $model->setPassword($model->new_password);
+                    
                     if ($model->save()) {
                         $this->redirect('site/account-profile');
                     }
                 }
+                //echo '=='.$model->current_password.'=new>='.$model->new_password.'=Repeat='.$model->new_repeat_password;
+                exit;
             }
             return $this->render('password', ['model' => $model]);
         } else {

@@ -213,6 +213,10 @@ class User extends ActiveRecord implements IdentityInterface {
 
     public function validateCurrentPassword() {
       //  echo $this->password_hash.'='.$this->current_password.'='.Yii::$app->security->generatePasswordHash($this->current_password).'='.$this->password_hash;
+      echo 'Current='.$this->password_hash.'<br/>';
+        echo 'new='.$this->current_password.'='.Yii::$app->security->generatePasswordHash($this->current_password);
+      
+        
         if (!Yii::$app->security->validatePassword(Yii::$app->security->generatePasswordHash($this->current_password), $this->password_hash)) {
             $this->addError('current_password', 'Wrong current password');
         }
