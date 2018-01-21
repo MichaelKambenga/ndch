@@ -61,10 +61,7 @@ class WeatherDataSearch extends WeatherData {
             $this->stationid = \yii::$app->user->identity->stationid;
         }
         if ($this->TIME) {
-            echo $this->TIME;
-//            exit;
             $this->TIME = Date('Y-m-d', strtotime($this->TIME));
-            echo '==' . $this->TIME;
         }
         //station user filter
         $query->andFilterWhere(['stationid' => $this->stationid])

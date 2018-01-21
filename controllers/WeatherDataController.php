@@ -75,7 +75,6 @@ class WeatherDataController extends \app\components\Controller {
             } else {
                 $model->TIME = NULL;
             }
-            echo $model->TIME;
             $model->EntryDate = Date('Y-m-d H:i:s', time());
 
             if ($model->save()) {
